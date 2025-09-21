@@ -27,23 +27,30 @@ void enqueue(fila *f, void *item);
 /// @return: Retorna o elemento que está no início da fila. NULL caso a fila esteja vazia.
 void *getInicioFila(fila *f);
 
-/// @brief:
+/// @brief: Pega o dado que se encontra no fim da fila.
+/// @param f: Ponteiro para a fila.
+/// @return: Um ponteiro para o objeto que se encontra no fim da fila. NULL caso a fila esteja vazia.
 void *getFimFila(fila *f);
 
+/// @brief: Remove um dado da fila, do seu início.
+/// @param f: Um ponteiro para a fila em questão.
+/// @return: Um ponteiro para o dado removido. NULL caso a remoção falhar (caso ela já esteja vazia).
 void *dequeue(fila *f);
 
+/// @brief: Libera todos os elementos da fila, e ao final, libera a fila em si.
+/// @param f: Ponteiro para a fila em questão.
+/// @param destrutor: Ponteiro para um função que sabe como remover um determinado item,
+/// recebe um ponteiro para o item como parâmetro.
 void liberaFila(fila *f, void (*destrutor)(void *item));
 
+
+/// @brief: Exibe todos os elementos da fila, independente de seu tipo.
+/// @param f: Ponteiro para a fila em questão.
+/// @param impressor: Ponteiro para a função que sabe como exibir determinado dado,
+/// recebe um dado como parâmetro.
+/// @return: Se a fila estiver vazia, encerra a função. Se o usuário passar NULL para função impressora
+/// exibe o endereço de memória de todos os dados presentes na fila. Caso ele passe um dado diferente de NULL
+/// exibe o objeto em questão.
 void exibeFila(fila *f, void (*impressor)(void *item));
-
-
-
-
-
-
-
-
-
-
 
 #endif //FILA_H
