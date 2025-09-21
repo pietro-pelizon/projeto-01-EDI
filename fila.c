@@ -3,3 +3,14 @@
 //
 
 #include "fila.h"
+
+typedef struct nodeF {
+	void *item;
+	nodeF *prox;
+}nodeF;
+
+typedef struct fila {
+	nodeF *inicio;
+	nodeF *fim;
+	int tam;
+}fila;

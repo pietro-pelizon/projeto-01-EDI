@@ -3,23 +3,20 @@
 //
 
 #include "circulo.h"
-#define PI = 3,1415
+#define PI 3.14159265
 
 
 typedef struct circulo {
-    double diametro;
-    double r = diametro/2;
-    char corb;
-    char corp;
+    double raio;
+    char corB[10];
+    char corP[10];
     double ancX, ancY;
     double area;
 
 }circulo;
 
-circulo calcArea(circulo *c, double r) {
-    double x = PI;;
-    circulo area = x *(r*r);
-
-    return area;
+double calcAreaCirculo(circulo *c) {
+    c -> area = PI * ((c -> raio) * (c -> raio));
+    return c -> area;
 
 }
