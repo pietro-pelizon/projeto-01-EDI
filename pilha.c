@@ -17,7 +17,7 @@ pilha *criaPilha() {
     pilha *p = malloc (sizeof(pilha));
     if (!p) {
         printf("falha na alocacao de memoria da pilha!\n");
-        exit(1);
+        return NULL;
     }
 
     p -> topo = NULL;
@@ -32,7 +32,7 @@ void push(pilha *p, void *item) {
     nodeP *novo = (nodeP*) malloc(sizeof(nodeP));
     if (!novo) {
         printf("erro ao alocar memoria para o noh da pilha\n");
-        exit(1);
+        return;
     }
 
     novo -> item = item;
@@ -43,7 +43,7 @@ void push(pilha *p, void *item) {
 }
 
 void *pop(pilha *p) {
-    if (p == NULL || p -> topo == NULL) {
+    if (estaVazia(p)) {
         return NULL;
     }
 
@@ -59,7 +59,7 @@ void *pop(pilha *p) {
 }
 
 void *topo(pilha *p) {
-    if (p == NULL || p -> topo == NULL) {
+    if (!p) {
         printf("a pilha esta vazia\n");
         return NULL;
     }
@@ -67,16 +67,16 @@ void *topo(pilha *p) {
     return p -> topo -> item;
 }
 
-int estaVazia(pilha *p) {
-    if (p -> topo == NULL) {
-        return 1;
+bool estaVazia(pilha *p) {
+    if (p == NULL || p -> topo == NULL) {
+        return true;
     }
 
-    return 0;
+    return false;
 }
 
-void liberaPilha(pilha *p) {
-    if (p == NULL) {
+void liberaPilha(pilha *p, void (*destrutor)(void *item)) {
+    if (estaVazia(p)) {
         return;
     }
 
@@ -84,41 +84,34 @@ void liberaPilha(pilha *p) {
 
     while (atual != NULL) {
         nodeP *proximo = atual -> prox;
+
+        if (destrutor != NULL) {
+            destrutor(atual -> item);
+        }
+
         free(atual);
         atual = proximo;
-
-        p -> tam--;
     }
 
     free(p);
 }
 
-
-int main() {
-    pilha p;
-    criaPilha(&p);
-    int *numero = malloc (sizeof(int));
-    if (!numero) {
-        printf("erro ao alocar memoria para o valor inteiro\n");
-        return 1;
+void printaPilha(pilha *p, void (*impressor)(void *item)) {
+    if (estaVazia(p)) {
+        printf("[ Pilha vazia ]\n");
+        return;
     }
 
-    *numero = 10;
+    nodeP *atual = p -> topo;
 
+    while (atual != NULL) {
+        if (impressor != NULL) {
+            impressor(atual -> item);
+        }
+        else {
+            printf("Item (endereco): %p\n", atual->item);
+        }
 
-
-    push(&p, numero);
-
-
-    int *numeroNoTopo = topo(&p);
-    int *dadoRemovido = pop(&p);
-
-    printf("dado removido: %d", *dadoRemovido);
-    free(dadoRemovido);
-
-
-
-    free(numero);
-    free(&p);
-
+        atual = atual -> prox;
+    }
 }

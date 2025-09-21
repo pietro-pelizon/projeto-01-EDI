@@ -8,14 +8,35 @@
 typedef struct fila fila;
 typedef struct nodeF nodeF;
 
+/// @brief: Cria uma fila.
+/// @return: Retorna um ponteiro para fila. NULL caso a criação falhe.
+fila *criaFila(void);
 
-fila *criaFila();
+/// @brief: Verifica se a fila está vazia.
+/// @param f: Ponteiro para a fila a ser checada.
+/// @return: Retorna TRUE para caso esteja vazia e FALSE para o contrário.
+bool estaVazia(fila *f);
 
-int insereFila(fila *f, void *item);
+/// @brief: Adiciona um dado à fila, ao seu fim.
+/// @param f: Ponteiro para a fila.
+/// @param item: Dado que será adicionado à fila.
+void enqueue(fila *f, void *item);
 
-nodeF *getInicioFila(fila *f);
+/// @brief: Pega o elemento que está no início da fila sem o remover.
+/// @param f: Ponteiro para a fila.
+/// @return: Retorna o elemento que está no início da fila. NULL caso a fila esteja vazia.
+void *getInicioFila(fila *f);
 
-nodeF *getFimFila(fila *f);
+/// @brief:
+void *getFimFila(fila *f);
+
+void *dequeue(fila *f);
+
+void liberaFila(fila *f, void (*destrutor)(void *item));
+
+void exibeFila(fila *f, void (*impressor)(void *item));
+
+
 
 
 

@@ -8,8 +8,8 @@
 
 typedef struct circulo {
     double raio;
-    char corB[10];
-    char corP[10];
+    char *corB;
+    char *corP;
     double ancX, ancY;
     double area;
 
