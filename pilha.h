@@ -5,11 +5,11 @@
 // para encapsular a implementação. O header só precisa
 // saber que o tipo 'pilha' existe.
 typedef struct pilha pilha;
-typedef struct node node;
+typedef struct nodeP nodeP;
 
 
-/// @brief: cria uma pilha de alocação dinâmica
-/// @return: retorna um ponteiro para o início da pilha
+/// @brief: Cria uma pilha de alocação dinâmica
+/// @return: Retorna um ponteiro para o início da pilha
 pilha *criaPilha();
 
 /// @brief: Insere um elemento no topo da pilha.

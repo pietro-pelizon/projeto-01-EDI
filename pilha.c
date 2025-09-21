@@ -2,29 +2,34 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-typedef struct node {
+typedef struct nodeP {
     void *item;
-    struct node *prox;
-}node;
+    struct nodeP *prox;
+}nodeP;
 
 typedef struct pilha {
-    node *topo;
+    nodeP *topo;
     int tam;
 }pilha;
 
 
+pilha *criaPilha() {
+    pilha *p = malloc (sizeof(pilha));
+    if (!p) {
+        printf("falha na alocacao de memoria da pilha!\n");
+        exit(1);
+    }
 
-pilha criaPilha(pilha *p) {
     p -> topo = NULL;
     p -> tam = 0;
 
-    return *p;
+    return p;
 }
 
 void push(pilha *p, void *item) {
     if (p == NULL) return;
 
-    node *novo = (node*) malloc(sizeof(node));
+    nodeP *novo = (nodeP*) malloc(sizeof(nodeP));
     if (!novo) {
         printf("erro ao alocar memoria para o noh da pilha\n");
         exit(1);
@@ -42,18 +47,18 @@ void *pop(pilha *p) {
         return NULL;
     }
 
-    node *destroi = p -> topo;
+    nodeP *memory = p -> topo;
 
-    void *itemDesempilhado = destroi -> item;
-    p -> topo = destroi -> prox;
-    free(destroi);
+    void *itemDesempilhado = memory -> item;
+    p -> topo = memory -> prox;
+    free(memory);
 
     p -> tam--;
 
     return itemDesempilhado;
 }
 
-void *topo(pilha const *p) {
+void *topo(pilha *p) {
     if (p == NULL || p -> topo == NULL) {
         printf("a pilha esta vazia\n");
         return NULL;
@@ -62,7 +67,7 @@ void *topo(pilha const *p) {
     return p -> topo -> item;
 }
 
-int estaVazia(pilha const *p) {
+int estaVazia(pilha *p) {
     if (p -> topo == NULL) {
         return 1;
     }
@@ -75,10 +80,10 @@ void liberaPilha(pilha *p) {
         return;
     }
 
-    node *atual = p -> topo;
+    nodeP *atual = p -> topo;
 
     while (atual != NULL) {
-        node *proximo = atual -> prox;
+        nodeP *proximo = atual -> prox;
         free(atual);
         atual = proximo;
 
@@ -114,5 +119,6 @@ int main() {
 
 
     free(numero);
+    free(&p);
 
 }

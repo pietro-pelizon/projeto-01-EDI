@@ -5,4 +5,8 @@ set(CMAKE_C_STANDARD 99)
 
 add_executable(EDI_projeto1
         pilha.c
-        pilha.h)
+        pilha.h
+        fila.c
+        fila.h
+        circulo.c
+        circulo.h)
