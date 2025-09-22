@@ -67,6 +67,12 @@ build CMakeFiles/EDI_projeto1.dir/circulo.c.obj: C_COMPILER__EDI_projeto1_unscan
   OBJECT_DIR = CMakeFiles\EDI_projeto1.dir
   OBJECT_FILE_DIR = CMakeFiles\EDI_projeto1.dir
 
+build CMakeFiles/EDI_projeto1.dir/retangulo.c.obj: C_COMPILER__EDI_projeto1_unscanned_Debug C$:/Users/pietr/CLionProjects/EDI_projeto1/retangulo.c || cmake_object_order_depends_target_EDI_projeto1
+  DEP_FILE = CMakeFiles\EDI_projeto1.dir\retangulo.c.obj.d
+  FLAGS = -g -std=gnu99 -fdiagnostics-color=always
+  OBJECT_DIR = CMakeFiles\EDI_projeto1.dir
+  OBJECT_FILE_DIR = CMakeFiles\EDI_projeto1.dir
+
 
 # =============================================================================
 # Link build statements for EXECUTABLE target EDI_projeto1
@@ -75,7 +81,7 @@ build CMakeFiles/EDI_projeto1.dir/circulo.c.obj: C_COMPILER__EDI_projeto1_unscan
 #############################################
 # Link the executable EDI_projeto1.exe
 
-build EDI_projeto1.exe: C_EXECUTABLE_LINKER__EDI_projeto1_Debug CMakeFiles/EDI_projeto1.dir/pilha.c.obj CMakeFiles/EDI_projeto1.dir/fila.c.obj CMakeFiles/EDI_projeto1.dir/circulo.c.obj
+build EDI_projeto1.exe: C_EXECUTABLE_LINKER__EDI_projeto1_Debug CMakeFiles/EDI_projeto1.dir/pilha.c.obj CMakeFiles/EDI_projeto1.dir/fila.c.obj CMakeFiles/EDI_projeto1.dir/circulo.c.obj CMakeFiles/EDI_projeto1.dir/retangulo.c.obj
   FLAGS = -g
   LINK_LIBRARIES = -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\EDI_projeto1.dir

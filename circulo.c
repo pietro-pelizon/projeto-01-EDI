@@ -8,11 +8,11 @@
 typedef struct circulo {
 	int i;
 	double x, y;
-	double raio;
+	double r;
 	char *corb, *corp;
 }circulo;
 
-circulo *criaCirculo(int i, double x, double y, double raio, char *corb, char *corp) {
+circulo *criaCirculo(int i, double x, double y, double r, char *corb, char *corp) {
 	circulo *c = malloc (sizeof(circulo));
 	if (c == NULL) {
 		printf("Erro na alocacao do objeto circulo!");
@@ -22,7 +22,7 @@ circulo *criaCirculo(int i, double x, double y, double raio, char *corb, char *c
 	c -> i = i;
 	c -> x = x;
 	c -> y = y;
-	c -> raio = raio;
+	c -> r = r;
 	c -> corb = (char*) malloc (strlen(corb) + 1);
 	if (c -> corb == NULL) {
 		printf("Erro de alocacao de memoria para a cor da borda do circulo!\n");
@@ -53,7 +53,7 @@ double getYCirculo(circulo *c) {
 }
 
 double getRaioCirculo(circulo *c) {
-	return c -> raio;
+	return c -> r;
 }
 
 char *getCorbCirculo(circulo *c) {
@@ -77,7 +77,7 @@ void setYCirculo(circulo *c, double y) {
 }
 
 void setRaioCirculo(circulo *c, double raio) {
-	c -> raio = raio;
+	c -> r = raio;
 }
 
 void setCorbCirculo(circulo *c, char *corb) {

@@ -9,4 +9,6 @@ add_executable(EDI_projeto1
         fila.c
         fila.h
         circulo.c
-        circulo.h)
+        circulo.h
+        retangulo.c
+        retangulo.h)
