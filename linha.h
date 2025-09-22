@@ -1,7 +1,7 @@
 #ifndef LINHA_H
 #define LINHA_H
 
-typedef struct linha linha;
+typedef struct stLinha linha;
 
 /* ------ FUNÇÃO CONSTRUTORA: LINHA ------- */
 

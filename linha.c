@@ -4,7 +4,7 @@
 #include <string.h>
 #include <math.h>
 
-typedef struct linha {
+typedef struct stLinha {
 	int i;
 	double x1, y1, x2, y2;
 	char *cor;
@@ -23,7 +23,7 @@ linha *criaLinha(int i, double x1, double y1, double x2, double y2, char *cor) {
 	c -> x2 = x2;
 	c -> y2 = y2;
 
-	c -> cor = (char*) malloc (strlen(cor));
+	c -> cor = (char*) malloc (strlen(cor) + 1);
 	if (c -> cor == NULL) {
 		printf("Erro na alocaco de memoria para a cor do objeto linha!\n");
 		free(c);

@@ -13,4 +13,6 @@ add_executable(EDI_projeto1
         retangulo.c
         retangulo.h
         linha.c
-        linha.h)
+        linha.h
+        texto.c
+        texto.h)
