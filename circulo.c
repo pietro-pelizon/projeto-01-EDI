@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-
+#define PI 3.14159265358
 
 typedef struct circulo {
 	int i;
@@ -26,6 +26,7 @@ circulo *criaCirculo(int i, double x, double y, double r, char *corb, char *corp
 	c -> corb = (char*) malloc (strlen(corb) + 1);
 	if (c -> corb == NULL) {
 		printf("Erro de alocacao de memoria para a cor da borda do circulo!\n");
+		free(c);
 		exit(1);
 	}
 	strcpy(c -> corb, corb);
@@ -33,6 +34,7 @@ circulo *criaCirculo(int i, double x, double y, double r, char *corb, char *corp
 	c -> corp = (char*) malloc (strlen(corp) + 1);
 	if (c -> corp == NULL) {
 		printf("Erro de alocacao de memoria para a cor do preenchimento do circulo!\n");
+		free(c);
 		exit(1);
 	}
 	strcpy (c -> corp, corp);
@@ -86,5 +88,23 @@ void setCorbCirculo(circulo *c, char *corb) {
 
 void setCorpCirculo(circulo *c, char *corp) {
 	c -> corp = corp;
+}
+
+double calcAreaCirculo(circulo *c) {
+	return PI * ((c -> r) * (c -> r));
+}
+
+void destrutorCirculo(circulo **pc) {
+	if (pc == NULL || *pc == NULL) {
+		return;
+	}
+
+	circulo *c = *pc;
+
+	free(c -> corb);
+	free(c -> corp);
+	free(c);
+
+	*pc = NULL;
 }
 
