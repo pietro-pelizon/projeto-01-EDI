@@ -10,8 +10,28 @@ typedef struct linha {
 	char *cor;
 }linha;
 
-linha criaLinha(int i, double x1, double y1, double x2, double y2, char *cor);
+linha *criaLinha(int i, double x1, double y1, double x2, double y2, char *cor) {
+	linha *c = malloc (sizeof(linha));
+	if (c == NULL) {
+		printf("Erro na alocacao de memoria para o objeto linha!\n");
+		exit(1);
+	}
 
+	c -> i = i;
+	c -> x1 = x1;
+	c -> y1 = y1;
+	c -> x2 = x2;
+	c -> y2 = y2;
+
+	c -> cor = (char*) malloc (strlen(cor));
+	if (c -> cor == NULL) {
+		printf("Erro na alocaco de memoria para a cor do objeto linha!\n");
+		free(c);
+		exit(1);
+	}
+
+	return c;
+}
 
 int getIDLinha(linha *l) {
 	return l -> i;

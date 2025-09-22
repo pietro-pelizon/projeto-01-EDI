@@ -13,7 +13,7 @@ typedef struct linha linha;
 /// @param y2: Coordenada y do segundo ponto.
 /// @param cor: Cor da linha.
 /// @return: Retorna um ponteiro para a linha.
-linha criaLinha(int i, double x1, double y1, double x2, double y2, char *cor);
+linha *criaLinha(int i, double x1, double y1, double x2, double y2, char *cor);
 
 /* ------- MÉTODOS GET: LINHA ------- */
 
