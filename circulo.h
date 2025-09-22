@@ -1,7 +1,3 @@
-//
-// Created by pietr on 20/09/2025.
-//
-
 #ifndef CIRCULO_H
 #define CIRCULO_H
 
@@ -17,13 +13,13 @@ typedef struct circulo circulo;
 /// @param corb: Cor da borda do círculo.
 /// @param corp: Cor de preenchimento do círculo.
 /// @return: Retorna o círculo criado.
-circulo criaCirculo(int i, double x, double y, double raio, char *corb, char *corp);
+circulo *criaCirculo(int i, double x, double y, double raio, char *corb, char *corp);
 
 /* ------- MÉTODOS GET: CÍRCULO ------- */
 
 /// @brief: Pega o identificador do círculo.
 /// @return: Retorna o identificador do círculo.
-int getIdentCirculo(circulo *c);
+int getIDCirculo(circulo *c);
 
 /// @brief: Pega a coordenada x do centro do círculo.
 /// @return: Retorna a coordenada x do centro do círculo.
@@ -39,16 +35,16 @@ double getRaioCirculo(circulo *c);
 
 /// @brief: Pega a cor de borda do círculo.
 /// @return: Retorna a cor de borda do círculo.
-char getCorbCirculo(circulo *c);
+char *getCorbCirculo(circulo *c);
 
 /// @brief: Pega a cor de preenchimento do círculo.
 /// @return: Retorna a cor de preenchimento do círculo.
-char getCorpCirculo(circulo *c);
+char *getCorpCirculo(circulo *c);
 
 /* ------- MÉTODOS SET: CÍRCULO ------- */
 
 /// @brief: Define o novo identificador do círculo.
-void setIdentCirculo(circulo *c, int i);
+void setIDCirculo(circulo *c, int i);
 
 /// @brief: Define o novo valor da coordenada x do centro do círculo.
 void setXCirculo(circulo *c, double x);

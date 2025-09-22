@@ -59,7 +59,7 @@ void *pop(pilha *p) {
 }
 
 void *topo(pilha *p) {
-    if (!p) {
+    if (estaVazia(p)) {
         printf("a pilha esta vazia\n");
         return NULL;
     }
@@ -68,7 +68,7 @@ void *topo(pilha *p) {
 }
 
 bool estaVazia(pilha *p) {
-    if (p == NULL || p -> topo == NULL) {
+    if (p -> tam == 0) {
         return true;
     }
 
@@ -96,7 +96,7 @@ void liberaPilha(pilha *p, void (*destrutor)(void *item)) {
     free(p);
 }
 
-void printaPilha(pilha *p, void (*impressor)(void *item)) {
+void exibePilha(pilha *p, void (*impressor)(void *item)) {
     if (estaVazia(p)) {
         printf("[ Pilha vazia ]\n");
         return;
@@ -114,4 +114,25 @@ void printaPilha(pilha *p, void (*impressor)(void *item)) {
 
         atual = atual -> prox;
     }
+}
+
+void copiaPilha(pilha *principal, pilha *copia) {
+    if (estaVazia(principal)) {
+        return;
+    }
+
+    pilha *auxiliar = criaPilha();
+    nodeP *atual = principal -> topo;
+    while (atual != NULL) {
+        push(auxiliar, atual -> item);
+        atual = atual -> prox;
+    }
+
+    atual = auxiliar -> topo;
+    while (atual != NULL) {
+        push(copia, atual -> item);
+        atual = atual -> prox;
+    }
+
+    liberaPilha(auxiliar, NULL);
 }

@@ -116,13 +116,12 @@ void liberaFila(fila *f, void (*destrutor)(void *item)) {
 
 		free(aux);
 		atual = atual -> prox;
-		f -> tam--;
 	}
 
 	free(f);
 }
 
-void printaFila(fila *f, void (*impressor)(void *item)) {
+void exibeFila(fila *f, void (*impressor)(void *item)) {
 	if (estaVazia(f)) {
 		printf("[ Fila vazia ]\n");
 		return;
@@ -141,3 +140,16 @@ void printaFila(fila *f, void (*impressor)(void *item)) {
 			atual = atual -> prox;
 	}
 }
+
+void copiaFila(fila *principal, fila *copia) {
+	if (estaVazia(principal)) {
+		return;
+	}
+
+	nodeF *aux = principal -> inicio;
+	while (aux != NULL) {
+		enqueue(copia, aux -> item);
+		aux = aux -> prox;
+	}
+}
+

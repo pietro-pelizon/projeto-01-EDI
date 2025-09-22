@@ -39,7 +39,7 @@ void *dequeue(fila *f);
 
 /// @brief: Libera todos os elementos da fila, e ao final, libera a fila em si.
 /// @param f: Ponteiro para a fila em questão.
-/// @param destrutor: Ponteiro para um função que sabe como remover um determinado item,
+/// @param destrutor: Ponteiro para uma função que sabe como remover um determinado item,
 /// recebe um ponteiro para o item como parâmetro.
 void liberaFila(fila *f, void (*destrutor)(void *item));
 
@@ -52,5 +52,10 @@ void liberaFila(fila *f, void (*destrutor)(void *item));
 /// exibe o endereço de memória de todos os dados presentes na fila. Caso ele passe um dado diferente de NULL
 /// exibe o objeto em questão.
 void exibeFila(fila *f, void (*impressor)(void *item));
+
+/// @brief: Faz a cópia de uma fila para outra fila.
+/// @param principal: Fila que será copiada para a outra.
+/// @param copia: Fila que será criada a partir da cópia da fila 'principal'.
+void copiaFila(fila *principal, fila *copia);
 
 #endif //FILA_H

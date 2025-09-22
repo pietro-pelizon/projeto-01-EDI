@@ -35,15 +35,20 @@ bool estaVazia(pilha *p);
 /// @brief: Libera todos os dados dentro da estrutura.
 /// @param p: Ponteiro para a pilha a ser liberada.
 /// @param destrutor: Ponteiro para uma função que sabe como liberar um item.
-/// @param item: Dado que será liberado da pilha.
+/// Esta função de callback recebe um único parâmetro: um ponteiro
+/// (void *) para o dado a ser destruído.
 void liberaPilha(pilha *p, void (*destrutor)(void *item));
 
 /// @brief: Mostra os elementos que estão dentro da devida da pilha.
 /// @param p: Ponteiro para a pilha.
 /// @param impressor: Ponteiro para a função que sabe como imprimir os itens.
-/// @param item: Dado que será exibido da pilha.
-void printaPilha(pilha *p, void (*impressor)(void *item));
+/// Esta função de callback recebe um único parâmetro: um ponteiro
+/// (void *) para o dado a ser impresso.
+void exibePilha(pilha *p, void (*impressor)(void *item));
 
-
+/// @brief: Faz a cópia de uma pilha em outra.
+/// @param principal: Pilha que será copiada.
+/// @param copia: Pilha criada a partir da cópia da principal.
+void copiaPilha(pilha *principal, pilha *copia);
 
 #endif //PILHA_H
