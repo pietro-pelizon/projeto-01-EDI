@@ -147,5 +147,6 @@ void setEstiloTexto(texto *t, estilo *novoEstilo);
 /// @return: Retorna a área calculada do círculo.
 double calcAreaTexto(texto *t);
 
+void destrutorTexto(texto *t)
 
 #endif //TEXTO_H

@@ -64,15 +64,50 @@ char *getfSize(estilo *e) {
 }
 
 void setfFamily(estilo *e, char *newfFamily) {
-	e -> fFamily = newfFamily;
+	if (newfFamily == NULL) {
+		return;
+	}
+
+	free(e -> fFamily);
+
+	e -> fFamily = (char*) malloc (strlen(newfFamily) + 1);
+	if (e -> fFamily == NULL) {
+		printf("Erro ao trocar a familia do estilo do texto!\n");
+		free(e);
+		exit(1);
+	}
+	strcpy(e -> fFamily, newfFamily);
 }
 
 void setfWeight(estilo *e, char *newfWeight) {
-	e -> fWeight = newfWeight;
+	if (newfWeight == NULL) {
+		return;
+	}
+
+	free(e -> fWeight);
+
+	e -> fWeight = (char*) malloc (strlen(newfWeight) + 1);
+	if (e -> fWeight == NULL) {
+		printf("Erro ao trocar a espessura do estilo do texto!\n");
+		free(e);
+		exit(1);
+	}
+	strcpy(e -> fWeight, newfWeight);
 }
 
 void setfSize(estilo *e, char *newfSize) {
-	e -> fSize = newfSize;
+	if (newfSize == NULL) {
+		return;
+	}
+
+	free(e -> fSize);
+	e -> fSize = (char*) malloc (strlen(newfSize) + 1);
+	if (e -> fSize == NULL) {
+		printf("Erro ao trocar o tamanho do estilo do texto!\n");
+		free(e);
+		exit(1);
+	}
+	strcpy(e -> fSize, newfSize);
 }
 
 texto *criaTexto(int i, double x, double y, char *corb, char *corp, char a, char *txto, estilo *e) {
@@ -162,11 +197,27 @@ void setYTexto(texto *t, double y) {
 }
 
 void setCorbTexto(texto *t, char *corb) {
-	t -> corb = corb;
+	free(t -> corb);
+
+	t -> corb = (char*) malloc (strlen(corb) + 1);
+	if (t -> corb == NULL) {
+		printf("Erro ao trocar a cor da borda o texto!\n");
+		free(t);
+		exit(1);
+	}
+	strcpy(t -> corb, corb);
 }
 
 void setCorpTexto(texto *t, char *corp) {
-	t -> corp = corp;
+	free(t -> corp);
+
+	t -> corp = (char*) malloc (strlen(corp) + 1);
+	if (t -> corp == NULL) {
+		printf("Erro ao trocar a cor da borda o texto!\n");
+		free(t);
+		exit(1);
+	}
+	strcpy(t -> corp, corp);
 }
 
 void setATexto(texto *t, char a) {
