@@ -15,4 +15,16 @@ add_executable(EDI_projeto1
         linha.c
         linha.h
         texto.c
-        texto.h)
+        texto.h
+        src/carregador.h
+        src/svg.c
+        src/svg.h
+        carregadores.c
+        carregadores.h
+        disparador.c
+        disparador.h
+        arena.c
+        arena.h
+        chao.c
+        chao.h
+)

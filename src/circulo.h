@@ -88,7 +88,6 @@ void setCorpCirculo(circulo *c, char *corp);
 /// @return: Retorna o tamanho da área do círculo.
 double calcAreaCirculo(circulo *c);
 
-
 /// @brief: Libera o objeto círculo.
 /// @param pc: Ponteiro duplo para o círculo a ser liberado
 void destrutorCirculo(circulo **pc);

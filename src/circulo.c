@@ -34,6 +34,7 @@ circulo *criaCirculo(int i, double x, double y, double r, char *corb, char *corp
 	c -> corp = (char*) malloc (strlen(corp) + 1);
 	if (c -> corp == NULL) {
 		printf("Erro de alocacao de memoria para a cor do preenchimento do circulo!\n");
+		free(c -> corb);
 		free(c);
 		exit(1);
 	}
@@ -42,7 +43,7 @@ circulo *criaCirculo(int i, double x, double y, double r, char *corb, char *corp
 	return c;
 }
 
-int getIDCirculo(circulo *c) {
+int getIDCirculo( circulo *c) {
 	return c -> i;
 }
 
@@ -94,8 +95,8 @@ void setCorbCirculo(circulo *c, char *corb) {
 	}
 
 	strcpy(novaCorb, corb);
-	free(c -> corp);
-	c -> corp = novaCorb;
+	free(c -> corb);
+	c -> corb = novaCorb;
 }
 
 void setCorpCirculo(circulo *c, char *corp) {

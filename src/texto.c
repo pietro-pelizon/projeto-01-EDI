@@ -276,7 +276,7 @@ void setEstiloTexto(texto *t, estilo *novoEstilo) {
 }
 
 double calcAreaTexto(texto *t) {
-	double area = 20.0 * strlen(t -> txto);
+	double area = 20.0 * (double) strlen(t -> txto);
 	return area;
 }
 
