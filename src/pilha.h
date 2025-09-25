@@ -10,7 +10,7 @@ typedef struct nodeP nodeP;
 
 /// @brief: Cria uma pilha de alocação dinâmica
 /// @return: Retorna um ponteiro para o início da pilha. Retorna NULL caso a alocação da pilha falhe.
-pilha *criaPilha();
+pilha *criaPilha(void);
 
 /// @brief: Insere um elemento no topo da pilha.
 /// @param p: Ponteiro para a struct pilha.
@@ -38,13 +38,6 @@ bool estaVazia(pilha *p);
 /// Esta função de callback recebe um único parâmetro: um ponteiro
 /// (void *) para o dado a ser destruído.
 void liberaPilha(pilha *p, void (*destrutor)(void *item));
-
-/// @brief: Mostra os elementos que estão dentro da devida da pilha.
-/// @param p: Ponteiro para a pilha.
-/// @param impressor: Ponteiro para a função que sabe como imprimir os itens.
-/// Esta função de callback recebe um único parâmetro: um ponteiro
-/// (void *) para o dado a ser impresso.
-void exibePilha(pilha *p, void (*impressor)(void *item));
 
 /// @brief: Faz a cópia de uma pilha em outra.
 /// @param principal: Pilha que será copiada.

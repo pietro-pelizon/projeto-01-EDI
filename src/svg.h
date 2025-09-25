@@ -12,11 +12,11 @@ void printaCabecalhoSvg(FILE *svg, const char *nomeArquivo);
 
 void insereRetangulo(FILE *svg, retangulo *r);
 
-void insereCirculo(FILE *svg, circulo *c)
+void insereCirculo(FILE *svg, circulo *c);
 
-void insereTexto(FILE *svg, texto *t)
+void insereTexto(FILE *svg, texto *t);
 
-void insereLinha(FILE *svg, linha *l)
+void insereLinha(FILE *svg, linha *l);
 
 void fechaSVG(FILE *svg);
 

@@ -13,7 +13,7 @@ typedef struct pilha {
 }pilha;
 
 
-pilha *criaPilha() {
+pilha *criaPilha(void) {
     pilha *p = malloc (sizeof(pilha));
     if (!p) {
         printf("falha na alocacao de memoria da pilha!\n");
@@ -96,25 +96,6 @@ void liberaPilha(pilha *p, void (*destrutor)(void *item)) {
     free(p);
 }
 
-void exibePilha(pilha *p, void (*impressor)(void *item)) {
-    if (estaVazia(p)) {
-        printf("[ Pilha vazia ]\n");
-        return;
-    }
-
-    nodeP *atual = p -> topo;
-
-    while (atual != NULL) {
-        if (impressor != NULL) {
-            impressor(atual -> item);
-        }
-        else {
-            printf("Item (endereco): %p\n", atual->item);
-        }
-
-        atual = atual -> prox;
-    }
-}
 
 void copiaPilha(pilha *principal, pilha *copia) {
     if (estaVazia(principal)) {
