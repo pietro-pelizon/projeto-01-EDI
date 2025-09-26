@@ -3,11 +3,12 @@
 //
 
 #include "fila.h"
+#include "forma.h"
 #include <stdlib.h>
 #include <stdio.h>
 
 typedef struct nodeF {
-	void *item;
+	;
 	nodeF *prox;
 }nodeF;
 

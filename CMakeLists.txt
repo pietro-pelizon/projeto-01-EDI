@@ -27,4 +27,7 @@ add_executable(EDI_projeto1
         arena.h
         chao.c
         chao.h
+        src/formas.c
+        src/formas.h
+        src/main.c
 )
