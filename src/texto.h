@@ -1,6 +1,29 @@
 #ifndef TEXTO_H
 #define TEXTO_H
 
+
+ /* ------- TAD TEXTO -------
+ * Este TAD define dois objetos relacionados: o Texto e seu Estilo.
+ *
+ * O objeto Texto representa um conteúdo textual a ser desenhado,
+ * e contém os seguintes atributos:
+ * Identificador: Permite diferenciar os textos uns dos outros pelo ID;
+ * Âncora: Define a posição de referência do texto no cenário, contendo as
+ * coordenadas (x, y);
+ * Alinhamento da Âncora: Define como o texto se alinha em relação à
+ * âncora: no início ('i'), meio ('m') ou fim ('f');
+ * Conteúdo: A string de caracteres que compõe o texto a ser exibido;
+ * Cores: Define as cores de borda ('corb') e de preenchimento ('corp');
+ * Estilo: Um ponteiro para um objeto 'estilo' que descreve a aparência da fonte.
+ *
+ * O objeto Estilo é um componente do Texto e define sua aparência
+ * visual através dos seguintes atributos:
+ * Família da Fonte: O nome da fonte a ser usada (ex: "Arial");
+ * Peso da Fonte: A espessura da fonte (ex: "normal", "bold");
+ * Tamanho da Fonte: O tamanho do texto (ex: "12px").
+ */
+
+/// As definições das structs ficam no arquivo .c
 typedef struct stEstilo estilo;
 typedef struct stTexto texto;
 

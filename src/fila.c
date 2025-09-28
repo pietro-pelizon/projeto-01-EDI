@@ -22,7 +22,7 @@ typedef struct fila {
 fila *criaFila(void) {
 	fila *f = malloc (sizeof(fila));
 	if (!f) {
-		free(f);
+		printf("Erro ao criar a fila!\n");
 		return NULL;
 	}
 

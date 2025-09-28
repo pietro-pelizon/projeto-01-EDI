@@ -2,9 +2,23 @@
 #define FILA_H
 #include "stdbool.h"
 
-// A definição da struct foi movida para o arquivo.c
-// para encapsular a implementação. O header só precisa
-// saber que o tipo 'fila' existe.
+
+ /* ------- TAD FILA -------
+ * A Fila é uma estrutura de dados genérica, que organiza elementos
+ * e opera com os seguintes conceitos:
+ * Padrão FIFO (First-In, First-Out): Garante que o primeiro elemento a ser
+ * inserido na fila será também o primeiro a ser removido, seguindo a
+ * lógica de uma fila de espera convencional;
+ * Dados Genéricos (void*): Armazena ponteiros genéricos ('void*'), permitindo
+ * que a mesma estrutura de fila seja usada para guardar qualquer tipo de
+ * dado (formas, disparadores, etc.);
+ * Início da Fila: É a extremidade da fila de onde os
+ * elementos são removidos ('dequeue');
+ * Fim da Fila: É a extremidade da fila onde novos elementos são
+ * inseridos ('enqueue').
+ */
+
+// A definição das structs foram movidas para o arquivo.c
 typedef struct fila fila;
 typedef struct nodeF nodeF;
 

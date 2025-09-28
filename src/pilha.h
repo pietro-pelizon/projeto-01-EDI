@@ -2,9 +2,25 @@
 #define PILHA_H
 #include <stdbool.h>
 
-/// @brief: A definição da struct foi movida para o arquivo.c
-/// para encapsular a implementação. O header só precisa
-/// saber que os tipos 'pilha' e 'nodeP' existem.
+
+ /* ------- TAD PILHA -------
+ * A Pilha é uma estrutura de dados genérica, que organiza elementos
+ * e opera com os seguintes conceitos:
+ *
+ * Padrão LIFO (Last-In, First-Out): Garante que o último elemento a ser
+ * inserido na pilha será também o primeiro a ser removido, seguindo a
+ * lógica de uma pilha de pratos;
+ *
+ * Dados Genéricos (void*): Armazena ponteiros genéricos ('void*'), permitindo
+ * que a mesma estrutura de pilha seja usada para guardar qualquer tipo de
+ * dado (formas, carregadores, etc.);
+ *
+ * Topo da Pilha: É o único ponto de acesso da estrutura. Novos elementos são
+ * adicionados no topo ('push'), e os elementos também são lidos ('topo') e
+ * removidos ('pop) do topo.
+ */
+
+/// A definição da struct foi movida para o arquivo.c
 typedef struct pilha pilha;
 typedef struct nodeP nodeP;
 

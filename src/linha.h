@@ -1,6 +1,18 @@
 #ifndef LINHA_H
 #define LINHA_H
 
+
+ /* ------- TAD LINHA -------
+ * A Linha é um objeto, que contém os seguintes atributos:
+ * Identificador: Permite diferenciar as linhas umas das outras pelo ID;
+ * Ponto Inicial: Define o ponto de partida da linha no cenário, contendo
+ * as coordenadas (x1, y1);
+ * Ponto Final: Define o ponto de término da linha no cenário, contendo
+ * as coordenadas (x2, y2);
+ * Cor: Define a cor da linha a ser desenhada.
+ */
+
+/// A definição da struct está no arquivo.c
 typedef struct stLinha linha;
 
 /* ------ FUNÇÃO CONSTRUTORA: LINHA ------- */

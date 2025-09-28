@@ -1,7 +1,20 @@
 #ifndef RETANGULO_H
 #define RETANGULO_H
 
-typedef struct retangulo retangulo;
+
+ /* ------- TAD RETANGULO -------
+ * O Retângulo é um objeto, que contém os seguintes atributos:
+ * Identificador: Permite diferenciar os retângulos uns dos outros pelo ID;
+ * Âncora: Define a posição de referência do retângulo no cenário,
+ * contendo as coordenadas (x, y);
+ * Largura: Define a dimensão horizontal do retângulo (width);
+ * Altura: Define a dimensão vertical do retângulo (height);
+ * Cor de Borda: Define a cor da linha que contorna o retângulo;
+ * Cor de Preenchimento: Define a cor que preenche o interior do retângulo.
+ */
+
+/// A definição da struct está no arquivo .c
+typedef struct stRetangulo retangulo;
 
 /* ------- FUNÇÃO CONSTRUTORA: RETÂNGULO ------- */
 

@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include <string.h>
 
-typedef struct retangulo {
+typedef struct stRetangulo {
 	int i;
 	double x, y, w, h;
 	char *corb, *corp;

@@ -18,6 +18,7 @@ typedef struct stCarregador carregador;
 /// @brief: Função construtora do carregador.
 /// @param i: Identificador do carregador
 /// @return: Retorna um ponteiro para o carregador.
+///
 carregador *criaCarregador(int i);
 
 /* ------- FUNÇÕES ADICIONAIS -------*/

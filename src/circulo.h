@@ -1,8 +1,20 @@
 #ifndef CIRCULO_H
 #define CIRCULO_H
 
+
+
+/* ------- TAD CIRCULO -------
+ * O círculo é um objeto, que contém os seguintes atributos:
+ * Identificador: Permite diferenciar os círculos uns dos outros pelo ID;
+ * Âncora: A âncora do círculo fica em seu centro, contém coordenadas (x, y)
+ * e faz referência a posição do objeto;
+ * raio: O raio do círculo;
+ * cor de borda: define a cor de borda pertencente ao círculo;
+ * Cor de preenchimento: define a cor de preenchimento pertencente ao círculo;
+ */
+
+
 /// A definição da struct círculo foi movida para o arquivo.c
-/// o header só precisa saber que o objeto 'circulo' existe.
 typedef struct circulo circulo;
 
 /* ------- FUNÇÃO CONSTRUTORA: CÍRCULO ------- */
