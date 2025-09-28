@@ -1,3 +1,0 @@
-C:/Users/pietr/CLionProjects/EDI_projeto1/cmake-build-debug/CMakeFiles/EDI_projeto1.dir
-C:/Users/pietr/CLionProjects/EDI_projeto1/cmake-build-debug/CMakeFiles/edit_cache.dir
-C:/Users/pietr/CLionProjects/EDI_projeto1/cmake-build-debug/CMakeFiles/rebuild_cache.dir
