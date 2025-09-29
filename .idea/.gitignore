@@ -1,0 +1,23 @@
+# Default ignored files
+/shelf/
+/workspace.xml
+# Editor-based HTTP Client requests
+/httpRequests/
+# Datasource local storage ignored files
+/dataSources/
+/dataSources.local.xml
+
+# Arquivos de configuração de IDEs (JetBrains)
+.idea/
+
+# Pastas de build do CMake/CLion
+cmake-build-*/
+
+# Arquivos de log do CLion
+*.clion.*
+
+# Outros arquivos de compilação comuns
+*.o
+*.exe
+*.out
+*.a
