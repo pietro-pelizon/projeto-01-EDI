@@ -7,17 +7,22 @@
 /dataSources/
 /dataSources.local.xml
 
-# Arquivos de configuração de IDEs (JetBrains)
+
+# Arquivos e pastas de configuração de IDEs (JetBrains / CLion)
+# Ignora a pasta .idea/ inteira
 .idea/
 
-# Pastas de build do CMake/CLion
+# Pastas de build do CMake
+# O * é um "curinga", então ignora cmake-build-debug, cmake-build-release, etc.
 cmake-build-*/
 
-# Arquivos de log do CLion
+# Arquivos de log e temporários do CLion
 *.clion.*
 
-# Outros arquivos de compilação comuns
+# Arquivos de compilação e executáveis comuns do C/C++
 *.o
+*.a
+*.so
+*.dll
 *.exe
 *.out
-*.a
