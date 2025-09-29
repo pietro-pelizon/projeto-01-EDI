@@ -2,12 +2,12 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-typedef struct nodeP {
+typedef struct stNodeP {
     void *item;
-    struct nodeP *prox;
+    nodeP *prox;
 }nodeP;
 
-typedef struct pilha {
+typedef struct stPilha {
     nodeP *topo;
     int tam;
 }pilha;

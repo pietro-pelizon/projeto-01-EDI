@@ -3,7 +3,7 @@
 
 #include "carregadores.h"
 #include "formas.h"
-#include "fila.h"
+#include "arena.h"
 
 
  /* ------- TAD DISPARADOR -------
@@ -34,7 +34,7 @@ disparador *criaDisparador(int i, double x, double y, carregador *esq, carregado
 /// @brief: Pega o identificador do disparador e o retorna;
 /// @param d: Ponteiro para o disparador.
 /// @return: Identificador do disparador.
-int getIDDisparador(disparador *d);
+int getIDdisparador(disparador *d);
 
 /// @brief: Posiciona o disparador 'd' na coordenada '(x,y)'
 /// @param d: Ponteiro para o disparador.
@@ -74,8 +74,8 @@ forma *disparaDisparador(disparador *d, double dx, double dy);
 /// @param dy: Distância em coordenada y em que a forma será disparada.
 /// @param ix: Valor a ser multiplicado com o iterador e acrescentado ao deslocamento dx.
 /// @param iy: Valor a ser multiplicado com o iterador e acrescentado ao deslocamento dy.
-/// @return: Retorna um ponteiro para a fila de objetos disparados.
-fila *rajadaDisparador(disparador *d, char botao, double dx, double dy, double ix, double iy);
+/// @param a: Arena aonde as formas serão disparadas.
+void rajadaDisparador(disparador *d, char botao, double dx, double dy, double ix, double iy, arena *a);
 
 /// @brief: Pega a forma que está em posição de disparo.
 /// @param d: Ponteiro para o disparador que contém a forma.

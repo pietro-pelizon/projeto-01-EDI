@@ -2,6 +2,8 @@
 #include "carregadores.h"
 #include "formas.h"
 #include "arena.h"
+#include "chao.h"
+#include "fila.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -28,11 +30,13 @@ disparador *criaDisparador(int i, double x, double y, carregador *esq, carregado
 	d -> dir = dir;
 	d -> formaEmDisparo = NULL;
 
+	printf("Disparador %i criado com sucesso!\n", d -> i);
+
 	return d;
 
 }
 
-int getIDDisparador(disparador *d) {
+int getIDdisparador(disparador *d) {
 	return d -> i;
 }
 
@@ -63,33 +67,38 @@ void attachDisparador(disparador *d, carregador *esq, carregador *dir) {
 
 }
 
+
 forma *shiftDisparador(disparador *d, char botao, int n) {
 	int i;
 	forma *formaEmDisparo = NULL;
 
+	if (n == 0) {
+		return 0;
+	}
+
 	switch (botao) {
 		case 'e': {
 			for (i = 0; i < n; i++) {
-				if (estaVazia((pilha*)d->esq)) {
+				if (carregadorEstaVazio(d -> esq)) {
 					printf("O carregador esquerdo esgotou!\n");
 					return NULL;
 				}
 
-				formaEmDisparo = (forma*)pop((pilha*)d->esq);
-				push((pilha*)d->dir, formaEmDisparo);
+				formaEmDisparo = removeDoCarregador(d -> esq);
+				adicionaFormaCarregador(d -> dir, formaEmDisparo);
 			}
 			break;
 		}
 
 		case 'd': {
 			for (i = 0; i < n; i++) {
-				if (estaVazia((pilha*)d->dir)) {
+				if (carregadorEstaVazio(d -> dir)) {
 					printf("O carregador direito esgotou!\n");
 					return NULL;
 				}
 
-				formaEmDisparo = (forma*)pop((pilha*)d->dir);
-				push((pilha*)d->esq, formaEmDisparo);
+				formaEmDisparo = removeDoCarregador(d->dir);
+				adicionaFormaCarregador(d -> esq, formaEmDisparo);
 			}
 			break;
 		}
@@ -130,12 +139,11 @@ forma *disparaDisparador(disparador *d, double dx, double dy) {
 
 }
 
-fila *rajadaDisparador(disparador *d, char botao, double dx, double dy, double ix, double iy) {
-	if (d == NULL) {
-		return NULL;
+void rajadaDisparador(disparador *d, char botao, double dx, double dy, double ix, double iy, arena *a) {
+	if (d == NULL || a == NULL) {
+		return;
 	}
 
-	fila *filaDeDisparos = criaFila();
 
 	int i = 0;
 
@@ -153,12 +161,9 @@ fila *rajadaDisparador(disparador *d, char botao, double dx, double dy, double i
 		forma *formaDisparada = disparaDisparador(d, dx_atual, dy_atual);
 
 		if (formaDisparada != NULL) {
-			enqueue(filaDeDisparos, formaDisparada);
+			adicionaFormaArena(a, formaDisparada);
 		}
 	}
-
-	return filaDeDisparos;
-
 }
 
 forma *getFormaEmDisparo(disparador *d) {

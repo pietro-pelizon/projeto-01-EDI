@@ -26,6 +26,11 @@ typedef struct nodeF nodeF;
 /// @return: Retorna um ponteiro para fila. NULL caso a criação falhe.
 fila *criaFila(void);
 
+/// @brief: Pega e retorna a quantiade de dados dentro da fila.
+/// @param f: Ponteiro para a fila.
+/// @return: Quantidade de dados dentro da fila.
+int getTamFila(fila *f);
+
 /// @brief: Verifica se a fila está vazia.
 /// @param f: Ponteiro para a fila a ser checada.
 /// @return: Retorna TRUE para caso esteja vazia e FALSE para o contrário.

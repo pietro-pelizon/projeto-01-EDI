@@ -21,8 +21,8 @@
  */
 
 /// A definição da struct foi movida para o arquivo.c
-typedef struct pilha pilha;
-typedef struct nodeP nodeP;
+typedef struct stPilha pilha;
+typedef struct stNodeP nodeP;
 
 /// @brief: Cria uma pilha de alocação dinâmica
 /// @return: Retorna um ponteiro para o início da pilha. Retorna NULL caso a alocação da pilha falhe.

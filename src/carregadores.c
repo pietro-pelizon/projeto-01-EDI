@@ -1,7 +1,9 @@
 #include "carregadores.h"
+#include "pilha.h"
 
 #include <stdio.h>
 #include <stdlib.h>
+
 
 typedef struct stCarregador {
 	int i;
@@ -30,42 +32,72 @@ carregador *criaCarregador(int i) {
 
 }
 
-int loadCarregador(fila *chao, carregador *alvo, int n) {
+void adicionaFormaCarregador(carregador *l, forma *f) {
+	if (l == NULL || f == NULL) {
+		return;
+	}
+
+	if (l->p == NULL) {
+		printf("Erro: Tentativa de push em carregador com pilha nula!\n");
+		return;
+	}
+
+	push(l -> p, f);
+}
+
+void adicionaChaoCarregador(carregador *l, chao *c) {
+	if (l == NULL || c == NULL) {
+		return;
+	}
+
+	forma *retirado = retiraChao(c);
+
+	adicionaFormaCarregador(l, retirado);
+}
+
+int loadCarregador(chao *c, carregador *alvo, int n) {
 
 	if (n < 0) {
 		return -1;
 	}
-	if (chao == NULL || alvo == NULL) {
-		printf("Erro: Fila ou carregador nulos passados para a loadCarregador!\n");
-		return -1;
-	}
-
-	if (alvo -> p == NULL) {
-		printf("O carregador nao possui uma pilha inicializada!\n");
+	if (c == NULL || alvo == NULL) {
+		printf("Erro: chao ou carregador nulos passados para a loadCarregador!\n");
 		return -1;
 	}
 
 	if (n == 0) {
 		printf("Quantidade de formas nula, nada a colocar no carregador!\n");
-		return -1;
+		return 0;
 	}
 
 	int i;
 	for (i = 0; i < n; i++) {
-		if (estaVazia(chao)) {
-			printf("A fila esta vazia!\n");
+		if (chaoEstaVazio(c)) {
+			printf("As formas que estavam no chão se esgotaram antes adicionar as %i formas ao carragador!\n", n);
+			printf("Foram colocadas somente %i formas!\n", i);
 			break;
 		}
 
-		void *itemTransferido = dequeue(chao);
-
-		push(alvo -> p, itemTransferido);
+		adicionaChaoCarregador(alvo, c);
 	}
 
 	return i;
-
 }
 
-int getIDCarregador(carregador *alvo) {
-	return alvo -> i;
+bool carregadorEstaVazio(carregador *c) {
+	if (c == NULL) return true;
+
+	return estaVazia(c -> p);
+}
+
+forma *removeDoCarregador(carregador *c) {
+	if (c == NULL) return NULL;
+
+	forma *removido = pop(c -> p);
+
+	return removido;
+}
+
+int getIDCarregador(carregador *c) {
+	return c -> i;
 }

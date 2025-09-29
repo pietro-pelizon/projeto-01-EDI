@@ -34,6 +34,10 @@ fila *criaFila(void) {
 
 }
 
+int getTamFila(fila *f) {
+	return f -> tam;
+}
+
 bool estaVazia(fila *f) {
 	if (f -> tam == 0) {
 		return true;
@@ -120,26 +124,6 @@ void liberaFila(fila *f, void (*destrutor)(void *item)) {
 	}
 
 	free(f);
-}
-
-void exibeFila(fila *f, void (*impressor)(void *item)) {
-	if (estaVazia(f)) {
-		printf("[ Fila vazia ]\n");
-		return;
-	}
-
-	nodeF *atual = f -> inicio;
-
-	while (atual != NULL) {
-		if (impressor != NULL) {
-			impressor(atual -> item);
-
-		}
-		else {
-			printf("Item (endereco): %p\n", atual->item);
-		}
-			atual = atual -> prox;
-	}
 }
 
 void copiaFila(fila *principal, fila *copia) {
