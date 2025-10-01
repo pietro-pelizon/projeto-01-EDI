@@ -9,22 +9,29 @@
 
 
 typedef struct stForma {
+	int id;
 	tipoForma tipo;
 	void *dados;
 }forma;
 
-forma *criaForma(tipoForma tipo, void *dados) {
+forma *criaForma(int id, tipoForma tipo, void *dados) {
 	forma *f = malloc (sizeof(forma));
 	if (f == NULL) {
 		printf("Erro ao criar a forma!\n");
 		return NULL;
 	}
 
+	f -> id = id;
 	f -> tipo = tipo;
 	f -> dados = dados;
 
 	return f;
 }
+
+int getIDforma(forma *f) {
+	return f -> id;
+}
+
 
 tipoForma getTipoForma(forma *f) {
 	return f -> tipo;
@@ -32,6 +39,126 @@ tipoForma getTipoForma(forma *f) {
 
 void *getFormaDados(forma *f) {
 	return f -> dados;
+}
+
+void setIDforma(forma *f, int novoID) {
+	f -> id = novoID;
+}
+
+char *getCorbForma(forma *f) {
+	tipoForma tipo = getTipoForma(f);
+
+	switch (tipo) {
+		case CIRCULO: {
+			return getCorbCirculo(getFormaDados(f)); break;
+		}
+
+		case RETANGULO: {
+			return getCorbRetangulo(getFormaDados(f)); break;
+		}
+
+		case LINHA: {
+			return getCorLinha(getFormaDados(f)); break;
+		}
+
+		case TEXTO: {
+			return getCorbTexto(getFormaDados(f)); break;
+		}
+		default: {
+			return NULL;
+		}
+	}
+}
+
+char *getCorpForma(forma *f) {
+	if (f == NULL) {
+		return NULL;
+	}
+
+	tipoForma tipo = getTipoForma(f);
+
+	switch (tipo) {
+		case CIRCULO: {
+			return getCorpCirculo(getFormaDados(f)); break;
+		}
+
+		case RETANGULO: {
+			return getCorpRetangulo(getFormaDados(f)); break;
+		}
+
+		case LINHA: {
+			return getCorLinha(getFormaDados(f)); break;
+		}
+
+		case TEXTO: {
+			return getCorpTexto(getFormaDados(f)); break;
+		}
+		default: {
+			return NULL;
+		}
+	}
+}
+
+void setCorpFormas(forma *f, char *novaCor) {
+	if (f == NULL || novaCor == NULL) {
+		return;
+	}
+
+	tipoForma tipo = getTipoForma(f);
+
+	switch (tipo) {
+		case CIRCULO: {
+			setCorpCirculo(getFormaDados(f), novaCor);
+		}
+
+		case RETANGULO: {
+			setCorpRetangulo(getFormaDados(f), novaCor);
+		}
+
+		case LINHA: {
+			setCorLinha(getFormaDados(f), novaCor);
+		}
+
+		case TEXTO: {
+			setCorpTexto(getFormaDados(f), novaCor);
+		}
+	}
+}
+
+void setCorbFormas(forma *f, char *novaCor) {
+	if (f == NULL || novaCor == NULL) {
+		return;
+	}
+
+	tipoForma tipo = getTipoForma(f);
+
+	switch (tipo) {
+		case CIRCULO: {
+			setCorbCirculo(getFormaDados(f), novaCor);
+		}
+
+		case RETANGULO: {
+			setCorbRetangulo(getFormaDados(f), novaCor);
+		}
+
+		case LINHA: {
+			setCorLinha(getFormaDados(f), novaCor);
+		}
+
+		case TEXTO: {
+			setCorbTexto(getFormaDados(f), novaCor);
+		}
+	}
+}
+
+forma *clonarForma(forma *f_original) {
+	int ID_original = getIDforma(f_original);
+	tipoForma tipo_forma_original = getTipoForma(f_original);
+	void *dados_original = getFormaDados(f_original);
+
+	forma *forma_clone = criaForma(ID_original + 1, tipo_forma_original, dados_original);
+
+	return forma_clone;
 }
 
 double getAreaForma(forma *f) {
@@ -120,3 +247,5 @@ void setPosicaoForma(forma *f, double x, double y) {
 		}
 	}
 }
+
+

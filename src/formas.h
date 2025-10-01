@@ -36,7 +36,12 @@ typedef struct stForma forma;
 /// @param tipo: Tipo da forma.
 /// @param dados: Ponteiro para os dados da forma.
 /// @return: Retorna um ponteiro para a forma criada.
-forma *criaForma(tipoForma tipo, void *dados);
+forma *criaForma(int id, tipoForma tipo, void *dados);
+
+/// @brief: Pega e retorna o ID da forma.
+/// @param f: Ponteiro para a forma.
+/// @return: ID da forma.
+int getIDforma(forma *f);
 
 /// @brief: Pega o tipo da forma e o retorna.
 /// @param f: Ponteiro para a forma.
@@ -47,6 +52,36 @@ tipoForma getTipoForma(forma *f);
 /// @param f: Ponteiro para a forma.
 /// @return: Ponteiro para os dados da forma.
 void *getFormaDados(forma *f);
+
+/// @brief: Define um novo identificador para a forma.
+/// @param f: Ponteiro para a forma.
+/// @param novoID: Novo identificador.
+void setIDforma(forma *f, int novoID);
+
+/// @brief: Pega e retorna a cor de borda de uma forma genérica.
+/// @param f: Ponteiro para a forma.
+/// @return: Cor de borda da forma genérica.
+char *getCorbForma(forma *f);
+
+/// @brief: Pega e retorna a cor de preenchimento de uma forma genérica.
+/// @param f: Ponteiro para a forma.
+/// @return: Cor de preenchimento de uma forma genérica.
+char *getCorpForma(forma *f);
+
+/// @brief: Define uma nova cor de preenchimento para uma forma genérica.
+/// @param f: Ponteiro para a forma.
+/// @param novaCor: Nova cor de preenchimento para a forma genérica.
+void setCorpFormas(forma *f, char *novaCor);
+
+/// @brief: Define uma nova cor de borda para uma forma genérica.
+/// @param f: Ponteiro para a forma.
+/// @param novaCor: Nova cor de borda da forma genérica.
+void setCorbFormas(forma *f, char *novaCor);
+
+/// @brief: Clona uma forma, acrescentando 1 ao seu ID.
+/// @param f_original: Forma que será clonada;
+/// @return: Ponteiro para a forma clonada.
+forma *clonarForma(forma *f_original);
 
 /// @brief: Calcula a área da forma.
 /// @param f: Ponteiro a forma.

@@ -138,3 +138,11 @@ void copiaFila(fila *principal, fila *copia) {
 	}
 }
 
+void passingQueue(fila *f, void *(acao)(void *item)) {
+	if (f == NULL) {
+		return;
+	}
+
+	while
+}
+

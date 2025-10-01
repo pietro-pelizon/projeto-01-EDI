@@ -3,6 +3,7 @@
 #include "formas.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include "sobreposicao.h"
 
@@ -88,7 +89,9 @@ int getArenaNumFormas(arena *a) {
     return getTamFila(a -> filaArena);
 }
 
-void calcArena(arena *a, forma *f);
+void calcArena(arena *a, forma *f) {
+
+}
 
 
 
