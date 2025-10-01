@@ -98,6 +98,9 @@ void destrutorForma(forma *f);
 /// @param y: Nova coordenada Y.
 void setPosicaoForma(forma *f, double x, double y);
 
-
+/// @brief: Faz o cálculo para obter a cor complementar de uma cor em hexadecimal.
+/// @param cor_hexa_original: A cor que terá sua cor complementar calculada.
+/// @return: Retorna um ponteiro para a cor complementar em hexadecimal.\n Caso seja um formato inválido, retorna o complementar da cor preta.
+char *getCorComplementar(char *cor_hexa_original);
 
 #endif //FORMAS_H

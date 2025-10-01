@@ -89,7 +89,7 @@ int getArenaNumFormas(arena *a) {
     return getTamFila(a -> filaArena);
 }
 
-void calcArena(arena *a, forma *f) {
+void calcArena(arena *a, double pontuacao_total) {
 
 }
 

@@ -29,7 +29,7 @@ add_executable(EDI_projeto1
         chao.h
         src/formas.c
         src/formas.h
-        src/main.c
+        main.c
         src/chao.c
         src/chao.h
 )

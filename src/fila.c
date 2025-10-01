@@ -1,7 +1,3 @@
-//
-// Created by pietr on 20/09/2025.
-//
-
 #include "fila.h"
 #include "formas.h"
 #include <stdlib.h>
@@ -143,6 +139,8 @@ void passingQueue(fila *f, void *(acao)(void *item)) {
 		return;
 	}
 
-	while
+	nodeF *atual = f -> fim;
+
+
 }
 

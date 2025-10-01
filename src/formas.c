@@ -2,6 +2,9 @@
 #include <stdlib.h>
 
 #include "formas.h"
+
+#include <string.h>
+
 #include "circulo.h"
 #include "retangulo.h"
 #include "linha.h"
@@ -159,6 +162,50 @@ forma *clonarForma(forma *f_original) {
 	forma *forma_clone = criaForma(ID_original + 1, tipo_forma_original, dados_original);
 
 	return forma_clone;
+}
+
+
+char *getCorComplementar(char *cor_hexa_original) {
+	if (cor_hexa_original == NULL || cor_hexa_original[0] != '#') {
+		char* branco_padrao = (char*) malloc(8 *  sizeof(char));
+		if (branco_padrao) {
+			strcpy(branco_padrao, "#FFFFFF");
+			return branco_padrao;
+		}
+	}
+
+	int r, g, b;
+
+	if (strlen(cor_hexa_original) == 7) {
+		sscanf(cor_hexa_original, "#%02x%02x%02x", &r, &g, &b);
+	}
+
+	else if (strlen(cor_hexa_original) == 4) {
+		int r_short, g_short, b_short;
+
+		sscanf(cor_hexa_original, "%1x%1x%1x", &r_short, &g_short, &b_short);
+
+		r = r_short * 17;
+		g = g_short * 17;
+		b = b_short * 17;
+	}
+
+	else {
+		printf("Formato invalido de cor hexadecimal!\n");
+		r = 0, g = 0, b = 0;
+	}
+
+	int comp_r = 255 - r, comp_g = 255 - g, comp_b = 255 - b;
+
+	char *cor_complementar_hexa = malloc(8 * sizeof(char));
+	if (cor_complementar_hexa == NULL) {
+		printf("Erro ao alocar memoria na funcao getCorComplementar!\n");
+		return NULL;
+	}
+
+	sprintf(cor_complementar_hexa, "#%02x%02x%02x", comp_r, comp_g, comp_b);
+
+	return cor_complementar_hexa;
 }
 
 double getAreaForma(forma *f) {
