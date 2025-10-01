@@ -22,22 +22,21 @@
  */
 
 /// Identificador de tipo para as formas.
-typedef enum stTipoForma tipoForma;
+typedef enum EnumtipoForma {
+    CIRCULO,
+    RETANGULO,
+    LINHA,
+    TEXTO
+} tipoForma;
 
 /// A definição da struct está no arquivo.c
 typedef struct stForma forma;
 
 /// @brief: Cria uma fórmula genérica.
-/// @param id: Identificador da forma.
 /// @param tipo: Tipo da forma.
 /// @param dados: Ponteiro para os dados da forma.
 /// @return: Retorna um ponteiro para a forma criada.
-forma *criaForma(int id, tipoForma tipo, void *dados);
-
-/// @brief: Pega o Identificador da forma e o retorna.
-/// @param f: Ponteiro para a forma.
-/// @return: Identificador da forma.
-int getIDForma(forma *f);
+forma *criaForma(tipoForma tipo, void *dados);
 
 /// @brief: Pega o tipo da forma e o retorna.
 /// @param f: Ponteiro para a forma.
@@ -63,5 +62,7 @@ void destrutorForma(forma *f);
 /// @param x: Nova coordenada X.
 /// @param y: Nova coordenada Y.
 void setPosicaoForma(forma *f, double x, double y);
+
+
 
 #endif //FORMAS_H

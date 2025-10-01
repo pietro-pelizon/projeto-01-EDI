@@ -121,6 +121,11 @@ char getATexto(texto *t);
 /// @return: Retorna o texto.
 char *getTxtoTexto(texto *t);
 
+/// @brief: Pega e retorna a quantidade de caracteres do texto.
+/// @param t: Ponteiro para o texto.
+/// @return: Quantidade de caracteres do texto.
+int getTamanhoTexto(texto *t);
+
 /// @brief: Pega o estilo do texto.
 /// @param t: Ponteiro para o texto.
 /// @return: Retorna o estilo do texto.

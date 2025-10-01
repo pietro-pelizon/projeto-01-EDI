@@ -203,6 +203,10 @@ char *getTxtoTexto(texto *t) {
 	return t -> txto;
 }
 
+int tamanhoTexto(texto *t) {
+	return strlen(t -> txto);
+}
+
 estilo *getEstiloTexto(texto *t) {
 	return t -> e;
 }

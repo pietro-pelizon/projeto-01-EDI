@@ -71,6 +71,5 @@ void setAlturaArena(arena *a, double novaAltura);
 /// @return: Quantidade de formas na arena.
 int getArenaNumFormas(arena *a);
 
-calc
 
 #endif //ARENA_H

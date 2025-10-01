@@ -67,7 +67,6 @@ void attachDisparador(disparador *d, carregador *esq, carregador *dir) {
 
 }
 
-
 forma *shiftDisparador(disparador *d, char botao, int n) {
 	int i;
 	forma *formaEmDisparo = NULL;
@@ -160,6 +159,7 @@ void rajadaDisparador(disparador *d, char botao, double dx, double dy, double ix
 
 		forma *formaDisparada = disparaDisparador(d, dx_atual, dy_atual);
 
+		///colocar setPosicaoForma
 		if (formaDisparada != NULL) {
 			adicionaFormaArena(a, formaDisparada);
 		}

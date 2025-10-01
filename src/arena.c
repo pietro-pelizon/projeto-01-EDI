@@ -4,6 +4,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include "sobreposicao.h"
+
 typedef struct stArena {
     double altura, largura;
     fila *filaArena;
@@ -86,7 +88,8 @@ int getArenaNumFormas(arena *a) {
     return getTamFila(a -> filaArena);
 }
 
-calc
+void calcArena(arena *a, forma *f);
+
 
 
 

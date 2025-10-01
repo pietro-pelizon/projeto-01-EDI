@@ -63,15 +63,6 @@ void *dequeue(fila *f);
 void liberaFila(fila *f, void (*destrutor)(void *item));
 
 
-/// @brief: Exibe todos os elementos da fila, independente de seu tipo.
-/// @param f: Ponteiro para a fila em questão.
-/// @param impressor: Ponteiro para a função que sabe como exibir determinado dado,
-/// recebe um dado como parâmetro.
-/// @return: Se a fila estiver vazia, encerra a função. Se o usuário passar NULL para função impressora
-/// exibe o endereço de memória de todos os dados presentes na fila. Caso ele passe um dado diferente de NULL
-/// exibe o objeto em questão.
-void exibeFila(fila *f, void (*impressor)(void *item));
-
 /// @brief: Faz a cópia de uma fila para outra fila.
 /// @param principal: Fila que será copiada para a outra.
 /// @param copia: Fila que será criada a partir da cópia da fila 'principal'.

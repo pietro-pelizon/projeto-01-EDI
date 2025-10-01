@@ -15,7 +15,7 @@
 
 
 /// A definição da struct círculo foi movida para o arquivo.c
-typedef struct circulo circulo;
+typedef struct stCirculo circulo;
 
 /* ------- FUNÇÃO CONSTRUTORA: CÍRCULO ------- */
 

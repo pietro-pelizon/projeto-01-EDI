@@ -1,42 +1,29 @@
-#include "formas.h"
-
 #include <stdio.h>
 #include <stdlib.h>
 
+#include "formas.h"
 #include "circulo.h"
 #include "retangulo.h"
 #include "linha.h"
 #include "texto.h"
 
-typedef enum stTipoForma {
-	CIRCULO,
-	RETANGULO,
-	LINHA,
-	TEXTO
-}tipoForma;
 
 typedef struct stForma {
-	int id;
 	tipoForma tipo;
 	void *dados;
 }forma;
 
-forma *criaForma(int id, tipoForma tipo, void *dados) {
+forma *criaForma(tipoForma tipo, void *dados) {
 	forma *f = malloc (sizeof(forma));
 	if (f == NULL) {
 		printf("Erro ao criar a forma!\n");
 		return NULL;
 	}
 
-	f -> id = id;
 	f -> tipo = tipo;
 	f -> dados = dados;
 
 	return f;
-}
-
-int getIDForma(forma *f) {
-	return f -> id;
 }
 
 tipoForma getTipoForma(forma *f) {
@@ -80,7 +67,6 @@ void destrutorForma(forma *f) {
 	free(f);
 
 }
-
 
 void setPosicaoForma(forma *f, double x, double y) {
 	if (f == NULL || f -> dados == NULL) {

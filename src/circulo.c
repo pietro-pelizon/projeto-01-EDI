@@ -5,7 +5,7 @@
 
 #define PI 3.14159265358
 
-typedef struct circulo {
+typedef struct stCirculo {
 	int i;
 	double x, y;
 	double r;
