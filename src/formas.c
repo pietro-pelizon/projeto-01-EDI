@@ -208,6 +208,25 @@ char *getCorComplementar(char *cor_hexa_original) {
 	return cor_complementar_hexa;
 }
 
+void trocaCores(forma *f1, forma *f2) {
+	if (f1 == NULL) {
+		return;
+	}
+
+	char *cor_borda_forma_J = getCorbForma(f2);
+
+	setCorpFormas(f1, cor_borda_forma_J);
+}
+
+void alternaCores(forma *f) {
+	if (f == NULL) {
+		return;
+	}
+
+	setCorpFormas(f, getCorbForma(f));
+	setCorbFormas(f, getCorpForma(f));
+}
+
 double getAreaForma(forma *f) {
 	if (f == NULL) {
 		return 0.0;
@@ -294,5 +313,3 @@ void setPosicaoForma(forma *f, double x, double y) {
 		}
 	}
 }
-
-

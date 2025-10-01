@@ -62,10 +62,14 @@ void *dequeue(fila *f);
 /// recebe um ponteiro para o item como parâmetro.
 void liberaFila(fila *f, void (*destrutor)(void *item));
 
-
 /// @brief: Faz a cópia de uma fila para outra fila.
 /// @param principal: Fila que será copiada para a outra.
 /// @param copia: Fila que será criada a partir da cópia da fila 'principal'.
 void copiaFila(fila *principal, fila *copia);
+
+/// @brief: Dada uma fila, realiza uma ação determina pela função inserida no callback;
+/// @param f: Ponteiro para a fila.
+/// @param acao: Ponteiro para a função da ação, essa função recebe o item atual da fila.
+void passtroughQueue(fila *f, void *(acao)(void *item));
 
 #endif //FILA_H

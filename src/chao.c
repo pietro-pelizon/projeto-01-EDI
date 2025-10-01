@@ -29,7 +29,7 @@ bool chaoEstaVazio(chao *c) {
     return false;
 }
 
-void colocaNoChao(chao *c, forma *f) {
+void voltaProChao(chao *c, forma *f) {
     if (f == NULL || c == NULL) {
         return;
     }

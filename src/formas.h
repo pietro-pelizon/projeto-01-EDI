@@ -103,4 +103,13 @@ void setPosicaoForma(forma *f, double x, double y);
 /// @return: Retorna um ponteiro para a cor complementar em hexadecimal.\n Caso seja um formato inválido, retorna o complementar da cor preta.
 char *getCorComplementar(char *cor_hexa_original);
 
+/// @brief: Troca a cor de preenchimento de f1 com a cor de borda de f2.
+/// @param f1: Ponteiro para a forma 1.
+/// @param f2: Ponteiro para a forma 2;
+void trocaCores(forma *f1, forma *f2);
+
+/// @brief: Troca a cor de preenchimento da forma com sua cor de borda e vice-versa.
+/// @param f: Ponteiro para a forma.
+void alternaCores(forma *f);
+
 #endif //FORMAS_H
