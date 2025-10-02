@@ -182,3 +182,16 @@ double getYdisparador(disparador *d) {
 	return d -> y;
 }
 
+void destrutorDisparador(disparador *d) {
+	if (d == NULL) {
+		return;
+	}
+
+	destrutorForma(d -> formaEmDisparo);
+	destrutorCarregador(d -> esq);
+	destrutorCarregador(d -> dir);
+
+	free(d);
+
+
+}

@@ -54,6 +54,10 @@ bool carregadorEstaVazio(carregador *c);
 /// @return: Forma que foi removida do carregador.
 forma *removeDoCarregador(carregador *c);
 
+/// @brief: Destroi o carregador.
+/// @param c: Ponteiro para o carregador a ser destruído.
+void destrutorCarregador(carregador *c);
+
 /* ------- FUNÇÃO GET: CARREGADOR ------- */
 
 /// @brief: Pega o ID do carregador desejado.

@@ -101,3 +101,13 @@ forma *removeDoCarregador(carregador *c) {
 int getIDCarregador(carregador *c) {
 	return c -> i;
 }
+
+void destrutorCarregador(carregador *c) {
+	if (c == NULL) {
+		return;
+	}
+
+	liberaPilha(c -> p, destrutorForma);
+
+	free(c);
+}

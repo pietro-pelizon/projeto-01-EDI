@@ -92,4 +92,8 @@ double getXdisparador(disparador *d);
 /// @return: Retorna a coordenada y da posição do disparador.
 double getYdisparador(disparador *d);
 
+/// @brief: Destrói um disparador.
+/// @param d: Ponteiro para o disparador a ser destruído.
+void destrutorDisparador(disparador *d);
+
 #endif //DISPARADOR_H
