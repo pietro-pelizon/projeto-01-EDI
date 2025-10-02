@@ -140,6 +140,7 @@ void passingQueue(fila *f, void *(acao)(void *item)) {
 	}
 
 	nodeF *atual = f -> fim;
+
 	while (atual != NULL) {
 		if (acao != NULL) {
 			acao(atual -> item);

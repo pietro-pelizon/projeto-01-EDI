@@ -214,7 +214,9 @@ void trocaCores(forma *f1, forma *f2) {
 	}
 
 	char *cor_borda_forma_J = getCorbForma(f2);
+	char *corp_forma_I = getCorpForma(f1);
 
+	setCorbFormas(f2, corp_forma_I);
 	setCorpFormas(f1, cor_borda_forma_J);
 }
 

@@ -1,6 +1,7 @@
 #ifndef ARENA_H
 #define ARENA_H
 
+#include "chao.h"
 #include "formas.h"
 
 
@@ -71,5 +72,19 @@ void setAlturaArena(arena *a, double novaAltura);
 /// @return: Quantidade de formas na arena.
 int getArenaNumFormas(arena *a);
 
+/// @brief: Pega e retorna a quantidade de formas na arena.
+/// @param a: Ponteiro para a arena.
+/// @return:O número de formas na arena.
+int getTamArena(arena *a);
+
+
+/// @brief: Procedimento base desse TAD. Processa a arena considerando a ordem
+/// de entrada dos objetos lançados nela, e então determina se o objeto será
+/// devolvido ao chão, destruído ou clonado.
+/// @param a: Ponteiro para a arena.
+/// @param c: Ponteiro para o chão.
+/// @param pontuacao_total: Soma da área das formas destruídas.
+/// @return: Retorna a pontuação total, obtida pela soma da área de todas as formas destruídas.
+double processaArena(arena *a, double, chao *c, double pontuacao_total);
 
 #endif //ARENA_H

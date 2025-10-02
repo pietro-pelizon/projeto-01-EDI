@@ -2,7 +2,6 @@
 #include "fila.h"
 #include "formas.h"
 #include "sobreposicao.h"
-#include "chao.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -99,48 +98,65 @@ int getTamArena(arena *a) {
     return getTamFila(a -> filaArena);
 }
 
-
-double processaArena(arena *a, double, chao *c, double pontuacao_total) {
-    forma *forma_I = removeFormaArena(a);
-    forma *forma_J = removeFormaArena(a);
+double processaArena(arena *a, chao *c, double *pontuacao_total) {
+    if (c == NULL || a == NULL) {
+        printf("Erro na funcao processaArena!\n");
+        return -1.0;
+    }
 
     while (getTamArena(a) >= 2) {
-        if (formasSobrepoem(forma_I, forma_J) == true) {
+        forma *forma_I = removeFormaArena(a);
+        forma *forma_J = removeFormaArena(a);
+
+        if (formasSobrepoem(forma_I, forma_J)) {
             double area_I = getAreaForma(forma_I);
             double area_J = getAreaForma(forma_J);
 
             if (area_I < area_J) {
+                *pontuacao_total += area_I;
                 destrutorForma(forma_I);
-                voltaProChao(c, forma_J);
-                pontuacao_total += area_I;
+                adicionaNoChao(c, forma_J);
             }
 
             else if (area_I > area_J) {
-                trocaCores(forma_I, forma_J);
+                if (getTipoForma(forma_I) == LINHA) {
+                    char *corLinha = getCorLinha(getFormaDados(forma_I));
+                    char * cor_complementar_linha = getCorComplementar(corLinha);
+                    setCorbFormas(forma_J, cor_complementar_linha);
+
+                }
+
+                else {
+                    trocaCores(forma_I, forma_J);
+                }
+
                 forma *clone_I = clonarForma(forma_I);
                 alternaCores(clone_I);
 
-                voltaProChao(c, clone_I);
-                voltaProChao(c, forma_J);
+                adicionaNoChao(c, forma_I);
+                adicionaNoChao(c, forma_J);
+                adicionaNoChao(c, clone_I);
+
             }
 
             else {
-                voltaProChao(c, forma_I);
-                voltaProChao(c, forma_J);
+                adicionaNoChao(c, forma_I);
+                adicionaNoChao(c, forma_J);
             }
         }
 
         else {
-            voltaProChao(c, forma_I);
-            voltaProChao(c, forma_J);
+            adicionaNoChao(c, forma_I);
+            adicionaNoChao(c, forma_J);
         }
 
     }
-    if (arenaEstaVazia(a) != true) {
-        voltaProChao(c, forma_I);
+
+    if (arenaEstaVazia(a) == true) {
+        adicionaNoChao(c, removeFormaArena(a));
     }
 
-    return pontuacao_total;
+    return *pontuacao_total;
 }
 
 

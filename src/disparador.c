@@ -159,7 +159,9 @@ void rajadaDisparador(disparador *d, char botao, double dx, double dy, double ix
 
 		forma *formaDisparada = disparaDisparador(d, dx_atual, dy_atual);
 
-		///colocar setPosicaoForma
+		/// não é necessário dar set na posição da forma,
+		/// pois a função disparaDisparador já faz isso pra gente
+
 		if (formaDisparada != NULL) {
 			adicionaFormaArena(a, formaDisparada);
 		}
