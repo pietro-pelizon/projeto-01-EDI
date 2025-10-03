@@ -6,6 +6,9 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "fila.h"
+#include "linha.h"
+
 #define MAX_OBJETOS 100
 
 typedef struct stRepositorio {
@@ -79,7 +82,7 @@ carregador* encontrarOuCriarCarregador(repositorio* repo, int id) {
     return NULL;
 }
 
-void processaQry(repositorio *repo, char *nome_path_qry, const char *nome_txt, arena *arena, chao *chao, double *pontuacao_total) {
+void processaQry(repositorio *repo, char *nome_path_qry, const char *nome_txt, arena *arena, chao *chao, double *pontuacao_total, fila *filaSVG) {
     FILE *arquivo_qry = fopen(nome_path_qry, "r");
     if (!arquivo_qry) {
         printf("Erro ao abrir o arquivo qry!\n");
@@ -105,12 +108,23 @@ void processaQry(repositorio *repo, char *nome_path_qry, const char *nome_txt, a
             int id; double x, y;
             sscanf(linha_buffer, "pd %i %lf %lf", &id, &x, &y);
             disparador *d = encontraOUCriarDisparador(repo, id);
-            if (d) {
-                posicionaDisparador(d, x, y);
-            }
+            if (d) posicionaDisparador(d, x, y);
+
         }
 
+        else if (strcmp(comando, "lc") == 0) {
+            int id, n;
+            sscanf(linha_buffer, "lc %i %i", &id, &n);
+            carregador *c = encontrarOuCriarCarregador(repo, id);
+            if (c) {
+                fprintf(arquivo_txt, "-> Carregando %d formas no carregador %d.\n", n, id);
+                int formas_carregadas = loadCarregadorN(chao, c, n);
 
+                for (int i = 0; i < n; i++) {
+                    fprintf(arquivo_txt, "[*] lc %d %d\n ", id, n);
+                }
+            }
+        }
     }
 
 
