@@ -72,4 +72,14 @@ void copiaFila(fila *principal, fila *copia);
 /// @param acao: Ponteiro para a função da ação, essa função recebe o item atual da fila.
 void passtroughQueue(fila *f, void *(acao)(void *item));
 
+/// @brief: Pega o proximo nó da fila.
+/// @param n: Ponteiro para o nó.
+/// @return: O nó que está na frente do nó passado como parâmetro.
+nodeF* getProxNode(nodeF *n);
+
+/// @brief: Pega o conteúdo de determinado nó da fila.
+/// @param n: Ponteiro para o nó.
+/// @return: O conteúdo do nó.
+void* getItemNode(nodeF *n);
+
 #endif //FILA_H

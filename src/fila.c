@@ -146,6 +146,19 @@ void passingQueue(fila *f, void *(acao)(void *item)) {
 		}
 		atual = atual -> prox;
 	}
+}
 
+nodeF* getProxNode(nodeF *n) {
+	if (n == NULL) {
+		return NULL;
+	}
+	return n -> prox;
+}
+
+void* getItemNode(nodeF *n) {
+	if (n == NULL) {
+		return NULL;
+	}
+	return n->item;
 }
 

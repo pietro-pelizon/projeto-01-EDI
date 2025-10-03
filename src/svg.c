@@ -2,6 +2,9 @@
 
 #include <stdio.h>
 
+#include "fila.h"
+#include "formas.h"
+
 FILE* inicializaSvg(const char* caminhoArquivo, double largura, double altura) {
 	FILE* svg = fopen(caminhoArquivo, "w");
 	if (svg == NULL) {
@@ -83,4 +86,32 @@ void insereTexto(FILE *svg, texto *t) {
 void fechaSVG(FILE *svg) {
 	fprintf(svg, "\n</svg>");
 	fclose(svg);
+}
+
+void acao_desenhar(void* item, void* aux) {
+	FILE* arquivo_svg = (FILE*)aux;
+	desenhaFormaSvg((forma*)item, arquivo_svg);
+}
+
+void gerarArquivoSvg(const char *nome_svg, fila *filaDeFormas) {
+	FILE *arquivo_svg = inicializaSvg(nome_svg, 1000, 1000);
+	if (!arquivo_svg) {
+		printf("Erro ao abrir o arquivo svg!\n");
+		return;
+	}
+
+	nodeF *no_atual = getInicioFila(filaDeFormas);
+
+	while (no_atual != NULL) {
+		forma *f = getItemNode(no_atual);
+
+		desenhaFormaSvg(f, arquivo_svg);
+
+		no_atual = getProxNode(no_atual);
+	}
+
+	fechaSVG(arquivo_svg);
+
+	printf("Arquivo .svg gerado com sucesso!\n");
+
 }
