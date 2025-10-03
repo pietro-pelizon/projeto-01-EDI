@@ -8,7 +8,10 @@
 #include "circulo.h"
 #include "retangulo.h"
 #include "linha.h"
+#include "svg.h"
 #include "texto.h"
+
+
 
 
 typedef struct stForma {
@@ -53,19 +56,19 @@ char *getCorbForma(forma *f) {
 
 	switch (tipo) {
 		case CIRCULO: {
-			return getCorbCirculo(getFormaDados(f)); break;
+			return getCorbCirculo(getFormaDados(f));
 		}
 
 		case RETANGULO: {
-			return getCorbRetangulo(getFormaDados(f)); break;
+			return getCorbRetangulo(getFormaDados(f));
 		}
 
 		case LINHA: {
-			return getCorLinha(getFormaDados(f)); break;
+			return getCorLinha(getFormaDados(f));
 		}
 
 		case TEXTO: {
-			return getCorbTexto(getFormaDados(f)); break;
+			return getCorbTexto(getFormaDados(f));
 		}
 		default: {
 			return NULL;
@@ -82,19 +85,19 @@ char *getCorpForma(forma *f) {
 
 	switch (tipo) {
 		case CIRCULO: {
-			return getCorpCirculo(getFormaDados(f)); break;
+			return getCorpCirculo(getFormaDados(f));
 		}
 
 		case RETANGULO: {
-			return getCorpRetangulo(getFormaDados(f)); break;
+			return getCorpRetangulo(getFormaDados(f));
 		}
 
 		case LINHA: {
-			return getCorLinha(getFormaDados(f)); break;
+			return getCorLinha(getFormaDados(f));
 		}
 
 		case TEXTO: {
-			return getCorpTexto(getFormaDados(f)); break;
+			return getCorpTexto(getFormaDados(f));
 		}
 		default: {
 			return NULL;
@@ -313,5 +316,96 @@ void setPosicaoForma(forma *f, double x, double y) {
 			printf("Forma inexistente ou sem posicao!\n");
 			break;
 		}
+	}
+}
+
+void desenhaFormaSvg(forma *f, FILE *svg) {
+	tipoForma tipo = getTipoForma(f);
+	void *dados = getFormaDados(f);
+
+	switch (tipo) {
+		case CIRCULO: {
+			insereCirculo(svg, (circulo*)dados); break;
+		}
+
+		case RETANGULO: {
+			insereRetangulo(svg, (retangulo*)dados); break;
+		}
+
+		case LINHA: {
+			insereLinha(svg, (linha*)dados); break;
+		}
+
+		case TEXTO: {
+			insereTexto(svg, (texto*)dados); break;
+		}
+
+		default: break;
+	}
+}
+
+void escreveDadosFormaTxt(forma *f, FILE *txt, char *reportDaFuncaoQRY) {
+	tipoForma tipo = getTipoForma(f);
+	void* dados = getFormaDados(f);
+
+	switch (tipo) {
+		case CIRCULO: {
+			fprintf(txt, "%s\n Círculo\n ID: %i\n Âncora em: (%.2lf, %.2lf)\n Raio: %lf\n Cor de borda: %s\n Cor de preenchimento: %s\n",
+				reportDaFuncaoQRY,
+				getIDforma(f),
+				getXCirculo(getFormaDados(f)),
+				getYCirculo(getFormaDados(f)),
+				getRaioCirculo(getFormaDados(f)),
+				getCorbForma(f),
+				getCorpForma(f)); break;
+		}
+
+		case RETANGULO: {
+			fprintf(txt, "%s\n Retângulo\n ID: %i\n Âncora em: (%.2lf, %.2lf)\n Largura: %lf\n Altura %lf\n Cor de borda: %s\n Cor de preenchimento: %s\n",
+				reportDaFuncaoQRY,
+				getIDforma(f),
+				getXretangulo(getFormaDados(f)),
+				getYretangulo(getFormaDados(f)),
+				getLarguraRetangulo(getFormaDados(f)),
+				getAlturaRetangulo(getFormaDados(f)),
+				getCorbForma(f),
+				getCorpForma(f)); break;
+		}
+
+		case LINHA: {
+			fprintf(txt, "%s\n Linha\n ID: %i\n Âncora de início em: (%.2lf, %.2lf)\n Âncora de fim em: (%.2lf, %.2lf)\n Cor: %s\n",
+				reportDaFuncaoQRY,
+				getIDforma(f),
+				getX1Linha(getFormaDados(f)),
+				getY1Linha(getFormaDados(f)),
+				getX2Linha(getFormaDados(f)),
+				getY2Linha(getFormaDados(f)),
+				getCorbForma(f)); break;
+		}
+		case TEXTO: {
+			texto* t = (texto*)dados;
+			estilo* e = getEstiloTexto(t);
+
+			fprintf(txt, " Texto\n ID: %d\n Âncora em: (%.2f, %.2f)\n Posição da Âncora: %c\n Conteúdo: \"%s\"\n Cor de borda: %s\n Cor de preenchimento: %s\n",
+				getIDforma(f),
+				getXTexto(t),
+				getYTexto(t),
+				getATexto(t),
+				getTxtoTexto(t),
+				getCorbForma(f),
+				getCorpForma(f));
+
+			if (e != NULL) {
+				fprintf(txt, " Família da fonte: %s\n Peso da fonte: %s\n Tamanho da fonte: %s\n\n",
+					getfFamily(e),
+					getfWeight(e),
+					getfSize(e));
+			} else {
+				fprintf(txt, "\n");
+			} break;
+
+
+		default:
+			break;
 	}
 }

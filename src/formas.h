@@ -112,4 +112,16 @@ void trocaCores(forma *f1, forma *f2);
 /// @param f: Ponteiro para a forma.
 void alternaCores(forma *f);
 
+/// @brief: Dado o tipo da forma, pega seus dados e a desenha em um arquivo svg.
+/// @param f: Ponteiro para a forma.
+/// @param svg: Ponteiro para o arquivo svg.
+void desenhaFormaSvg(forma *f, FILE *svg);
+
+/// @brief: Dado o tipo da forma, pega seus dados e gera um relatório no arquivo txt.
+/// @param f: Ponteiro para a forma.
+/// @param txt: Arquivo .txt aonde as informações serão escritas.
+/// @param reportDaFuncaoQRY: Começo padrão que será adicionado conforme a função do .qry.
+void escreveDadosFormaTxt(forma *f, FILE *txt, char *reportDaFuncaoQRY);
+
+
 #endif //FORMAS_H
