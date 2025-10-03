@@ -83,7 +83,7 @@ chao *processaGeo(const char *nome_path_geo) {
         }
 
         else if (strcmp(comando, "ts") == 0) {
-            sscanf(linha_buffer, "ts %s %s %s", &estilo_familia, &estilo_peso, &estilo_tamanho);
+            sscanf(linha_buffer, "ts %s %s %s", estilo_familia, estilo_peso, estilo_tamanho);
         }
     }
 

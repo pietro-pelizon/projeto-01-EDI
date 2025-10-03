@@ -37,7 +37,7 @@ void adicionaNoChao(chao *c, forma *f) {
     enqueue(c -> filaChao, f);
 }
 
-forma *retiraChao(chao *c) {
+forma *retiraDoChao(chao *c) {
     if (c == NULL) {
         return NULL;
     }
@@ -47,11 +47,9 @@ forma *retiraChao(chao *c) {
 }
 
 void destrutorChao(chao *c) {
-    if (c == NULL) {
-        return;
-    }
+    if (c == NULL) return;
 
-    free(c -> filaChao);
+    liberaFila(c -> filaChao, destrutorForma);
     free(c);
 }
 

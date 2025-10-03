@@ -136,8 +136,7 @@ void destrutorRetangulo(retangulo **pr) {
 	free(r -> corp);
 	free(r);
 
-	*pr == NULL;
-
+	*pr = NULL;
 
 }
 

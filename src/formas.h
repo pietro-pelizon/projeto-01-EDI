@@ -33,6 +33,7 @@ typedef enum EnumtipoForma {
 typedef struct stForma forma;
 
 /// @brief: Cria uma fórmula genérica.
+/// @param id: Identificador da forma.
 /// @param tipo: Tipo da forma.
 /// @param dados: Ponteiro para os dados da forma.
 /// @return: Retorna um ponteiro para a forma criada.
@@ -100,7 +101,7 @@ void setPosicaoForma(forma *f, double x, double y);
 
 /// @brief: Faz o cálculo para obter a cor complementar de uma cor em hexadecimal.
 /// @param cor_hexa_original: A cor que terá sua cor complementar calculada.
-/// @return: Retorna um ponteiro para a cor complementar em hexadecimal.\n Caso seja um formato inválido, retorna o complementar da cor preta.
+/// @return: Retorna um ponteiro para a cor complementar em hexadecimal.
 char *getCorComplementar(char *cor_hexa_original);
 
 /// @brief: Troca a cor de preenchimento de f1 com a cor de borda de f2.
@@ -123,5 +124,14 @@ void desenhaFormaSvg(forma *f, FILE *svg);
 /// @param reportDaFuncaoQRY: Começo padrão que será adicionado conforme a função do .qry.
 void escreveDadosFormaTxt(forma *f, FILE *txt, char *reportDaFuncaoQRY);
 
+/// @brief: Obtém a coordenada X principal (âncora) de uma forma genérica.
+/// @param f: Ponteiro para a forma genérica.
+/// @return: O valor da coordenada X. Retorna 0.0 se a forma for nula ou inválida.
+double getXForma(forma *f);
+
+/// @brief: Obtém a coordenada Y principal (âncora) de uma forma genérica.
+/// @param f: Ponteiro para a forma genérica.
+/// @return: O valor da coordenada Y. Retorna 0.0 se a forma for nula ou inválida.
+double getYForma(forma *f);
 
 #endif //FORMAS_H

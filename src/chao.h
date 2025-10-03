@@ -46,7 +46,7 @@ void adicionaNoChao(chao *c, forma *f);
 /// @brief: Retira uma forma do chão.
 /// @param c: Ponteiro para o chão.
 /// @return: Retorna um ponteiro para a forma que foi retirada.
-forma *retiraChao(chao *c);
+forma *retiraDoChao(chao *c);
 
 /// @brief: Libera toda a memória do chão.
 /// @param c: Ponteiro para o chão a ser liberado.

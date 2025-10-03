@@ -20,6 +20,8 @@ typedef struct stForma {
 	void *dados;
 }forma;
 
+
+
 forma *criaForma(int id, tipoForma tipo, void *dados) {
 	forma *f = malloc (sizeof(forma));
 	if (f == NULL) {
@@ -53,22 +55,23 @@ void setIDforma(forma *f, int novoID) {
 
 char *getCorbForma(forma *f) {
 	tipoForma tipo = getTipoForma(f);
+	void *dados = getFormaDados(f);
 
 	switch (tipo) {
 		case CIRCULO: {
-			return getCorbCirculo(getFormaDados(f));
+			return getCorbCirculo(dados);
 		}
 
 		case RETANGULO: {
-			return getCorbRetangulo(getFormaDados(f));
+			return getCorbRetangulo(dados);
 		}
 
 		case LINHA: {
-			return getCorLinha(getFormaDados(f));
+			return getCorLinha(dados);
 		}
 
 		case TEXTO: {
-			return getCorbTexto(getFormaDados(f));
+			return getCorbTexto(dados);
 		}
 		default: {
 			return NULL;
@@ -82,22 +85,23 @@ char *getCorpForma(forma *f) {
 	}
 
 	tipoForma tipo = getTipoForma(f);
+	void *dados = getFormaDados(f);
 
 	switch (tipo) {
 		case CIRCULO: {
-			return getCorpCirculo(getFormaDados(f));
+			return getCorpCirculo(dados);
 		}
 
 		case RETANGULO: {
-			return getCorpRetangulo(getFormaDados(f));
+			return getCorpRetangulo(dados);
 		}
 
 		case LINHA: {
-			return getCorLinha(getFormaDados(f));
+			return getCorLinha(dados);
 		}
 
 		case TEXTO: {
-			return getCorpTexto(getFormaDados(f));
+			return getCorpTexto(dados);
 		}
 		default: {
 			return NULL;
@@ -111,23 +115,27 @@ void setCorpFormas(forma *f, char *novaCor) {
 	}
 
 	tipoForma tipo = getTipoForma(f);
+	void *dados = getFormaDados(f);
 
 	switch (tipo) {
 		case CIRCULO: {
-			setCorpCirculo(getFormaDados(f), novaCor);
+			setCorpCirculo(dados, novaCor); break;
 		}
 
 		case RETANGULO: {
-			setCorpRetangulo(getFormaDados(f), novaCor);
+			setCorpRetangulo(dados, novaCor); break;
 		}
 
 		case LINHA: {
-			setCorLinha(getFormaDados(f), novaCor);
+			setCorLinha(dados, novaCor); break;
 		}
 
 		case TEXTO: {
-			setCorpTexto(getFormaDados(f), novaCor);
+			setCorpTexto(dados, novaCor); break;
 		}
+
+		default:
+			break;
 	}
 }
 
@@ -137,78 +145,173 @@ void setCorbFormas(forma *f, char *novaCor) {
 	}
 
 	tipoForma tipo = getTipoForma(f);
+	void *dados = getFormaDados(f);
 
 	switch (tipo) {
 		case CIRCULO: {
-			setCorbCirculo(getFormaDados(f), novaCor);
+			setCorbCirculo(dados, novaCor); break;
 		}
 
 		case RETANGULO: {
-			setCorbRetangulo(getFormaDados(f), novaCor);
+			setCorbRetangulo(dados, novaCor); break;
 		}
 
 		case LINHA: {
-			setCorLinha(getFormaDados(f), novaCor);
+			setCorLinha(dados, novaCor); break;
 		}
 
 		case TEXTO: {
-			setCorbTexto(getFormaDados(f), novaCor);
+			setCorbTexto(dados, novaCor); break;
 		}
+		default:
+			break;
 	}
 }
 
 forma *clonarForma(forma *f_original) {
-	int ID_original = getIDforma(f_original);
-	tipoForma tipo_forma_original = getTipoForma(f_original);
-	void *dados_original = getFormaDados(f_original);
+    if (f_original == NULL) return NULL;
 
-	forma *forma_clone = criaForma(ID_original + 1, tipo_forma_original, dados_original);
+    static int max_id = 10000;
+    int novo_id = ++max_id;
 
-	return forma_clone;
+    tipoForma tipo = getTipoForma(f_original);
+    void *dados_orig = getFormaDados(f_original);
+    void *novos_dados = NULL;
+    forma *forma_clonada = NULL;
+
+    switch (tipo) {
+        case CIRCULO: {
+            circulo *c = (circulo*)dados_orig;
+            novos_dados = criaCirculo(novo_id,
+                getXCirculo(c),
+                getYCirculo(c),
+                getRaioCirculo(c),
+                getCorbCirculo(c),
+                getCorpCirculo(c));
+            break;
+        }
+
+        case RETANGULO: {
+            retangulo *r = (retangulo*)dados_orig;
+            novos_dados = criaRetangulo(novo_id,
+                getXretangulo(r),
+                getYretangulo(r),
+                getLarguraRetangulo(r),
+                getAlturaRetangulo(r),
+                getCorbRetangulo(r),
+                getCorpRetangulo(r));
+            break;
+        }
+
+        case LINHA: {
+            linha *l = (linha*)dados_orig;
+            novos_dados = criaLinha(novo_id,
+                getX1Linha(l),
+                getY1Linha(l),
+                getX2Linha(l),
+                getY2Linha(l),
+                getCorLinha(l));
+            break;
+        }
+
+        case TEXTO: {
+            texto *t = (texto*)dados_orig;
+            estilo *e_orig = getEstiloTexto(t);
+            estilo *e_novo = NULL;
+
+            if (e_orig != NULL) {
+                e_novo = criaEstilo(
+                    getfFamily(e_orig),
+                    getfWeight(e_orig),
+                    getfSize(e_orig)
+                );
+            }
+
+            novos_dados = criaTexto(novo_id,
+                getXTexto(t),
+                getYTexto(t),
+                getCorbTexto(t),
+                getCorpTexto(t),
+                getATexto(t),
+                getTxtoTexto(t),
+                e_novo);
+        	if (e_novo != NULL) {
+        		destroiEstilo(e_novo);
+
+        	}
+            break;
+        }
+        default:
+            return NULL;
+    }
+
+    if (novos_dados != NULL) {
+        forma_clonada = criaForma(novo_id, tipo, novos_dados);
+    }
+
+    return forma_clonada;
 }
 
-
 char *getCorComplementar(char *cor_hexa_original) {
-	if (cor_hexa_original == NULL || cor_hexa_original[0] != '#') {
-		char* branco_padrao = (char*) malloc(8 *  sizeof(char));
-		if (branco_padrao) {
-			strcpy(branco_padrao, "#FFFFFF");
-			return branco_padrao;
-		}
-	}
+    if (cor_hexa_original == NULL) {
+        char* branco_padrao = (char*) malloc(8 * sizeof(char));
+        if (branco_padrao) {
+            strcpy(branco_padrao, "#FFFFFF");
+            return branco_padrao;
+        }
+        return NULL;
+    }
 
-	int r, g, b;
+    int tem_hash = (cor_hexa_original[0] == '#');
+    const char *cor_str = tem_hash ? cor_hexa_original + 1 : cor_hexa_original;
+    int len = strlen(cor_str);
 
-	if (strlen(cor_hexa_original) == 7) {
-		sscanf(cor_hexa_original, "#%02x%02x%02x", &r, &g, &b);
-	}
+    int r, g, b;
 
-	else if (strlen(cor_hexa_original) == 4) {
-		int r_short, g_short, b_short;
+    if (len == 6) {
+        if (sscanf(cor_str, "%02x%02x%02x", &r, &g, &b) != 3) {
+            printf("Formato inválido de cor hexadecimal: %s\n", cor_hexa_original);
+            r = g = b = 0;
+        }
+    }
+    else if (len == 3) {
+        int r_short, g_short, b_short;
+        if (sscanf(cor_str, "%1x%1x%1x", &r_short, &g_short, &b_short) != 3) {
+            printf("Formato inválido de cor hexadecimal: %s\n", cor_hexa_original);
+            r = g = b = 0;
+        } else {
+            r = r_short * 17;
+            g = g_short * 17;
+            b = b_short * 17;
+        }
+    }
+    else {
+        printf("Comprimento inválido de cor hexadecimal: %s (comprimento: %d)\n", cor_hexa_original, len);
+        char* branco_padrao = (char*) malloc(8 * sizeof(char));
+        if (branco_padrao) {
+            strcpy(branco_padrao, "#FFFFFF");
+            return branco_padrao;
+        }
+        return NULL;
+    }
 
-		sscanf(cor_hexa_original, "%1x%1x%1x", &r_short, &g_short, &b_short);
+    int comp_r = 255 - r;
+    int comp_g = 255 - g;
+    int comp_b = 255 - b;
 
-		r = r_short * 17;
-		g = g_short * 17;
-		b = b_short * 17;
-	}
+    comp_r = (comp_r < 0) ? 0 : (comp_r > 255) ? 255 : comp_r;
+    comp_g = (comp_g < 0) ? 0 : (comp_g > 255) ? 255 : comp_g;
+    comp_b = (comp_b < 0) ? 0 : (comp_b > 255) ? 255 : comp_b;
 
-	else {
-		printf("Formato invalido de cor hexadecimal!\n");
-		r = 0, g = 0, b = 0;
-	}
+    char *cor_complementar_hexa = malloc(8 * sizeof(char));
+    if (cor_complementar_hexa == NULL) {
+        printf("Erro ao alocar memoria na funcao getCorComplementar!\n");
+        return NULL;
+    }
 
-	int comp_r = 255 - r, comp_g = 255 - g, comp_b = 255 - b;
+    sprintf(cor_complementar_hexa, "#%02x%02x%02x", comp_r, comp_g, comp_b);
 
-	char *cor_complementar_hexa = malloc(8 * sizeof(char));
-	if (cor_complementar_hexa == NULL) {
-		printf("Erro ao alocar memoria na funcao getCorComplementar!\n");
-		return NULL;
-	}
-
-	sprintf(cor_complementar_hexa, "#%02x%02x%02x", comp_r, comp_g, comp_b);
-
-	return cor_complementar_hexa;
+    return cor_complementar_hexa;
 }
 
 void trocaCores(forma *f1, forma *f2) {
@@ -228,8 +331,12 @@ void alternaCores(forma *f) {
 		return;
 	}
 
-	setCorpFormas(f, getCorbForma(f));
-	setCorbFormas(f, getCorpForma(f));
+	char *borda = getCorbForma(f);
+	char *preenchimento = getCorpForma(f);
+
+	setCorpFormas(f, borda);
+	setCorbFormas(f, preenchimento);
+
 }
 
 double getAreaForma(forma *f) {
@@ -276,7 +383,7 @@ void setPosicaoForma(forma *f, double x, double y) {
 		case CIRCULO: {
 			circulo *c = (circulo*) f -> dados;
 			setXCirculo(c, x);
-			setYCirculo(c, x);
+			setYCirculo(c, y);
 			break;
 		}
 
@@ -353,9 +460,9 @@ void escreveDadosFormaTxt(forma *f, FILE *txt, char *reportDaFuncaoQRY) {
 			fprintf(txt, "%s\n Círculo\n ID: %i\n Âncora em: (%.2lf, %.2lf)\n Raio: %lf\n Cor de borda: %s\n Cor de preenchimento: %s\n",
 				reportDaFuncaoQRY,
 				getIDforma(f),
-				getXCirculo(getFormaDados(f)),
-				getYCirculo(getFormaDados(f)),
-				getRaioCirculo(getFormaDados(f)),
+				getXCirculo(dados),
+				getYCirculo(dados),
+				getRaioCirculo(dados),
 				getCorbForma(f),
 				getCorpForma(f)); break;
 		}
@@ -364,10 +471,10 @@ void escreveDadosFormaTxt(forma *f, FILE *txt, char *reportDaFuncaoQRY) {
 			fprintf(txt, "%s\n Retângulo\n ID: %i\n Âncora em: (%.2lf, %.2lf)\n Largura: %lf\n Altura %lf\n Cor de borda: %s\n Cor de preenchimento: %s\n",
 				reportDaFuncaoQRY,
 				getIDforma(f),
-				getXretangulo(getFormaDados(f)),
-				getYretangulo(getFormaDados(f)),
-				getLarguraRetangulo(getFormaDados(f)),
-				getAlturaRetangulo(getFormaDados(f)),
+				getXretangulo(dados),
+				getYretangulo(dados),
+				getLarguraRetangulo(dados),
+				getAlturaRetangulo(dados),
 				getCorbForma(f),
 				getCorpForma(f)); break;
 		}
@@ -376,10 +483,10 @@ void escreveDadosFormaTxt(forma *f, FILE *txt, char *reportDaFuncaoQRY) {
 			fprintf(txt, "%s\n Linha\n ID: %i\n Âncora de início em: (%.2lf, %.2lf)\n Âncora de fim em: (%.2lf, %.2lf)\n Cor: %s\n",
 				reportDaFuncaoQRY,
 				getIDforma(f),
-				getX1Linha(getFormaDados(f)),
-				getY1Linha(getFormaDados(f)),
-				getX2Linha(getFormaDados(f)),
-				getY2Linha(getFormaDados(f)),
+				getX1Linha(dados),
+				getY1Linha(dados),
+				getX2Linha(dados),
+				getY2Linha(dados),
 				getCorbForma(f)); break;
 		}
 		case TEXTO: {
@@ -405,7 +512,55 @@ void escreveDadosFormaTxt(forma *f, FILE *txt, char *reportDaFuncaoQRY) {
 			} break;
 
 
-		default:
+			default:
+			fprintf(txt, "Tipo de forma desconhecida!\n");
 			break;
+		}
 	}
 }
+
+double getXForma(forma *f) {
+	if (f == NULL) {
+		return 0.0;
+	}
+
+	tipoForma tipo = getTipoForma(f);
+	void* dados = getFormaDados(f);
+
+	switch (tipo) {
+		case CIRCULO:
+			return getXCirculo(dados);
+		case RETANGULO:
+			return getXretangulo(dados);
+		case TEXTO:
+			return getXTexto(dados);
+		case LINHA:
+			return getX1Linha(dados);
+		default:
+			return 0.0;
+	}
+}
+
+double getYForma(forma *f) {
+	if (f == NULL) {
+		return 0.0;
+	}
+
+	tipoForma tipo = getTipoForma(f);
+	void* dados = getFormaDados(f);
+
+	switch (tipo) {
+		case CIRCULO:
+			return getYCirculo(dados);
+		case RETANGULO:
+			return getYretangulo(dados);
+		case TEXTO:
+			return getYTexto(dados);
+		case LINHA:
+			return getY1Linha(dados);
+		default:
+			return 0.0;
+	}
+}
+
+

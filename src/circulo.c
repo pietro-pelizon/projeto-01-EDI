@@ -90,7 +90,7 @@ void setCorbCirculo(circulo *c, char *corb) {
 
 	char* novaCorb = (char*) malloc (strlen(corb) + 1);
 	if (novaCorb == NULL) {
-		printf("Erro ao alocar memoria para a nova cor de preenchimento do retangulo!\n");
+		printf("Erro ao alocar memoria para a nova cor de preenchimento do circulo!\n");
 		return;
 	}
 
@@ -106,7 +106,7 @@ void setCorpCirculo(circulo *c, char *corp) {
 
 	char* novaCorp = (char*) malloc (strlen(corp) + 1);
 	if (novaCorp == NULL) {
-		printf("Erro ao alocar memoria para a nova cor de preenchimento do retangulo!\n");
+		printf("Erro ao alocar memoria para a nova cor de preenchimento do circulo!\n");
 		return;
 	}
 

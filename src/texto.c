@@ -203,7 +203,7 @@ char *getTxtoTexto(texto *t) {
 	return t -> txto;
 }
 
-int tamanhoTexto(texto *t) {
+int getTamanhoTexto(texto *t) {
 	return strlen(t -> txto);
 }
 
@@ -294,7 +294,7 @@ void destrutorTexto(texto **t) {
 	free(t2 -> corp);
 	free(t2 -> corb);
 	free(t2 -> txto);
-	free(t2 -> e);
+	destroiEstilo(t2 -> e);
 	free(t2);
 
 	*t = NULL;

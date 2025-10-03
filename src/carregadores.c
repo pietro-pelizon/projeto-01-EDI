@@ -4,6 +4,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include "fila.h"
+
 
 typedef struct stCarregador {
 	int i;
@@ -32,37 +34,40 @@ carregador *criaCarregador(int i) {
 
 }
 
-void adicionaFormaCarregador(carregador *l, forma *f) {
+forma *adicionaFormaCarregador(carregador *l, forma *f) {
 	if (l == NULL || f == NULL) {
-		return;
+		return NULL;
 	}
 
 	if (l->p == NULL) {
 		printf("Erro: Tentativa de push em carregador com pilha nula!\n");
-		return;
+		return NULL;
 	}
 
 	push(l -> p, f);
+
+	return f;
 }
 
-void adicionaChaoCarregador(carregador *l, chao *c) {
+forma *insereDoChaoParaCarregador(carregador *l, chao *c) {
 	if (l == NULL || c == NULL) {
-		return;
+		return NULL;
 	}
 
-	forma *retirado = retiraChao(c);
+	forma *retirado = retiraDoChao(c);
 
-	adicionaFormaCarregador(l, retirado);
+	return adicionaFormaCarregador(l, retirado);
 }
 
-int loadCarregador(chao *c, carregador *alvo, int n) {
+fila *loadCarregadorN(chao *c, carregador *alvo, int n) {
+
 
 	if (n < 0) {
-		return -1;
+		return criaFila();
 	}
 	if (c == NULL || alvo == NULL) {
 		printf("Erro: chao ou carregador nulos passados para a loadCarregador!\n");
-		return -1;
+		return NULL;
 	}
 
 	if (n == 0) {
@@ -70,19 +75,23 @@ int loadCarregador(chao *c, carregador *alvo, int n) {
 		return 0;
 	}
 
-	int i;
-	for (i = 0; i < n; i++) {
+
+	fila *fila_formas_inseridas = criaFila();
+	for (int i = 0; i < n; i++) {
 		if (chaoEstaVazio(c)) {
-			printf("As formas que estavam no chão se esgotaram antes adicionar as %i formas ao carragador!\n", n);
-			printf("Foram colocadas somente %i formas!\n", i);
+			printf("As formas do chão se esgotaram. Foram carregadas %d de %d formas.\n", i, n);
 			break;
 		}
+		forma *forma_movida	=	insereDoChaoParaCarregador(alvo, c);
 
-		adicionaChaoCarregador(alvo, c);
+		if (forma_movida != NULL) {
+			enqueue(fila_formas_inseridas, forma_movida);
+		}
 	}
 
-	return i;
+	return fila_formas_inseridas;
 }
+
 
 bool carregadorEstaVazio(carregador *c) {
 	if (c == NULL) return true;

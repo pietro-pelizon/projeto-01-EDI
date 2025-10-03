@@ -30,10 +30,11 @@ void insereCirculo(FILE *svg, circulo *c) {
 }
 
 void insereRetangulo(FILE *svg, retangulo *r) {
+	double y_svg_retangulo = getYretangulo(r) - getAlturaRetangulo(r);
 	fprintf(svg, "\t<rect id=\"%d\" x=\"%lf\" y=\"%lf\" width=\"%lf\" height=\"%lf\" stroke=\"%s\" fill=\"%s\" />\n",
 		getIDretangulo(r),
 		getXretangulo(r),
-		getYretangulo(r),
+		y_svg_retangulo,
 		getLarguraRetangulo(r),
 		getAlturaRetangulo(r),
 		getCorbRetangulo(r),
@@ -115,3 +116,5 @@ void gerarArquivoSvg(const char *nome_svg, fila *filaDeFormas) {
 	printf("Arquivo .svg gerado com sucesso!\n");
 
 }
+
+void trajetoriaDoDisparo()

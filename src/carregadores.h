@@ -5,6 +5,7 @@
 #include "chao.h"
 #include <stdbool.h>
 
+#include "fila.h"
 
 
 /* ------- CARREGADOR -------
@@ -28,19 +29,21 @@ carregador *criaCarregador(int i);
 /// @brief: Adiciona uma forma ao carregador
 /// @param l: Ponteiro para o carregador.
 /// @param f: Ponteiro para a forma que será adicionada.
-void adicionaFormaCarregador(carregador *l, forma *f);
+/// @return: A forma que foi inserida no carregador.
+forma *adicionaFormaCarregador(carregador *l, forma *f);
 
 /// @brief: Adiciona um dado proveniente do chão ao carregador.
 /// @param c: Ponteiro para o carregador.
 /// @param c: Dado que será adicionada ao carregador.
-void adicionaChaoCarregador(carregador *l, chao *c);
+/// @return: Forma que foi retirada do chão e inserida ao carregador.
+forma *insereDoChaoParaCarregador(carregador *l, chao *c);
 
 /// @brief: Coloca dados da fila, 'n' vezes no carregador desejado.
 /// @param c: Ponteiro para o chão de onde as formas serão adicionadas ao carregador.
 /// @param alvo: Carregador aonde serão colocados os dados.
 /// @param n: Número de vezes que um dado será retirado do chao e inserido no carregador.
-/// @return: Retorna a quantidade de formas acrescentadas ao carregador. Se 'n' for negativo, encerra a função.
-int loadCarregadorN(chao *c, carregador *alvo, int n);
+/// @return: Uma fila com as formas inseridas no carregador.
+fila *loadCarregadorN(chao *c, carregador *alvo, int n);
 
 /// @brief: Checa se o carregador está vazio.
 /// @param c: Ponteiro para o carregador.

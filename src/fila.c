@@ -66,20 +66,20 @@ void enqueue(fila *f, void *item) {
 	f -> tam++;
 }
 
-void *getInicioFila(fila *f) {
+nodeF *getInicioFila(fila *f) {
 	if (estaVazia(f)) {
 		return NULL;
 	}
 
-	return f -> inicio -> item;
+	return f -> inicio;
 }
 
-void *getFimFila(fila *f) {
+nodeF *getFimFila(fila *f) {
 	if (estaVazia(f)) {
 		return NULL;
 	}
 
-	return f -> fim -> item;
+	return f -> fim;
 }
 
 void *dequeue(fila *f) {
@@ -103,20 +103,20 @@ void *dequeue(fila *f) {
 }
 
 void liberaFila(fila *f, void (*destrutor)(void *item)) {
-	if (estaVazia(f)) {
+	if (f == NULL || estaVazia(f)) {
 		return;
 	}
 
 	nodeF *atual = f -> inicio;
 	while (atual != NULL) {
-		nodeF *aux = atual;
+		nodeF *proximo = atual -> prox;
 
 		if (destrutor != NULL) {
 			destrutor(atual -> item);
 		}
 
-		free(aux);
-		atual = atual -> prox;
+		free(atual);
+		atual = proximo;
 	}
 
 	free(f);
@@ -134,17 +134,17 @@ void copiaFila(fila *principal, fila *copia) {
 	}
 }
 
-void passingQueue(fila *f, void *(acao)(void *item)) {
-	if (f == NULL) {
+void passthroughQueue(fila *f, void (*acao)(void *item, void *aux_data), void *aux_data) {
+	if (f == NULL || acao == NULL || estaVazia(f)) {
 		return;
 	}
 
-	nodeF *atual = f -> fim;
+	nodeF *atual = f->inicio;
+
 	while (atual != NULL) {
-		if (acao != NULL) {
-			acao(atual -> item);
-		}
-		atual = atual -> prox;
+		acao(atual->item, aux_data);
+
+		atual = atual->prox;
 	}
 }
 
@@ -155,7 +155,7 @@ nodeF* getProxNode(nodeF *n) {
 	return n -> prox;
 }
 
-void* getItemNode(nodeF *n) {
+void *getItemNode(nodeF *n) {
 	if (n == NULL) {
 		return NULL;
 	}

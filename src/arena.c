@@ -99,11 +99,15 @@ int getTamArena(arena *a) {
     return getTamFila(a -> filaArena);
 }
 
-double processaArena(arena *a, chao *c, double *pontuacao_total) {
-    if (c == NULL || a == NULL) {
-        printf("Erro na funcao processaArena!\n");
-        return -1.0;
+// Em arena.c
+// A função pode ser void, já que a pontuação é atualizada pelo ponteiro.
+void processaArena(arena *a, chao *c, double *pontuacao_total, fila *anotacoes_svg, FILE *arquivo_txt) {
+    if (c == NULL || a == NULL || arquivo_txt == NULL) {
+        printf("Erro: Parâmetros nulos passados para processaArena!\n");
+        return;
     }
+
+    double area_esmagada_round = 0.0;
 
     while (getTamArena(a) >= 2) {
         forma *forma_I = removeFormaArena(a);
@@ -113,22 +117,33 @@ double processaArena(arena *a, chao *c, double *pontuacao_total) {
             double area_I = getAreaForma(forma_I);
             double area_J = getAreaForma(forma_J);
 
-            if (area_I < area_J) {
+            fprintf(arquivo_txt, "-> Verificação: Forma %d vs Forma %d. SOBREPOSIÇÃO.\n", getIDforma(forma_I), getIDforma(forma_J));
+
+            if (area_I < area_J) { // Regra: I é esmagado
+                fprintf(arquivo_txt, "   Ação: Forma %d (área %.2f) foi esmagada por Forma %d (área %.2f).\n", getIDforma(forma_I), area_I, getIDforma(forma_J), area_J);
+
+                // SVG: Criar anotação do asterisco
+                double x_esmagada = getXForma(forma_I);
+                double y_esmagada = getYForma(forma_I);
+                texto* asterisco = criaTexto(-1, x_esmagada, y_esmagada, "red", "red", 'm', "*", NULL);
+                enqueue(anotacoes_svg, criaForma(-1, TEXTO, asterisco));
+
                 *pontuacao_total += area_I;
+                area_esmagada_round += area_I;
                 destrutorForma(forma_I);
                 adicionaNoChao(c, forma_J);
             }
+            else if (area_I > area_J) { // Regra: I modifica J e é clonado
+                fprintf(arquivo_txt, "   Ação: Forma %d (área %.2f) modificou a Forma %d (área %.2f).\n", getIDforma(forma_I), area_I, getIDforma(forma_J), area_J);
 
-            else if (area_I > area_J) {
                 if (getTipoForma(forma_I) == LINHA) {
                     char *corLinha = getCorLinha(getFormaDados(forma_I));
-                    char * cor_complementar_linha = getCorComplementar(corLinha);
+                    char *cor_complementar_linha = getCorComplementar(corLinha);
                     setCorbFormas(forma_J, cor_complementar_linha);
-
-                }
-
-                else {
-                    trocaCores(forma_I, forma_J);
+                    free(cor_complementar_linha);
+                } else {
+                    // A regra é apenas I mudar a borda de J
+                    setCorbFormas(forma_J, getCorpForma(forma_I));
                 }
 
                 forma *clone_I = clonarForma(forma_I);
@@ -137,28 +152,28 @@ double processaArena(arena *a, chao *c, double *pontuacao_total) {
                 adicionaNoChao(c, forma_I);
                 adicionaNoChao(c, forma_J);
                 adicionaNoChao(c, clone_I);
-
             }
-
             else {
+                fprintf(arquivo_txt, "   Ação: Áreas iguais. Ambas as formas retornam ao chão.\n");
                 adicionaNoChao(c, forma_I);
                 adicionaNoChao(c, forma_J);
             }
         }
-
         else {
+            fprintf(arquivo_txt, "-> Verificação: Forma %d vs Forma %d. SEM sobreposição.\n", getIDforma(forma_I), getIDforma(forma_J));
             adicionaNoChao(c, forma_I);
             adicionaNoChao(c, forma_J);
         }
-
     }
 
-    if (arenaEstaVazia(a) == true) {
+
+    if (!arenaEstaVazia(a)) {
         adicionaNoChao(c, removeFormaArena(a));
     }
 
-    return *pontuacao_total;
+    fprintf(arquivo_txt, "Área total esmagada no round: %.2f\n", area_esmagada_round);
 }
+
 
 
 

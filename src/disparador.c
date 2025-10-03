@@ -67,49 +67,51 @@ void attachDisparador(disparador *d, carregador *esq, carregador *dir) {
 
 }
 
-forma *shiftDisparador(disparador *d, char botao, int n) {
-	int i;
-	forma *formaEmDisparo = NULL;
+forma* shiftDisparador(disparador *d, char botao, int n) {
+    if (d == NULL || n <= 0) {
+        return NULL;
+    }
 
-	if (n == 0) {
-		return 0;
-	}
+    forma* ultima_forma_movida = NULL;
 
-	switch (botao) {
-		case 'e': {
-			for (i = 0; i < n; i++) {
-				if (carregadorEstaVazio(d -> esq)) {
-					printf("O carregador esquerdo esgotou!\n");
-					return NULL;
-				}
+    for (int i = 0; i < n; i++) {
+        switch (botao) {
+            case 'e': {
 
-				formaEmDisparo = removeDoCarregador(d -> esq);
-				adicionaFormaCarregador(d -> dir, formaEmDisparo);
-			}
-			break;
-		}
+            	if (carregadorEstaVazio(d->esq)) {
+                    printf("AVISO: Carregador esquerdo esgotou durante o 'shft'.\n");
 
-		case 'd': {
-			for (i = 0; i < n; i++) {
-				if (carregadorEstaVazio(d -> dir)) {
-					printf("O carregador direito esgotou!\n");
-					return NULL;
-				}
+                    d->formaEmDisparo = ultima_forma_movida;
+                    return ultima_forma_movida;
+                }
 
-				formaEmDisparo = removeDoCarregador(d->dir);
-				adicionaFormaCarregador(d -> esq, formaEmDisparo);
-			}
-			break;
-		}
+                ultima_forma_movida = removeDoCarregador(d->esq);
+                adicionaFormaCarregador(d->dir, ultima_forma_movida);
+                break;
+            }
 
-		default: {
-			printf("Botao '%c' invalido!\n", botao);
-			return NULL;
-		}
-	}
+            case 'd': {
 
-	d -> formaEmDisparo = formaEmDisparo;
-	return formaEmDisparo;
+            	if (carregadorEstaVazio(d->dir)) {
+                    printf("AVISO: Carregador direito esgotou durante o 'shft'.\n");
+                    d->formaEmDisparo = ultima_forma_movida;
+                    return ultima_forma_movida;
+                }
+                ultima_forma_movida = removeDoCarregador(d->dir);
+                adicionaFormaCarregador(d->esq, ultima_forma_movida);
+                break;
+            }
+
+            default: {
+                printf("ERRO: Botão '%c' inválido no comando shft.\n", botao);
+                return NULL;
+            }
+        }
+    }
+
+    d->formaEmDisparo = ultima_forma_movida;
+
+    return ultima_forma_movida;
 }
 
 forma *disparaDisparador(disparador *d, double dx, double dy) {
@@ -138,13 +140,15 @@ forma *disparaDisparador(disparador *d, double dx, double dy) {
 
 }
 
-void rajadaDisparador(disparador *d, char botao, double dx, double dy, double ix, double iy, arena *a) {
+fila *rajadaDisparador(disparador *d, char botao, double dx, double dy, double ix, double iy, arena *a) {
 	if (d == NULL || a == NULL) {
-		return;
+		return NULL;
 	}
 
 
 	int i = 0;
+
+	fila *fila_disparos = criaFila();
 
 	for (i = 0; ; i++) {
 		forma *formaAtual = shiftDisparador(d, botao, 1);
@@ -159,11 +163,14 @@ void rajadaDisparador(disparador *d, char botao, double dx, double dy, double ix
 
 		forma *formaDisparada = disparaDisparador(d, dx_atual, dy_atual);
 
-		///colocar setPosicaoForma
+
 		if (formaDisparada != NULL) {
 			adicionaFormaArena(a, formaDisparada);
+			enqueue(fila_disparos, (forma*)formaDisparada);
 		}
 	}
+
+	return fila_disparos;
 }
 
 forma *getFormaEmDisparo(disparador *d) {
@@ -188,8 +195,7 @@ void destrutorDisparador(disparador *d) {
 	}
 
 	destrutorForma(d -> formaEmDisparo);
-	destrutorCarregador(d -> esq);
-	destrutorCarregador(d -> dir);
+
 
 	free(d);
 

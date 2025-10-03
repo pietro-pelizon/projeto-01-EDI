@@ -1,6 +1,10 @@
 #ifndef ARENA_H
 #define ARENA_H
 
+#include <stdio.h>
+
+#include "chao.h"
+#include "fila.h"
 #include "formas.h"
 
 
@@ -71,5 +75,12 @@ void setAlturaArena(arena *a, double novaAltura);
 /// @return: Quantidade de formas na arena.
 int getArenaNumFormas(arena *a);
 
+/// @brief: Faz o cálculos envolvendo a arena e as formas lançadas nelas.
+/// @param a: Ponteiro para a arena.
+/// @param c: Ponteiro para o chão.
+/// @param pontuacao_total: Pontuação total do round (soma da área das formas esmagadas).
+/// @param anotacoes_svg: Fila de anotações do SVG.
+/// @param arquivo_txt: Ponteiro para o arquivo txt onde os reports acontecerão.
+void processaArena(arena *a, chao *c, double *pontuacao_total, fila *anotacoes_svg, FILE *arquivo_txt, int *formas_clonadas, int *formas_esmagadas);
 
 #endif //ARENA_H

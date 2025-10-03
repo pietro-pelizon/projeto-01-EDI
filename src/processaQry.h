@@ -7,6 +7,8 @@
 
 typedef struct stRepositorio repositorio;
 
+typedef struct stReportTxt report_txt;
+
 // Estruturas de gerenciamento que serão definidas no .c
 typedef struct stRepositorioObjetos RepositorioObjetos;
 
@@ -18,7 +20,6 @@ repositorio* criarRepositorio();
 /// @brief: Libera a memória do repositório e de todos os objetos que ele contém.
 /// @param repo: O repositório a ser destruído.
 void destruirRepositorio(RepositorioObjetos* repo);
-
 
 
 void processaQry(const char *nome_path_qry, const char *nome_txt, arena *arena, chao *chao, disparador *d, carregador *c, double *pontuacao_total);

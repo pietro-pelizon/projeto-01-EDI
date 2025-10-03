@@ -12,26 +12,27 @@ typedef struct stLinha {
 }linha;
 
 linha *criaLinha(int i, double x1, double y1, double x2, double y2, char *cor) {
-	linha *c = malloc (sizeof(linha));
-	if (c == NULL) {
+	linha *l = malloc (sizeof(linha));
+	if (l == NULL) {
 		printf("Erro na alocacao de memoria para o objeto linha!\n");
 		exit(1);
 	}
 
-	c -> i = i;
-	c -> x1 = x1;
-	c -> y1 = y1;
-	c -> x2 = x2;
-	c -> y2 = y2;
+	l -> i = i;
+	l -> x1 = x1;
+	l -> y1 = y1;
+	l -> x2 = x2;
+	l -> y2 = y2;
 
-	c -> cor = (char*) malloc (strlen(cor) + 1);
-	if (c -> cor == NULL) {
+	l -> cor = (char*) malloc (strlen(cor) + 1);
+	if (l -> cor == NULL) {
 		printf("Erro na alocaco de memoria para a cor do objeto linha!\n");
-		free(c);
+		free(l);
 		exit(1);
 	}
+	strcpy(l -> cor, cor);
 
-	return c;
+	return l;
 }
 
 int getIDLinha(linha *l) {
