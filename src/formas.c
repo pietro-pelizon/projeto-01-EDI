@@ -1,9 +1,15 @@
 #include <stdio.h>
+
+#define _POSIX_C_SOURCE 200809L
+#include "formas.h"
+#include "circulo.h"
 #include <stdlib.h>
+#include <stdbool.h>
+#include <string.h>
 
 #include "formas.h"
 
-#include <string.h>
+#include <tgmath.h>
 
 #include "circulo.h"
 #include "retangulo.h"
@@ -11,16 +17,11 @@
 #include "svg.h"
 #include "texto.h"
 
-
-
-
 typedef struct stForma {
 	int id;
 	tipoForma tipo;
 	void *dados;
 }forma;
-
-
 
 forma *criaForma(int id, tipoForma tipo, void *dados) {
 	forma *f = malloc (sizeof(forma));
@@ -169,88 +170,49 @@ void setCorbFormas(forma *f, char *novaCor) {
 }
 
 forma *clonarForma(forma *f_original) {
-    if (f_original == NULL) return NULL;
+	if (f_original == NULL) return NULL;
 
-    static int max_id = 10000;
-    int novo_id = ++max_id;
+	static int max_id = 10000;
+	int novo_id = ++max_id;
 
-    tipoForma tipo = getTipoForma(f_original);
-    void *dados_orig = getFormaDados(f_original);
-    void *novos_dados = NULL;
-    forma *forma_clonada = NULL;
+	tipoForma tipo = getTipoForma(f_original);
+	void *dados_orig = getFormaDados(f_original);
+	void *novos_dados = NULL;
 
-    switch (tipo) {
-        case CIRCULO: {
-            circulo *c = (circulo*)dados_orig;
-            novos_dados = criaCirculo(novo_id,
-                getXCirculo(c),
-                getYCirculo(c),
-                getRaioCirculo(c),
-                getCorbCirculo(c),
-                getCorpCirculo(c));
-            break;
-        }
+	switch (tipo) {
+		case CIRCULO: {
+			circulo *c = (circulo*)dados_orig;
+			novos_dados = criaCirculo(novo_id, getXCirculo(c), getYCirculo(c), getRaioCirculo(c), getCorbCirculo(c), getCorpCirculo(c));
+			break;
+		}
+		case RETANGULO: {
+			retangulo *r = (retangulo*)dados_orig;
+			novos_dados = criaRetangulo(novo_id, getXretangulo(r), getYretangulo(r), getLarguraRetangulo(r), getAlturaRetangulo(r), getCorbRetangulo(r), getCorpRetangulo(r));
+			break;
+		}
+		case LINHA: {
+			linha *l = (linha*)dados_orig;
+			novos_dados = criaLinha(novo_id, getX1Linha(l), getY1Linha(l), getX2Linha(l), getY2Linha(l), getCorLinha(l), getEh_pontilhada(l));
+			break;
+		}
+		case TEXTO: {
+			texto *t = (texto*)dados_orig;
+			estilo *e_orig = getEstiloTexto(t);
+			estilo *novo = criaCopiaEstilo(e_orig);
+			novos_dados = criaTexto(novo_id, getXTexto(t), getYTexto(t), getCorbTexto(t), getCorpTexto(t), getATexto(t), getTxtoTexto(t), novo);
+			break;
+		}
 
-        case RETANGULO: {
-            retangulo *r = (retangulo*)dados_orig;
-            novos_dados = criaRetangulo(novo_id,
-                getXretangulo(r),
-                getYretangulo(r),
-                getLarguraRetangulo(r),
-                getAlturaRetangulo(r),
-                getCorbRetangulo(r),
-                getCorpRetangulo(r));
-            break;
-        }
+		default:
+			return NULL;
+	}
 
-        case LINHA: {
-            linha *l = (linha*)dados_orig;
-            novos_dados = criaLinha(novo_id,
-                getX1Linha(l),
-                getY1Linha(l),
-                getX2Linha(l),
-                getY2Linha(l),
-                getCorLinha(l));
-            break;
-        }
-
-        case TEXTO: {
-            texto *t = (texto*)dados_orig;
-            estilo *e_orig = getEstiloTexto(t);
-            estilo *e_novo = NULL;
-
-            if (e_orig != NULL) {
-                e_novo = criaEstilo(
-                    getfFamily(e_orig),
-                    getfWeight(e_orig),
-                    getfSize(e_orig)
-                );
-            }
-
-            novos_dados = criaTexto(novo_id,
-                getXTexto(t),
-                getYTexto(t),
-                getCorbTexto(t),
-                getCorpTexto(t),
-                getATexto(t),
-                getTxtoTexto(t),
-                e_novo);
-        	if (e_novo != NULL) {
-        		destroiEstilo(e_novo);
-
-        	}
-            break;
-        }
-        default:
-            return NULL;
-    }
-
-    if (novos_dados != NULL) {
-        forma_clonada = criaForma(novo_id, tipo, novos_dados);
-    }
-
-    return forma_clonada;
+	if (novos_dados != NULL) {
+		return criaForma(novo_id, tipo, novos_dados);
+	}
+	return NULL;
 }
+
 
 char *getCorComplementar(char *cor_hexa_original) {
     if (cor_hexa_original == NULL) {
@@ -314,30 +276,61 @@ char *getCorComplementar(char *cor_hexa_original) {
     return cor_complementar_hexa;
 }
 
-void trocaCores(forma *f1, forma *f2) {
-	if (f1 == NULL) {
-		return;
-	}
-
-	char *cor_borda_forma_J = getCorbForma(f2);
-	char *cor_preenchimento_forma_I = getCorpForma(f1);
-
-	setCorbFormas(f2, cor_preenchimento_forma_I);
-	setCorpFormas(f1, cor_borda_forma_J);
-}
-
 void alternaCores(forma *f) {
 	if (f == NULL) {
 		return;
 	}
 
-	char *borda = getCorbForma(f);
-	char *preenchimento = getCorpForma(f);
+	char *cor_borda = getCorbForma(f);
+	char *cor_preenchimento = getCorpForma(f);
 
-	setCorpFormas(f, borda);
-	setCorbFormas(f, preenchimento);
+	if (cor_borda == NULL || cor_preenchimento == NULL) {
+		return;
+	}
 
+	char *copia_preenchimento = malloc(strlen(cor_preenchimento) + 1);
+	if (copia_preenchimento == NULL) {
+		fprintf(stderr, "Erro de memoria na funcao alternaCores!\n");
+		return;
+	}
+	strcpy(copia_preenchimento, cor_preenchimento);
+
+	setCorpFormas(f, cor_borda);
+	setCorbFormas(f, copia_preenchimento);
+
+	free(copia_preenchimento);
 }
+
+void trocaCores(forma *f1, forma *f2) {
+	if (f1 == NULL || f2 == NULL) {
+		return;
+	}
+
+	if (f1 == f2) {
+		alternaCores(f1);
+		return;
+	}
+
+	char *cor_preenchimento_f1 = getCorpForma(f1);
+	char *cor_borda_f2 = getCorbForma(f2);
+
+	if (cor_preenchimento_f1 == NULL || cor_borda_f2 == NULL) {
+		return;
+	}
+
+	char *copia_preenchimento_f1 = malloc(strlen(cor_preenchimento_f1) + 1);
+	if (copia_preenchimento_f1 == NULL) {
+		fprintf(stderr, "Erro de memoria na funcao trocaCores!\n");
+		return;
+	}
+	strcpy(copia_preenchimento_f1, cor_preenchimento_f1);
+
+	setCorpFormas(f1, cor_borda_f2);
+	setCorbFormas(f2, copia_preenchimento_f1);
+
+	free(copia_preenchimento_f1);
+}
+
 
 double getAreaForma(forma *f) {
 	if (f == NULL) {
@@ -355,7 +348,6 @@ double getAreaForma(forma *f) {
 }
 
 void destrutorForma(forma *f) {
-
 	if (f == NULL) {
 		return;
 	}
@@ -363,12 +355,13 @@ void destrutorForma(forma *f) {
 	void* dados = f -> dados;
 
 	switch (f -> tipo) {
-		case CIRCULO: destrutorCirculo((circulo**) &dados); break;
-		case RETANGULO: destrutorRetangulo((retangulo**) &dados); break;
-		case LINHA: destrutorLinha((linha**) &dados); break;
-		case TEXTO: destrutorTexto((texto **) &dados); break;
+		case CIRCULO: destrutorCirculo(dados); break;
+		case RETANGULO: destrutorRetangulo(dados); break;
+		case LINHA: destrutorLinha(dados); break;
+		case TEXTO: destrutorTexto(dados); break;
 	}
 
+	f -> dados = NULL;
 	free(f);
 
 }
@@ -452,71 +445,78 @@ void desenhaFormaSvg(forma *f, FILE *svg) {
 }
 
 void escreveDadosFormaTxt(forma *f, FILE *txt, char *reportDaFuncaoQRY) {
-	tipoForma tipo = getTipoForma(f);
-	void* dados = getFormaDados(f);
+    tipoForma tipo = getTipoForma(f);
+    void* dados = getFormaDados(f);
 
-	switch (tipo) {
-		case CIRCULO: {
-			fprintf(txt, "%s\n Círculo\n ID: %i\n Âncora em: (%.2lf, %.2lf)\n Raio: %lf\n Cor de borda: %s\n Cor de preenchimento: %s\n",
-				reportDaFuncaoQRY,
-				getIDforma(f),
-				getXCirculo(dados),
-				getYCirculo(dados),
-				getRaioCirculo(dados),
-				getCorbForma(f),
-				getCorpForma(f)); break;
-		}
+    const char* report_safe = (reportDaFuncaoQRY != NULL) ? reportDaFuncaoQRY : "";
 
-		case RETANGULO: {
-			fprintf(txt, "%s\n Retângulo\n ID: %i\n Âncora em: (%.2lf, %.2lf)\n Largura: %lf\n Altura %lf\n Cor de borda: %s\n Cor de preenchimento: %s\n",
-				reportDaFuncaoQRY,
-				getIDforma(f),
-				getXretangulo(dados),
-				getYretangulo(dados),
-				getLarguraRetangulo(dados),
-				getAlturaRetangulo(dados),
-				getCorbForma(f),
-				getCorpForma(f)); break;
-		}
+    switch (tipo) {
+        case CIRCULO: {
+            fprintf(txt, "%s\n Círculo\n ID: %i\n Âncora em: (%.2lf, %.2lf)\n Raio: %lf\n Cor de borda: %s\n Cor de preenchimento: %s\n",
+                report_safe,
+                getIDforma(f),
+                getXCirculo(dados),
+                getYCirculo(dados),
+                getRaioCirculo(dados),
+                getCorbCirculo(dados),
+                getCorpCirculo(dados));
+            break;
+        }
 
-		case LINHA: {
-			fprintf(txt, "%s\n Linha\n ID: %i\n Âncora de início em: (%.2lf, %.2lf)\n Âncora de fim em: (%.2lf, %.2lf)\n Cor: %s\n",
-				reportDaFuncaoQRY,
-				getIDforma(f),
-				getX1Linha(dados),
-				getY1Linha(dados),
-				getX2Linha(dados),
-				getY2Linha(dados),
-				getCorbForma(f)); break;
-		}
-		case TEXTO: {
-			texto* t = (texto*)dados;
-			estilo* e = getEstiloTexto(t);
+        case RETANGULO: {
+            fprintf(txt, "%s\n Retângulo\n ID: %i\n Âncora em: (%.2lf, %.2lf)\n Largura: %lf\n Altura %lf\n Cor de borda: %s\n Cor de preenchimento: %s\n",
+                report_safe,
+                getIDforma(f),
+                getXretangulo(dados),
+                getYretangulo(dados),
+                getLarguraRetangulo(dados),
+                getAlturaRetangulo(dados),
+                getCorbRetangulo(dados),
+                getCorpRetangulo(dados));
+            break;
+        }
 
-			fprintf(txt, " Texto\n ID: %d\n Âncora em: (%.2f, %.2f)\n Posição da Âncora: %c\n Conteúdo: \"%s\"\n Cor de borda: %s\n Cor de preenchimento: %s\n",
-				getIDforma(f),
-				getXTexto(t),
-				getYTexto(t),
-				getATexto(t),
-				getTxtoTexto(t),
-				getCorbForma(f),
-				getCorpForma(f));
+        case LINHA: {
+            fprintf(txt, "%s\n Linha\n ID: %i\n Âncora de início em: (%.2lf, %.2lf)\n Âncora de fim em: (%.2lf, %.2lf)\n Cor: %s\n",
+                report_safe,
+                getIDforma(f),
+                getX1Linha(dados),
+                getY1Linha(dados),
+                getX2Linha(dados),
+                getY2Linha(dados),
+                getCorLinha(dados));
+            break;
+        }
 
-			if (e != NULL) {
-				fprintf(txt, " Família da fonte: %s\n Peso da fonte: %s\n Tamanho da fonte: %s\n\n",
-					getfFamily(e),
-					getfWeight(e),
-					getfSize(e));
-			} else {
-				fprintf(txt, "\n");
-			} break;
+        case TEXTO: {
+            texto* t = (texto*)dados;
+            estilo* e = getEstiloTexto(t);
 
+            fprintf(txt, "%s Texto\n ID: %d\n Âncora em: (%.2f, %.2f)\n Posição da Âncora: %c\n Conteúdo: \"%s\"\n Cor de borda: %s\n Cor de preenchimento: %s\n",
+                report_safe,
+                getIDforma(f),
+                getXTexto(t),
+                getYTexto(t),
+                getATexto(t),
+                getTxtoTexto(t),
+                getCorbTexto(dados),
+                getCorpTexto(dados));
 
-			default:
-			fprintf(txt, "Tipo de forma desconhecida!\n");
-			break;
-		}
-	}
+            if (e != NULL) {
+                fprintf(txt, " Família da fonte: %s\n Peso da fonte: %s\n Tamanho da fonte: %s\n\n",
+                    getfFamily(e),
+                    getfWeight(e),
+                    getfSize(e));
+            } else {
+                fprintf(txt, "\n");
+            }
+            break;
+        }
+
+        default:
+            fprintf(txt, "Tipo de forma desconhecida!\n");
+            break;
+    }
 }
 
 double getXForma(forma *f) {

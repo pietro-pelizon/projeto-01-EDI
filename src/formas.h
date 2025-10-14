@@ -1,5 +1,7 @@
 #ifndef FORMAS_H
 #define FORMAS_H
+#include <stdio.h>
+
 
 /*
  * ------- TAD FORMAS -------
@@ -29,7 +31,7 @@ typedef enum EnumtipoForma {
     TEXTO
 } tipoForma;
 
-/// A definição da struct está no arquivo.c
+
 typedef struct stForma forma;
 
 /// @brief: Cria uma fórmula genérica.
