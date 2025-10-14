@@ -1,7 +1,8 @@
 #include "fila.h"
-#include "formas.h"
 #include <stdlib.h>
 #include <stdio.h>
+
+#include "formas.h"
 
 typedef struct nodeF {
 	void *item;
@@ -34,7 +35,7 @@ int getTamFila(fila *f) {
 	return f -> tam;
 }
 
-bool estaVazia(fila *f) {
+bool estaVaziaFila(fila *f) {
 	if (f -> tam == 0) {
 		return true;
 	}
@@ -43,16 +44,17 @@ bool estaVazia(fila *f) {
 }
 
 void enqueue(fila *f, void *item) {
-	nodeF *novo = malloc (sizeof(nodeF));
+	nodeF *novo = malloc(sizeof(nodeF));
 	if (!novo) {
-		free(novo);
-		return;
+		perror("malloc nodeF");
+		exit(1);
 	}
+
 
 	novo -> item = item;
 	novo -> prox = NULL;
 
-	if (estaVazia(f)) {
+	if (estaVaziaFila(f)) {
 		f -> inicio = novo;
 		f -> fim = novo;
 	}
@@ -67,7 +69,7 @@ void enqueue(fila *f, void *item) {
 }
 
 nodeF *getInicioFila(fila *f) {
-	if (estaVazia(f)) {
+	if (estaVaziaFila(f)) {
 		return NULL;
 	}
 
@@ -75,7 +77,7 @@ nodeF *getInicioFila(fila *f) {
 }
 
 nodeF *getFimFila(fila *f) {
-	if (estaVazia(f)) {
+	if (estaVaziaFila(f)) {
 		return NULL;
 	}
 
@@ -83,7 +85,7 @@ nodeF *getFimFila(fila *f) {
 }
 
 void *dequeue(fila *f) {
-	if (estaVazia(f)) {
+	if (estaVaziaFila(f)) {
 		return NULL;
 	}
 
@@ -103,27 +105,33 @@ void *dequeue(fila *f) {
 }
 
 void liberaFila(fila *f, void (*destrutor)(void *item)) {
-	if (f == NULL || estaVazia(f)) {
-		return;
-	}
+	if (f == NULL) return;
 
-	nodeF *atual = f -> inicio;
+	printf("DEBUG FILA: Liberando fila com %d elementos\n", f -> tam);
+
+	nodeF *atual = f->inicio;
+	int contador = 0;
 	while (atual != NULL) {
-		nodeF *proximo = atual -> prox;
+		nodeF *proximo = atual->prox;
 
-		if (destrutor != NULL) {
-			destrutor(atual -> item);
+		if (destrutor != NULL && atual->item != NULL) {
+			printf("DEBUG FILA: Liberando forma do nó %d\n", contador);
+			destrutor(atual->item);
+			contador++;
 		}
 
 		free(atual);
+
 		atual = proximo;
 	}
 
+
+	printf("DEBUG FILA: %d formas liberadas\n", contador);
 	free(f);
 }
 
 void copiaFila(fila *principal, fila *copia) {
-	if (estaVazia(principal)) {
+	if (estaVaziaFila(principal)) {
 		return;
 	}
 
@@ -135,7 +143,7 @@ void copiaFila(fila *principal, fila *copia) {
 }
 
 void passthroughQueue(fila *f, void (*acao)(void *item, void *aux_data), void *aux_data) {
-	if (f == NULL || acao == NULL || estaVazia(f)) {
+	if (f == NULL || acao == NULL || estaVaziaFila(f)) {
 		return;
 	}
 

@@ -34,7 +34,7 @@ int getTamFila(fila *f);
 /// @brief: Verifica se a fila está vazia.
 /// @param f: Ponteiro para a fila a ser checada.
 /// @return: Retorna TRUE para caso esteja vazia e FALSE para o contrário.
-bool estaVazia(fila *f);
+bool estaVaziaFila(fila *f);
 
 /// @brief: Adiciona um dado à fila, ao seu fim.
 /// @param f: Ponteiro para a fila.
@@ -76,11 +76,11 @@ void passthroughQueue(fila *f, void (*acao)(void *item, void *aux_data), void *a
 /// @brief: Pega o proximo nó da fila.
 /// @param n: Ponteiro para o nó.
 /// @return: O nó que está na frente do nó passado como parâmetro.
-nodeF* getProxNode(nodeF *n);
+nodeF *getProxNode(nodeF *n);
 
 /// @brief: Pega o conteúdo de determinado nó da fila.
 /// @param n: Ponteiro para o nó.
 /// @return: O conteúdo do nó.
-void* getItemNode(nodeF *n);
+void *getItemNode(nodeF *n);
 
 #endif //FILA_H
