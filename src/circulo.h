@@ -13,8 +13,6 @@
  * Cor de preenchimento: define a cor de preenchimento pertencente ao círculo;
  */
 
-
-/// A definição da struct círculo foi movida para o arquivo.c
 typedef struct stCirculo circulo;
 
 /* ------- FUNÇÃO CONSTRUTORA: CÍRCULO ------- */
@@ -101,7 +99,7 @@ void setCorpCirculo(circulo *c, char *corp);
 double calcAreaCirculo(circulo *c);
 
 /// @brief: Libera o objeto círculo.
-/// @param pc: Ponteiro duplo para o círculo a ser liberado
-void destrutorCirculo(circulo **pc);
+/// @param c: Ponteiro para o círculo a ser liberado
+void destrutorCirculo(circulo *c);
 
 #endif //CIRCULO_H

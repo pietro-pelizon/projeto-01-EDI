@@ -125,18 +125,14 @@ double calcAreaRetangulo(retangulo *r) {
 	return ((r -> w) * (r -> h));
 }
 
-void destrutorRetangulo(retangulo **pr) {
-	if (pr == NULL || *pr == NULL) {
+void destrutorRetangulo(retangulo *r) {
+	if (r == NULL) {
 		return;
 	}
-
-	retangulo *r = *pr;
 
 	free(r -> corb);
 	free(r -> corp);
 	free(r);
-
-	*pr = NULL;
 
 }
 

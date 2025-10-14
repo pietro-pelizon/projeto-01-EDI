@@ -119,17 +119,14 @@ double calcAreaCirculo(circulo *c) {
 	return PI * ((c -> r) * (c -> r));
 }
 
-void destrutorCirculo(circulo **pc) {
-	if (pc == NULL || *pc == NULL) {
+void destrutorCirculo(circulo *c) {
+	if (c == NULL) {
 		return;
 	}
-
-	circulo *c = *pc;
 
 	free(c -> corb);
 	free(c -> corp);
 	free(c);
 
-	*pc = NULL;
 }
 

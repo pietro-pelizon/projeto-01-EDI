@@ -13,7 +13,6 @@
  * Cor de Preenchimento: Define a cor que preenche o interior do retângulo.
  */
 
-/// A definição da struct está no arquivo .c
 typedef struct stRetangulo retangulo;
 
 /* ------- FUNÇÃO CONSTRUTORA: RETÂNGULO ------- */
@@ -111,7 +110,7 @@ void setCorpRetangulo(retangulo *r, char *corp);
 double calcAreaRetangulo(retangulo *r);
 
 /// @brief: Libera o retângulo da memória.
-/// @param r: Ponteiro duplo para o retângulo a ser liberado.
-void destrutorRetangulo(retangulo **r);
+/// @param r: Ponteiro para o retângulo a ser liberado.
+void destrutorRetangulo(retangulo *r);
 
 #endif //RETANGULO_H
