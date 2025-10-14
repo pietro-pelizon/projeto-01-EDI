@@ -6,14 +6,6 @@
 
 #include <math.h>
 
-bool sobrepoe_circulo_circulo(circulo *c1, circulo *c2);
-bool sobrepoe_circulo_retangulo(circulo *c1, retangulo *r);
-bool sobrepoe_circulo_linhaOUtexto(circulo *c, linha *l);
-bool sobrepoe_retangulo_retangulo(retangulo *r1, retangulo *r2);
-bool sobrepoe_linha_linha(linha *l1, linha *l2);
-bool sobrepoe_linha_texto(linha *l, texto *t);
-bool sobrepoe_retangulo_linha(retangulo *r, linha *l);
-void converter_texto_para_linha(texto *t, linha *l_out);
 
 static double distancia_quadrada(double x1, double y1, double x2, double y2) {
     double deltaX = x1 - x2;
@@ -38,9 +30,11 @@ bool formasSobrepoem(forma *f1, forma *f2) {
         return sobrepoe_circulo_linhaOUtexto((circulo*)dados1, (linha*)dados2);
     }
     if (tipo1 == CIRCULO && tipo2 == TEXTO) {
-        linha temp_linha;
-        converter_texto_para_linha((texto*)dados2, &temp_linha);
-        return sobrepoe_circulo_linhaOUtexto((circulo*)dados1, &temp_linha);
+        linha *temp_linha = criaLinha(-1, 0, 0, 0, 0, "temp", false);
+        converter_texto_para_linha((texto*)dados2, temp_linha);
+        bool resultado = sobrepoe_circulo_linhaOUtexto((circulo*)dados1, temp_linha);
+        destrutorLinha(temp_linha);
+        return resultado;
     }
 
 
@@ -54,9 +48,11 @@ bool formasSobrepoem(forma *f1, forma *f2) {
         return sobrepoe_retangulo_linha((retangulo*)dados1, (linha*)dados2);
     }
     if (tipo1 == RETANGULO && tipo2 == TEXTO) {
-        linha temp_linha;
-        converter_texto_para_linha((texto*)dados2, &temp_linha);
-        return sobrepoe_retangulo_linha((retangulo*)dados1, &temp_linha);
+        linha *temp_linha = criaLinha(-1, 0, 0, 0, 0, "temp", false);
+        converter_texto_para_linha((texto*)dados2, temp_linha);
+        bool resultado = sobrepoe_retangulo_linha((retangulo*)dados1, temp_linha);
+        destrutorLinha(temp_linha);
+        return resultado;
     }
 
     if (tipo1 == LINHA && tipo2 == CIRCULO) {
@@ -73,23 +69,29 @@ bool formasSobrepoem(forma *f1, forma *f2) {
     }
 
     if (tipo1 == TEXTO && tipo2 == CIRCULO) {
-        linha temp_linha;
-        converter_texto_para_linha((texto*)dados1, &temp_linha);
-        return sobrepoe_circulo_linhaOUtexto((circulo*)dados2, &temp_linha);
+        linha *temp_linha = criaLinha(-1, 0, 0, 0, 0, "temp", false);;
+        converter_texto_para_linha((texto*)dados1, temp_linha);
+        bool resultado = sobrepoe_circulo_linhaOUtexto((circulo*)dados2, temp_linha);
+        destrutorLinha(temp_linha);
+        return resultado;
     }
     if (tipo1 == TEXTO && tipo2 == RETANGULO) {
-        linha temp_linha;
-        converter_texto_para_linha((texto*)dados1, &temp_linha);
-        return sobrepoe_retangulo_linha((retangulo*)dados2, &temp_linha);
+        linha *temp_linha = criaLinha(-1, 0, 0, 0, 0, "temp", false);;
+        converter_texto_para_linha((texto*)dados1, temp_linha);
+        bool resultado =  sobrepoe_retangulo_linha((retangulo*)dados2, temp_linha);
+        destrutorLinha(temp_linha);
+        return resultado;
     }
     if (tipo1 == TEXTO && tipo2 == LINHA) {
         return sobrepoe_linha_texto((linha*)dados2, (texto*)dados1);
     }
     if (tipo1 == TEXTO && tipo2 == TEXTO) {
-        linha temp1, temp2;
-        converter_texto_para_linha((texto*)dados1, &temp1);
-        converter_texto_para_linha((texto*)dados2, &temp2);
-        return sobrepoe_linha_linha(&temp1, &temp2);
+        linha *temp1 = criaLinha(-1, 0, 0, 0, 0, "temp", false), *temp2 = criaLinha(-1, 0, 0, 0, 0, "temp", false);
+        converter_texto_para_linha((texto*)dados1, temp1);
+        converter_texto_para_linha((texto*)dados2, temp2);
+        bool resultado = sobrepoe_linha_linha(temp1, temp2);
+        destrutorLinha(temp1); destrutorLinha(temp2);
+        return resultado;
     }
 
     return false;
@@ -124,7 +126,7 @@ bool sobrepoe_circulo_retangulo(circulo *c1, retangulo *r) {
 
     double x_min = xRetangulo;
     double x_max = xRetangulo + largura;
-    double y_min = yRetangulo - altura; // Borda de cima
+    double y_min = yRetangulo - altura;
     double y_max = yRetangulo;
 
     double px, py;
@@ -162,8 +164,8 @@ static bool ponto_dentro_retangulo(retangulo *r, double px, double py) {
     double rx_min = getXretangulo(r);
     double rx_max = getXretangulo(r) + getLarguraRetangulo(r);
 
-    double ry_min = getYretangulo(r) - getAlturaRetangulo(r); // Topo
-    double ry_max = getYretangulo(r);      // Base
+    double ry_min = getYretangulo(r) - getAlturaRetangulo(r);
+    double ry_max = getYretangulo(r);
 
     bool dentroX = (px >= rx_min) && (px <= rx_max);
     bool dentroY = (py >= ry_min) && (py <= ry_max);
@@ -314,11 +316,11 @@ bool sobrepoe_linha_texto(linha *l, texto *t) {
             return false;
     }
 
-    linha *linha_do_texto = criaLinha(-1, tx1, ty1, tx2, ty2, "temporario");
+    linha *linha_do_texto = criaLinha(-1, tx1, ty1, tx2, ty2, "temporario", false);
 
     bool resultado = sobrepoe_linha_linha(l, linha_do_texto);
 
-    destrutorLinha(&linha_do_texto);
+    destrutorLinha(linha_do_texto);
 
     return resultado;
 }
@@ -348,35 +350,35 @@ bool sobrepoe_retangulo_linha(retangulo *r, linha *l) {
 
     bool resultado = false;
 
-    linha *borda_cima = criaLinha(-1, cse_x, cse_y, csd_x, csd_y, "temp");
+    linha *borda_cima = criaLinha(-1, cse_x, cse_y, csd_x, csd_y, "temp", false);
     if (sobrepoe_linha_linha(l, borda_cima)) {
         resultado = true;
     }
-    destrutorLinha(&borda_cima);
+    destrutorLinha(borda_cima);
     if (resultado) return true;
 
 
-    linha *borda_direita = criaLinha(-1, csd_x, csd_y, cid_x, cid_y, "temp");
+    linha *borda_direita = criaLinha(-1, csd_x, csd_y, cid_x, cid_y, "temp", false);
     if (sobrepoe_linha_linha(l, borda_direita)) {
         resultado = true;
     }
 
-    destrutorLinha(&borda_direita);
+    destrutorLinha(borda_direita);
     if (resultado) return true;
 
-    linha *borda_baixo = criaLinha(-1, cid_x, cid_y, cie_x, cie_y, "temp");
+    linha *borda_baixo = criaLinha(-1, cid_x, cid_y, cie_x, cie_y, "temp", false);
     if (sobrepoe_linha_linha(l, borda_baixo)) {
         resultado = true;
     }
-    destrutorLinha(&borda_baixo);
+    destrutorLinha(borda_baixo);
     if (resultado) return true;
 
-    linha *borda_esquerda = criaLinha(-1, cie_x, cie_y, cse_x, cse_y, "temp");
+    linha *borda_esquerda = criaLinha(-1, cie_x, cie_y, cse_x, cse_y, "temp", false);
     if (sobrepoe_linha_linha(l, borda_esquerda)) {
         resultado = true;
     }
 
-    destrutorLinha(&borda_esquerda);
+    destrutorLinha(borda_esquerda);
     if (resultado) return true;
 
     return false;
