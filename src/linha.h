@@ -1,8 +1,9 @@
 #ifndef LINHA_H
 #define LINHA_H
+#include <stdbool.h>
 
 
- /* ------- TAD LINHA -------
+/* ------- TAD LINHA -------
  * A Linha é um objeto, que contém os seguintes atributos:
  * Identificador: Permite diferenciar as linhas umas das outras pelo ID;
  * Ponto Inicial: Define o ponto de partida da linha no cenário, contendo
@@ -10,9 +11,9 @@
  * Ponto Final: Define o ponto de término da linha no cenário, contendo
  * as coordenadas (x2, y2);
  * Cor: Define a cor da linha a ser desenhada.
+ * eh_pontilhada: Define se a linha será pontilhada ou não.
  */
 
-/// A definição da struct está no arquivo.c
 typedef struct stLinha linha;
 
 /* ------ FUNÇÃO CONSTRUTORA: LINHA ------- */
@@ -24,8 +25,9 @@ typedef struct stLinha linha;
 /// @param x2: Coordenada x do segundo ponto.
 /// @param y2: Coordenada y do segundo ponto.
 /// @param cor: Cor da linha.
+/// @param eh_pontilhada: Tipo bool para definir se a linha será pontilhada ou não na amostra do .svg
 /// @return: Retorna um ponteiro para a linha.
-linha *criaLinha(int i, double x1, double y1, double x2, double y2, char *cor);
+linha *criaLinha(int i, double x1, double y1, double x2, double y2, char *cor, bool eh_pontilhada);
 
 /* ------- MÉTODOS GET: LINHA ------- */
 
@@ -59,6 +61,11 @@ double getY2Linha(linha *l);
 /// @return: Retorna a cor da linha.
 char *getCorLinha(linha *l);
 
+/// @brief: Pega e retorna um valor booleano que indica se a linha é pontilhada ou não.
+/// @param l: Ponteiro para a linha.
+/// @return: true caso a linha seja pontilhada e false caso o contrário.
+bool getEh_pontilhada(linha *l);
+
 /* ------- MÉTODOS SET: LINHA ------- */
 
 /// @brief: Define um novo identificador para a linha.
@@ -91,6 +98,11 @@ void setY2Linha(linha *l, double y2);
 /// @param cor: Nova cor da linha.
 void setCorLinha(linha *l, char *cor);
 
+/// @brief: Define uma nova condição para o pontilhamento da linha.
+/// @param l: Ponteiro para a linha.
+/// @param opcao: true para tornar a linha pontilhada e false para tornar não pontilhada.
+void setEh_pontilhada(linha *l, bool opcao);
+
 /* ------- MÉTODOS ADICIONAIS: LINHA ------- */
 
 /// @brief: Calcula o comprimento da linha.
@@ -104,7 +116,7 @@ double calcComprimentoLinha(linha *l);
 double calcAreaLinha(linha *l);
 
 /// @brief: Libera a linha.
-/// @param pl: Ponteiro duplo para a linha a ser liberada.
-void destrutorLinha(linha **pl);
+/// @param l: Ponteiro duplo para a linha a ser liberada.
+void destrutorLinha(linha *l);
 
 #endif //LINHA_H

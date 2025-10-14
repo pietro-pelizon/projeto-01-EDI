@@ -9,9 +9,10 @@ typedef struct stLinha {
 	int i;
 	double x1, y1, x2, y2;
 	char *cor;
-}linha;
+	bool eh_pontilhada;
+} linha;
 
-linha *criaLinha(int i, double x1, double y1, double x2, double y2, char *cor) {
+linha *criaLinha(int i, double x1, double y1, double x2, double y2, char *cor, bool eh_pontilhada) {
 	linha *l = malloc (sizeof(linha));
 	if (l == NULL) {
 		printf("Erro na alocacao de memoria para o objeto linha!\n");
@@ -23,6 +24,7 @@ linha *criaLinha(int i, double x1, double y1, double x2, double y2, char *cor) {
 	l -> y1 = y1;
 	l -> x2 = x2;
 	l -> y2 = y2;
+	l -> eh_pontilhada = eh_pontilhada;
 
 	l -> cor = (char*) malloc (strlen(cor) + 1);
 	if (l -> cor == NULL) {
@@ -57,6 +59,10 @@ double getY2Linha(linha *l) {
 
 char *getCorLinha(linha *l) {
 	return l -> cor;
+}
+
+bool getEh_pontilhada(linha *l) {
+	return l -> eh_pontilhada;
 }
 
 void setIDLinha(linha *l, int i) {
@@ -99,9 +105,13 @@ void setCorLinha(linha *l, char *cor) {
 
 }
 
+void setEh_pontilhada(linha *l, bool opcao) {
+	l -> eh_pontilhada = opcao;
+}
+
 double calcComprimentoLinha(linha *l) {
-	double dx = l->x2 - l->x1;
-	double dy = l->y2 - l->y1;
+	double dx = l -> x2 - l -> x1;
+	double dy = l -> y2 - l -> y1;
 	double comprimento = sqrt((dx*dx) + (dy*dy));
 	return comprimento;
 }
@@ -111,17 +121,14 @@ double calcAreaLinha(linha *l) {
 	return area;
 }
 
-void destrutorLinha(linha **pl) {
-	if (pl == NULL || *pl == NULL) {
+void destrutorLinha(linha *l) {
+	if (l == NULL) {
 		return;
 	}
-
-	linha *l = *pl;
 
 	free(l->cor);
 
 	free(l);
 
-	*pl = NULL;
 }
 
