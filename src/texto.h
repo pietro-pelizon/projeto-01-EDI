@@ -1,8 +1,9 @@
 #ifndef TEXTO_H
 #define TEXTO_H
+#include <stddef.h>
 
 
- /* ------- TAD TEXTO -------
+/* ------- TAD TEXTO -------
  * Este TAD define dois objetos relacionados: o Texto e seu Estilo.
  *
  * O objeto Texto representa um conteúdo textual a ser desenhado,
@@ -177,7 +178,7 @@ double calcAreaTexto(texto *t);
 
 /// @brief: Libera da memória o texto.
 /// @param t: Ponteiro para o texto.
-void destrutorTexto(texto **t);
+void destrutorTexto(texto *t);
 
 /// @brief: Cria um cópia do estilo, dessa forma, o estilo é único para cada texto.
 /// @param original: Ponteiro original, de onde será copiado.
