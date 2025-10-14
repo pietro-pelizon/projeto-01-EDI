@@ -4,6 +4,7 @@
 
 #include "retangulo.h"
 #include "circulo.h"
+#include "fila.h"
 #include "linha.h"
 #include "texto.h"
 
@@ -30,10 +31,8 @@
 
 /// @brief: Cria, abre e inicializa um arquivo SVG com o cabeçalho padrão.
 /// @param caminhoArquivo: O nome/caminho do arquivo a ser criado.
-/// @param largura: A largura da área de visualização (viewBox) do SVG.
-/// @param altura: A altura da área de visualização (viewBox) do SVG.
 /// @return: Retorna um ponteiro para o arquivo (FILE*) pronto para escrita, ou NULL se ocorrer um erro.
-FILE* inicializaSvg(const char* caminhoArquivo, double largura, double altura);
+FILE* inicializaSvg(const char* caminhoArquivo);
 
 /// @brief: Desenha um retângulo no arquivo SVG.
 /// @param svg: Ponteiro para o arquivo SVG aberto para escrita.
@@ -58,5 +57,15 @@ void insereLinha(FILE *svg, linha *l);
 /// @brief: Finaliza e fecha o arquivo SVG.
 /// @param svg: Ponteiro para o arquivo SVG a ser fechado.
 void fechaSVG(FILE *svg);
+
+/// @brief: Função auxiliar que recebe um dado e se possível, o desenha no arquivo .svg
+/// @param item: Dado a ser desenhado.
+/// @param aux: Dado auxiliar, caso necessário.
+void acao_desenhar(void* item, void* aux);
+
+/// @brief: Função que recebe as formas que serão adicionadas ao .svg criado.
+/// @param nome_svg: Nome do arquivo .svg.
+/// @param filaDeFormas: Fila contendo as formas que serão adicionadas ao .svg.
+void gerarArquivoSvg(const char *nome_svg, fila *filaDeFormas);
 
 #endif //SVG_H
