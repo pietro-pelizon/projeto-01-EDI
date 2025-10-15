@@ -79,6 +79,24 @@ bool sobrepoe_retangulo_linha(retangulo *r, linha *l);
 
 /* ------- FUNÇÕES ADICIONAIS PARA A VERIFICAÇÃO DE SOBREPOSIÇÃO --------*/
 
+/// @brief: Função auxiliar na verificação da sobreposição entre texto e círculo.
+/// @param txt: O objeto texto.
+/// @param circ: O objeto circulo.
+/// @return: true caso haja sobreposição e false caso o contrário.
+bool sobrepoe_texto_circulo(texto *txt, circulo *circ);
+
+/// @brief: Função auxiliar para a verificação da sobreposição entre texto e retângulo.
+/// @param txt: Objeto texto.
+/// @param ret: Objeto retângulo.
+/// @return: true caso haja sobreposição e false caso o contrário.
+bool sobrepoe_texto_retangulo(texto *txt, retangulo *ret);
+
+/// @brief: Função auxiliar para a verficação da sobreposição entre texto e texto.
+/// @param txt1: Texto 1.
+/// @param txt2: Texto 2.
+/// @return: true caso haja sobreposição e false caso o contrário.
+bool sobrepoe_texto_texto(texto *txt1, texto *txt2);
+
 /// @brief: Converte um objeto texto em um segmento de reta, preenchendo um objeto linha existente.
 /// @param t: Ponteiro para o objeto texto de origem.
 /// @param l_out: Ponteiro para o objeto linha de destino que será preenchido com as coordenadas.

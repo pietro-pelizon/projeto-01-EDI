@@ -19,82 +19,72 @@ bool formasSobrepoem(forma *f1, forma *f2) {
     void *dados1 = getFormaDados(f1);
     void *dados2 = getFormaDados(f2);
 
+    switch (tipo1) {
+        case CIRCULO:
+            switch (tipo2) {
+                case CIRCULO: return sobrepoe_circulo_circulo((circulo*)dados1, (circulo*)dados2);
+                case RETANGULO: return sobrepoe_circulo_retangulo((circulo*)dados1, (retangulo*)dados2);
+                case LINHA: return sobrepoe_circulo_linhaOUtexto((circulo*)dados1, (linha*)dados2);
+                case TEXTO: return sobrepoe_texto_circulo((texto*)dados2, (circulo*)dados1);
+                default: return false;
+            }
 
-    if (tipo1 == CIRCULO && tipo2 == CIRCULO) {
-        return sobrepoe_circulo_circulo((circulo*)dados1, (circulo*)dados2);
-    }
-    if (tipo1 == CIRCULO && tipo2 == RETANGULO) {
-        return sobrepoe_circulo_retangulo((circulo*)dados1, (retangulo*)dados2);
-    }
-    if (tipo1 == CIRCULO && tipo2 == LINHA) {
-        return sobrepoe_circulo_linhaOUtexto((circulo*)dados1, (linha*)dados2);
-    }
-    if (tipo1 == CIRCULO && tipo2 == TEXTO) {
-        linha *temp_linha = criaLinha(-1, 0, 0, 0, 0, "temp", false);
-        converter_texto_para_linha((texto*)dados2, temp_linha);
-        bool resultado = sobrepoe_circulo_linhaOUtexto((circulo*)dados1, temp_linha);
-        destrutorLinha(temp_linha);
-        return resultado;
-    }
+        case RETANGULO:
+            switch (tipo2) {
+                case CIRCULO: return sobrepoe_circulo_retangulo((circulo*)dados2, (retangulo*)dados1);
+                case RETANGULO: return sobrepoe_retangulo_retangulo((retangulo*)dados1, (retangulo*)dados2);
+                case LINHA: return sobrepoe_retangulo_linha((retangulo*)dados1, (linha*)dados2);
+                case TEXTO: return sobrepoe_texto_retangulo((texto*)dados2, (retangulo*)dados1);
+                default: return false;
+            }
 
+        case LINHA:
+            switch (tipo2) {
+                case CIRCULO: return sobrepoe_circulo_linhaOUtexto((circulo*)dados2, (linha*)dados1);
+                case RETANGULO: return sobrepoe_retangulo_linha((retangulo*)dados2, (linha*)dados1);
+                case LINHA: return sobrepoe_linha_linha((linha*)dados1, (linha*)dados2);
+                case TEXTO: return sobrepoe_linha_texto((linha*)dados1, (texto*)dados2);
+                default: return false;
+            }
 
-    if (tipo1 == RETANGULO && tipo2 == CIRCULO) {
-        return sobrepoe_circulo_retangulo((circulo*)dados2, (retangulo*)dados1);
-    }
-    if (tipo1 == RETANGULO && tipo2 == RETANGULO) {
-        return sobrepoe_retangulo_retangulo((retangulo*)dados1, (retangulo*)dados2);
-    }
-    if (tipo1 == RETANGULO && tipo2 == LINHA) {
-        return sobrepoe_retangulo_linha((retangulo*)dados1, (linha*)dados2);
-    }
-    if (tipo1 == RETANGULO && tipo2 == TEXTO) {
-        linha *temp_linha = criaLinha(-1, 0, 0, 0, 0, "temp", false);
-        converter_texto_para_linha((texto*)dados2, temp_linha);
-        bool resultado = sobrepoe_retangulo_linha((retangulo*)dados1, temp_linha);
-        destrutorLinha(temp_linha);
-        return resultado;
-    }
+        case TEXTO:
+            switch (tipo2) {
+                case CIRCULO: return sobrepoe_texto_circulo((texto*)dados1, (circulo*)dados2);
+                case RETANGULO: return sobrepoe_texto_retangulo((texto*)dados1, (retangulo*)dados2);
+                case LINHA: return sobrepoe_linha_texto((linha*)dados2, (texto*)dados1);
+                case TEXTO: return  sobrepoe_texto_texto((texto*)dados1, (texto*)dados2);
+                default: return false;
+            }
 
-    if (tipo1 == LINHA && tipo2 == CIRCULO) {
-        return sobrepoe_circulo_linhaOUtexto((circulo*)dados2, (linha*)dados1);
+        default: return false;
     }
-    if (tipo1 == LINHA && tipo2 == RETANGULO) {
-        return sobrepoe_retangulo_linha((retangulo*)dados2, (linha*)dados1);
-    }
-    if (tipo1 == LINHA && tipo2 == LINHA) {
-        return sobrepoe_linha_linha((linha*)dados1, (linha*)dados2);
-    }
-    if (tipo1 == LINHA && tipo2 == TEXTO) {
-        return sobrepoe_linha_texto((linha*)dados1, (texto*)dados2);
-    }
+}
 
-    if (tipo1 == TEXTO && tipo2 == CIRCULO) {
-        linha *temp_linha = criaLinha(-1, 0, 0, 0, 0, "temp", false);;
-        converter_texto_para_linha((texto*)dados1, temp_linha);
-        bool resultado = sobrepoe_circulo_linhaOUtexto((circulo*)dados2, temp_linha);
-        destrutorLinha(temp_linha);
-        return resultado;
-    }
-    if (tipo1 == TEXTO && tipo2 == RETANGULO) {
-        linha *temp_linha = criaLinha(-1, 0, 0, 0, 0, "temp", false);;
-        converter_texto_para_linha((texto*)dados1, temp_linha);
-        bool resultado =  sobrepoe_retangulo_linha((retangulo*)dados2, temp_linha);
-        destrutorLinha(temp_linha);
-        return resultado;
-    }
-    if (tipo1 == TEXTO && tipo2 == LINHA) {
-        return sobrepoe_linha_texto((linha*)dados2, (texto*)dados1);
-    }
-    if (tipo1 == TEXTO && tipo2 == TEXTO) {
-        linha *temp1 = criaLinha(-1, 0, 0, 0, 0, "temp", false), *temp2 = criaLinha(-1, 0, 0, 0, 0, "temp", false);
-        converter_texto_para_linha((texto*)dados1, temp1);
-        converter_texto_para_linha((texto*)dados2, temp2);
-        bool resultado = sobrepoe_linha_linha(temp1, temp2);
-        destrutorLinha(temp1); destrutorLinha(temp2);
-        return resultado;
-    }
+bool sobrepoe_texto_circulo(texto *txt, circulo *circ) {
+    linha *temp_linha = criaLinha(-1, 0, 0, 0, 0, "temp", false);
+    converter_texto_para_linha(txt, temp_linha);
+    bool resultado = sobrepoe_circulo_linhaOUtexto(circ, temp_linha);
+    destrutorLinha(temp_linha);
+    return resultado;
+}
 
-    return false;
+bool sobrepoe_texto_retangulo(texto *txt, retangulo *ret) {
+    linha *temp_linha = criaLinha(-1, 0, 0, 0, 0, "temp", false);
+    converter_texto_para_linha(txt, temp_linha);
+    bool resultado = sobrepoe_retangulo_linha(ret, temp_linha);
+    destrutorLinha(temp_linha);
+    return resultado;
+}
+
+bool sobrepoe_texto_texto(texto *txt1, texto *txt2) {
+    linha *temp1 = criaLinha(-1, 0, 0, 0, 0, "temp", false);
+    linha *temp2 = criaLinha(-1, 0, 0, 0, 0, "temp", false);
+    converter_texto_para_linha(txt1, temp1);
+    converter_texto_para_linha(txt2, temp2);
+    bool resultado = sobrepoe_linha_linha(temp1, temp2);
+    destrutorLinha(temp1);
+    destrutorLinha(temp2);
+    return resultado;
 }
 
 bool sobrepoe_circulo_circulo(circulo *c1, circulo *c2) {
@@ -256,8 +246,6 @@ bool sobrepoe_linha_linha(linha *l1, linha *l2) {
     double l2y1 = getY1Linha(l2);
     double l2x2 = getX2Linha(l2);
     double l2y2 = getY2Linha(l2);
-
-
 
 
     int o1 = orientacao(l1x1, l1y1, l1x2, l1y2, l2x1, l2y1);
