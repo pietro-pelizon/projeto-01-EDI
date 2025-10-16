@@ -149,7 +149,7 @@ void processaArena(arena *a, chao *c, double *pontuacao_total, fila *anotacoes_s
                 destrutorForma(forma_I);
                 adicionaNoChao(c, forma_J);
             }
-            else if (area_I > area_J) {
+            else if (area_I >= area_J) {
                 fprintf(arquivo_txt, "   Ação: Forma %d (área %.2f) modificou a Forma %d (área %.2f).\n",
                         getIDforma(forma_I), area_I, getIDforma(forma_J), area_J);
 
@@ -173,12 +173,8 @@ void processaArena(arena *a, chao *c, double *pontuacao_total, fila *anotacoes_s
                 adicionaNoChao(c, forma_J);
                 adicionaNoChao(c, clone_I);
             }
-            else {
-                fprintf(arquivo_txt, "   Ação: Áreas iguais. Ambas as formas retornam ao chão.\n");
-                adicionaNoChao(c, forma_I);
-                adicionaNoChao(c, forma_J);
-            }
         }
+
         else {
             fprintf(arquivo_txt, "-> Verificação: Forma %d vs Forma %d. SEM sobreposição.\n",
                     getIDforma(forma_I), getIDforma(forma_J));
