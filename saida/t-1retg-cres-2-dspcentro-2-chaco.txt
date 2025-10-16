@@ -1,0 +1,341 @@
+[*] pd 1 10.00 10.00
+[*] lc 1 2
+
+ Retângulo
+ ID: 6
+ Âncora em: (308.28, 245.22)
+ Largura: 17.000000
+ Altura 19.600000
+ Cor de borda: #6600ff
+ Cor de preenchimento: #c8ab37
+
+ Retângulo
+ ID: 5
+ Âncora em: (377.79, 636.41)
+ Largura: 13.500000
+ Altura 17.300000
+ Cor de borda: #784421
+ Cor de preenchimento: #00aa88
+[*] lc 2 2
+
+ Retângulo
+ ID: 8
+ Âncora em: (107.42, 523.54)
+ Largura: 24.000000
+ Altura 24.200000
+ Cor de borda: #6600ff
+ Cor de preenchimento: #c8ab37
+
+ Retângulo
+ ID: 7
+ Âncora em: (143.72, 234.56)
+ Largura: 20.500000
+ Altura 21.900000
+ Cor de borda: #784421
+ Cor de preenchimento: #00aa88
+[*] atch 1 1 2
+[*] pd 2 710.00 10.00
+[*] lc 3 2
+
+ Retângulo
+ ID: 10
+ Âncora em: (223.48, 188.21)
+ Largura: 31.000000
+ Altura 28.800000
+ Cor de borda: #6600ff
+ Cor de preenchimento: #c8ab37
+
+ Retângulo
+ ID: 9
+ Âncora em: (124.85, 400.84)
+ Largura: 27.500000
+ Altura 26.500000
+ Cor de borda: #784421
+ Cor de preenchimento: #00aa88
+[*] lc 4 2
+
+ Retângulo
+ ID: 12
+ Âncora em: (314.59, 437.09)
+ Largura: 38.000000
+ Altura 33.400000
+ Cor de borda: #6600ff
+ Cor de preenchimento: #c8ab37
+
+ Retângulo
+ ID: 11
+ Âncora em: (666.15, 261.43)
+ Largura: 34.500000
+ Altura 31.100000
+ Cor de borda: #784421
+ Cor de preenchimento: #00aa88
+[*] atch 2 3 4
+[*] pd 3 710.00 710.00
+[*] lc 5 2
+
+ Retângulo
+ ID: 14
+ Âncora em: (148.19, 644.71)
+ Largura: 45.000000
+ Altura 38.000000
+ Cor de borda: #6600ff
+ Cor de preenchimento: #c8ab37
+
+ Retângulo
+ ID: 13
+ Âncora em: (456.46, 172.06)
+ Largura: 41.500000
+ Altura 35.700000
+ Cor de borda: #784421
+ Cor de preenchimento: #00aa88
+[*] lc 6 2
+
+ Retângulo
+ ID: 16
+ Âncora em: (207.82, 517.40)
+ Largura: 52.000000
+ Altura 42.600000
+ Cor de borda: #6600ff
+ Cor de preenchimento: #c8ab37
+
+ Retângulo
+ ID: 15
+ Âncora em: (301.02, 328.84)
+ Largura: 48.500000
+ Altura 40.300000
+ Cor de borda: #784421
+ Cor de preenchimento: #00aa88
+[*] atch 3 5 6
+[*] pd 4 10.00 710.00
+[*] lc 7 2
+
+ Retângulo
+ ID: 18
+ Âncora em: (123.96, 406.16)
+ Largura: 59.000000
+ Altura 47.200000
+ Cor de borda: #6600ff
+ Cor de preenchimento: #c8ab37
+
+ Retângulo
+ ID: 17
+ Âncora em: (160.60, 396.54)
+ Largura: 55.500000
+ Altura 44.900000
+ Cor de borda: #784421
+ Cor de preenchimento: #00aa88
+[*] lc 8 2
+
+ Retângulo
+ ID: 20
+ Âncora em: (567.86, 681.48)
+ Largura: 66.000000
+ Altura 51.800000
+ Cor de borda: #6600ff
+ Cor de preenchimento: #c8ab37
+
+ Retângulo
+ ID: 19
+ Âncora em: (417.18, 465.97)
+ Largura: 62.500000
+ Altura 49.500000
+ Cor de borda: #784421
+ Cor de preenchimento: #00aa88
+[*] atch 4 7 8
+[*] shft 1 e 1
+
+ Retângulo
+ ID: 7
+ Âncora em: (143.72, 234.56)
+ Largura: 20.500000
+ Altura 21.900000
+ Cor de borda: #784421
+ Cor de preenchimento: #00aa88
+[*] shft 1 d 1
+
+ Retângulo
+ ID: 5
+ Âncora em: (377.79, 636.41)
+ Largura: 13.500000
+ Altura 17.300000
+ Cor de borda: #784421
+ Cor de preenchimento: #00aa88
+[*] shft 1 e 1
+
+ Retângulo
+ ID: 7
+ Âncora em: (143.72, 234.56)
+ Largura: 20.500000
+ Altura 21.900000
+ Cor de borda: #784421
+ Cor de preenchimento: #00aa88
+[*] shft 1 d 1
+
+ Retângulo
+ ID: 5
+ Âncora em: (377.79, 636.41)
+ Largura: 13.500000
+ Altura 17.300000
+ Cor de borda: #784421
+ Cor de preenchimento: #00aa88
+[*] shft 1 e 1
+
+ Retângulo
+ ID: 7
+ Âncora em: (143.72, 234.56)
+ Largura: 20.500000
+ Altura 21.900000
+ Cor de borda: #784421
+ Cor de preenchimento: #00aa88
+[*] dsp 1 366.12 359.93 v
+
+ Retângulo
+ ID: 7
+ Âncora em: (376.12, 369.93)
+ Largura: 20.500000
+ Altura 21.900000
+ Cor de borda: #784421
+ Cor de preenchimento: #00aa88
+[*] shft 1 e 1
+
+ Retângulo
+ ID: 8
+ Âncora em: (107.42, 523.54)
+ Largura: 24.000000
+ Altura 24.200000
+ Cor de borda: #6600ff
+ Cor de preenchimento: #c8ab37
+[*] dsp 1 370.18 367.19 v
+
+ Retângulo
+ ID: 8
+ Âncora em: (380.18, 377.19)
+ Largura: 24.000000
+ Altura 24.200000
+ Cor de borda: #6600ff
+ Cor de preenchimento: #c8ab37
+[*] shft 2 d 1
+
+ Retângulo
+ ID: 9
+ Âncora em: (124.85, 400.84)
+ Largura: 27.500000
+ Altura 26.500000
+ Cor de borda: #784421
+ Cor de preenchimento: #00aa88
+[*] dsp 2 -366.12 359.93 v
+
+ Retângulo
+ ID: 9
+ Âncora em: (343.88, 369.93)
+ Largura: 27.500000
+ Altura 26.500000
+ Cor de borda: #784421
+ Cor de preenchimento: #00aa88
+[*] shft 2 d 1
+
+ Retângulo
+ ID: 10
+ Âncora em: (223.48, 188.21)
+ Largura: 31.000000
+ Altura 28.800000
+ Cor de borda: #6600ff
+ Cor de preenchimento: #c8ab37
+[*] dsp 2 -362.06 367.19 v
+
+ Retângulo
+ ID: 10
+ Âncora em: (347.94, 377.19)
+ Largura: 31.000000
+ Altura 28.800000
+ Cor de borda: #6600ff
+ Cor de preenchimento: #c8ab37
+[*] shft 3 e 1
+
+ Retângulo
+ ID: 15
+ Âncora em: (301.02, 328.84)
+ Largura: 48.500000
+ Altura 40.300000
+ Cor de borda: #784421
+ Cor de preenchimento: #00aa88
+[*] dsp 3 -366.12 -359.93 v
+
+ Retângulo
+ ID: 15
+ Âncora em: (343.88, 350.07)
+ Largura: 48.500000
+ Altura 40.300000
+ Cor de borda: #784421
+ Cor de preenchimento: #00aa88
+[*] shft 3 e 1
+
+ Retângulo
+ ID: 16
+ Âncora em: (207.82, 517.40)
+ Largura: 52.000000
+ Altura 42.600000
+ Cor de borda: #6600ff
+ Cor de preenchimento: #c8ab37
+[*] dsp 3 -365.32 -352.68 v
+
+ Retângulo
+ ID: 16
+ Âncora em: (344.68, 357.32)
+ Largura: 52.000000
+ Altura 42.600000
+ Cor de borda: #6600ff
+ Cor de preenchimento: #c8ab37
+[*] shft 4 d 1
+
+ Retângulo
+ ID: 17
+ Âncora em: (160.60, 396.54)
+ Largura: 55.500000
+ Altura 44.900000
+ Cor de borda: #784421
+ Cor de preenchimento: #00aa88
+[*] dsp 4 366.12 -359.93 v
+
+ Retângulo
+ ID: 17
+ Âncora em: (376.12, 350.07)
+ Largura: 55.500000
+ Altura 44.900000
+ Cor de borda: #784421
+ Cor de preenchimento: #00aa88
+[*] shft 4 d 1
+
+ Retângulo
+ ID: 18
+ Âncora em: (123.96, 406.16)
+ Largura: 59.000000
+ Altura 47.200000
+ Cor de borda: #6600ff
+ Cor de preenchimento: #c8ab37
+[*] dsp 4 366.92 -352.68 v
+
+ Retângulo
+ ID: 18
+ Âncora em: (376.92, 357.32)
+ Largura: 59.000000
+ Altura 47.200000
+ Cor de borda: #6600ff
+ Cor de preenchimento: #c8ab37
+[*] calc
+-> Verificação: Forma 7 vs Forma 8. SOBREPOSIÇÃO.
+   Ação: Forma 7 (área 448.95) foi esmagada por Forma 8 (área 580.80).
+-> Verificação: Forma 9 vs Forma 10. SOBREPOSIÇÃO.
+   Ação: Forma 9 (área 728.75) foi esmagada por Forma 10 (área 892.80).
+-> Verificação: Forma 15 vs Forma 16. SOBREPOSIÇÃO.
+   Ação: Forma 15 (área 1954.55) foi esmagada por Forma 16 (área 2215.20).
+-> Verificação: Forma 17 vs Forma 18. SOBREPOSIÇÃO.
+   Ação: Forma 17 (área 2491.95) foi esmagada por Forma 18 (área 2784.80).
+Área total esmagada no round: 5624.20
+
+ ----- RELATÓRIO FINAL ----- 
+Pontuação total: 5624.200000
+Número de instruções realizadas: 37
+Número total de disparos: 8
+Número de formas esmagadas: 4
+Número de formas clonadas: 0

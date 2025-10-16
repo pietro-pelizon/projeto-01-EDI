@@ -9,7 +9,7 @@
 					"jsonFile" : "directory-.-Debug-d0094a50bb2071803777.json",
 					"minimumCMakeVersion" : 
 					{
-						"string" : "3.31"
+						"string" : "3.10"
 					},
 					"projectIndex" : 0,
 					"source" : ".",
@@ -27,7 +27,7 @@
 					[
 						0
 					],
-					"name" : "EDI_projeto1",
+					"name" : "ted",
 					"targetIndexes" : 
 					[
 						0
@@ -38,9 +38,9 @@
 			[
 				{
 					"directoryIndex" : 0,
-					"id" : "EDI_projeto1::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-EDI_projeto1-Debug-6634fd4d49f963b16016.json",
-					"name" : "EDI_projeto1",
+					"id" : "ted::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-ted-Debug-a0a3b9d4a2f841711c63.json",
+					"name" : "ted",
 					"projectIndex" : 0
 				}
 			]
