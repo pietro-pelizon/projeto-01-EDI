@@ -49,60 +49,71 @@ forma *adicionaFormaCarregador(carregador *l, forma *f) {
 	return f;
 }
 
-forma *insereDoChaoParaCarregador(carregador *l, chao *c) {
-	if (l == NULL || c == NULL) {
-		return NULL;
+forma *insereDoChaoParaCarregador(carregador *car, chao *c) {
+	if (c == NULL || car == NULL) {
+		printf("Erro na funcao 'insereDoChaoParaCarregador'!\n");
 	}
 
-	forma *retirado = retiraDoChao(c);
+	forma *f = retiraDoChao(c);
+	if (f != NULL) {
+		adicionaFormaCarregador(car, f);
+	}
 
-	return adicionaFormaCarregador(l, retirado);
+	return f;
 }
 
 fila *loadCarregadorN(chao *c, carregador *alvo, int n) {
-
-
-	if (n < 0) {
-		return criaFila();
-	}
-	if (c == NULL || alvo == NULL) {
-		printf("Erro: chao ou carregador nulos passados para a loadCarregador!\n");
-		return NULL;
-	}
-
-	if (n == 0) {
-		printf("Quantidade de formas nula, nada a colocar no carregador!\n");
-		return 0;
-	}
-
+	if (n < 0) return criaFila();
+	if (c == NULL || alvo == NULL) return NULL;
 
 	fila *fila_formas_inseridas = criaFila();
-	for (int i = 0; i < n; i++) {
-		if (chaoEstaVazio(c)) {
-			printf("As formas do chão se esgotaram. Foram carregadas %d de %d formas.\n", i, n);
-			break;
-		}
-		forma *forma_movida	=	insereDoChaoParaCarregador(alvo, c);
 
-		if (forma_movida != NULL) {
-			enqueue(fila_formas_inseridas, forma_movida);
-		}
+	printf("DEBUG LC: Ordem das formas no carregador %d:\n", getIDCarregador(alvo));
+	pilha *temp = criaPilha();
+	for (int i = 0; i < n; i++) {
+		if (chaoEstaVazio(c)) break;
+
+		forma *forma_movida = retiraDoChao(c);
+		printf("  Forma %d - Área: %.2f\n", getIDforma(forma_movida), getAreaForma(forma_movida));
+		push(temp, forma_movida);
 	}
 
+	while (!estaVaziaPilha(temp)) {
+		forma *f = pop(temp);
+		adicionaFormaCarregador(alvo, f);
+		enqueue(fila_formas_inseridas, f);
+	}
+
+	liberaPilha(temp, NULL);
 	return fila_formas_inseridas;
 }
 
 
 bool carregadorEstaVazio(carregador *c) {
-	if (c == NULL) return true;
+	if (c == NULL) {
+		printf("DEBUG CARREGADOR: Carregador NULL!\n");
+		return true;
+	}
 
-	return estaVazia(c -> p);
+	bool vazio = estaVaziaPilha(c -> p);
+	printf("DEBUG CARREGADOR: Carregador %d vazio? %d\n", getIDCarregador(c), vazio);
+	return vazio;
+
 }
 
 forma *removeDoCarregador(carregador *c) {
-	if (c == NULL) return NULL;
-
+	if (c == NULL) {
+		printf("DEBUG CARREGADOR: Tentativa de remover de carregador NULL\n");
+		return NULL;
+	}
 	forma *removido = pop(c -> p);
+
+	if (removido == NULL) {
+		printf("DEBUG CARREGADOR: Pop retornou NULL para carregador %d\n", getIDCarregador(c));
+	} else {
+		printf("DEBUG CARREGADOR: Removeu forma ID=%d do carregador %d\n",
+			   getIDforma(removido), getIDCarregador(c));
+	}
 
 	return removido;
 }
@@ -111,12 +122,16 @@ int getIDCarregador(carregador *c) {
 	return c -> i;
 }
 
-void destrutorCarregador(carregador *c) {
-	if (c == NULL) {
+void destrutorCarregador(carregador **c_ptr) {
+	if (c_ptr == NULL || *c_ptr == NULL) {
 		return;
 	}
 
-	liberaPilha(c -> p, destrutorForma);
+	carregador *c = *c_ptr;
+
+	liberaPilha(c -> p, NULL);
 
 	free(c);
+
+	*c_ptr = NULL;
 }
