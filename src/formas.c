@@ -1,17 +1,9 @@
 #include <stdio.h>
 
-#define _POSIX_C_SOURCE 200809L
 #include "formas.h"
 #include "circulo.h"
 #include <stdlib.h>
-#include <stdbool.h>
 #include <string.h>
-
-#include "formas.h"
-
-#include <tgmath.h>
-
-#include "circulo.h"
 #include "retangulo.h"
 #include "linha.h"
 #include "svg.h"
@@ -276,7 +268,7 @@ char *getCorComplementar(char *cor_hexa_original) {
     return cor_complementar_hexa;
 }
 
-void alternaCores(forma *f) {
+void alterna_cores_forma(forma *f) {
 	if (f == NULL) {
 		return;
 	}
@@ -301,13 +293,13 @@ void alternaCores(forma *f) {
 	free(copia_preenchimento);
 }
 
-void trocaCores(forma *f1, forma *f2) {
+void alterna_cores_entre_formas(forma *f1, forma *f2) {
 	if (f1 == NULL || f2 == NULL) {
 		return;
 	}
 
 	if (f1 == f2) {
-		alternaCores(f1);
+		alterna_cores_forma(f1);
 		return;
 	}
 

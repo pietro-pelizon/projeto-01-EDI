@@ -109,11 +109,11 @@ char *getCorComplementar(char *cor_hexa_original);
 /// @brief: Troca a cor de preenchimento de f1 com a cor de borda de f2.
 /// @param f1: Ponteiro para a forma 1.
 /// @param f2: Ponteiro para a forma 2;
-void trocaCores(forma *f1, forma *f2);
+void alterna_cores_entre_formas(forma *f1, forma *f2);
 
 /// @brief: Troca a cor de preenchimento da forma com sua cor de borda e vice-versa.
 /// @param f: Ponteiro para a forma.
-void alternaCores(forma *f);
+void alterna_cores_forma(forma *f);
 
 /// @brief: Dado o tipo da forma, pega seus dados e a desenha em um arquivo svg.
 /// @param f: Ponteiro para a forma.
