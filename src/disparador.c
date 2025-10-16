@@ -82,7 +82,7 @@ forma* shiftDisparador(disparador *d, char botao, int n) {
 	printf("DEBUG SHFT: Ordem de disparo - Botão: %c\n", botao);
     for (int i = 0; i < n; i++) {
         switch (botao) {
-            case 'e': {
+            case 'd': {
                 printf("DEBUG SHFT: Botão esquerdo pressionado. Forma atual em disparo: %p\n",
                        (void*)forma_anterior);
 
@@ -106,7 +106,7 @@ forma* shiftDisparador(disparador *d, char botao, int n) {
                 break;
             }
 
-            case 'd': {
+            case 'e': {
                 printf("DEBUG SHFT: Botão direito pressionado. Forma atual em disparo: %p\n",
                        (void*)forma_anterior);
 
