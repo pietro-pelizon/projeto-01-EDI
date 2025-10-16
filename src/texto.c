@@ -203,8 +203,9 @@ char *getTxtoTexto(texto *t) {
 	return t -> txto;
 }
 
-int tamanhoTexto(texto *t) {
+int getTamanhoTexto(texto *t) {
 	return strlen(t -> txto);
+
 }
 
 estilo *getEstiloTexto(texto *t) {
@@ -284,19 +285,27 @@ double calcAreaTexto(texto *t) {
 	return area;
 }
 
-void destrutorTexto(texto **t) {
-	if (t == NULL || *t == NULL) {
-		return;
+void destrutorTexto(texto *t) {
+	if (t == NULL) return;
+
+
+	if (t -> corp) {
+		free(t -> corp);
+		t -> corp = NULL;
+	}
+	if (t -> corb) {
+		free(t -> corb);
+		t -> corb = NULL;
+	}
+	if (t -> txto) {
+		free(t -> txto);
+		t -> txto = NULL;
+	}
+	if (t -> e) {
+		destroiEstilo(t -> e);
+		t -> e = NULL;
 	}
 
-	texto *t2 = *t;
-
-	free(t2 -> corp);
-	free(t2 -> corb);
-	free(t2 -> txto);
-	free(t2 -> e);
-	free(t2);
-
-	*t = NULL;
+	free(t);
 }
 

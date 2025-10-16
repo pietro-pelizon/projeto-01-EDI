@@ -41,11 +41,11 @@ bool chaoEstaVazio(chao *c);
 /// @brief: Coloca uma forma no chão.
 /// @param c: Ponteiro para o chão.
 /// @param f: Ponteiro para a forma que será colocada no chão.
-void adicionaNoChao(chao *c, forma *f);
+void voltaProChao(chao *c, forma *f);
 
 /// @brief: Retira uma forma do chão.
 /// @param c: Ponteiro para o chão.
-/// @return: Retorna um ponteiro para a forma retirada.
+/// @return: Retorna um ponteiro para a forma que foi retirada.
 forma *retiraChao(chao *c);
 
 /// @brief: Libera toda a memória do chão.

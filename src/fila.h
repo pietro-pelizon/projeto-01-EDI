@@ -1,3 +1,4 @@
+
 #ifndef FILA_H
 #define FILA_H
 #include "stdbool.h"
@@ -34,7 +35,7 @@ int getTamFila(fila *f);
 /// @brief: Verifica se a fila está vazia.
 /// @param f: Ponteiro para a fila a ser checada.
 /// @return: Retorna TRUE para caso esteja vazia e FALSE para o contrário.
-bool estaVazia(fila *f);
+bool estaVaziaFila(fila *f);
 
 /// @brief: Adiciona um dado à fila, ao seu fim.
 /// @param f: Ponteiro para a fila.
@@ -44,12 +45,12 @@ void enqueue(fila *f, void *item);
 /// @brief: Pega o elemento que está no início da fila sem o remover.
 /// @param f: Ponteiro para a fila.
 /// @return: Retorna o elemento que está no início da fila. NULL caso a fila esteja vazia.
-void *getInicioFila(fila *f);
+nodeF *getInicioFila(fila *f);
 
 /// @brief: Pega o dado que se encontra no fim da fila.
 /// @param f: Ponteiro para a fila.
 /// @return: Um ponteiro para o objeto que se encontra no fim da fila. NULL caso a fila esteja vazia.
-void *getFimFila(fila *f);
+nodeF *getFimFila(fila *f);
 
 /// @brief: Remove um dado da fila, do seu início.
 /// @param f: Um ponteiro para a fila em questão.
@@ -70,6 +71,17 @@ void copiaFila(fila *principal, fila *copia);
 /// @brief: Dada uma fila, realiza uma ação determina pela função inserida no callback;
 /// @param f: Ponteiro para a fila.
 /// @param acao: Ponteiro para a função da ação, essa função recebe o item atual da fila.
-void passtroughQueue(fila *f, void *(acao)(void *item));
+/// @param aux_data: Dado auxiliar, caso a função precise.
+void passthroughQueue(fila *f, void (*acao)(void *item, void *aux_data), void *aux_data);
+
+/// @brief: Pega o proximo nó da fila.
+/// @param n: Ponteiro para o nó.
+/// @return: O nó que está na frente do nó passado como parâmetro.
+nodeF *getProxNode(nodeF *n);
+
+/// @brief: Pega o conteúdo de determinado nó da fila.
+/// @param n: Ponteiro para o nó.
+/// @return: O conteúdo do nó.
+void *getItemNode(nodeF *n);
 
 #endif //FILA_H

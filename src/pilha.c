@@ -4,11 +4,11 @@
 
 typedef struct stNodeP {
     void *item;
-    nodeP *prox;
-}nodeP;
+    node *prox;
+}node;
 
 typedef struct stPilha {
-    nodeP *topo;
+    node *topo;
     int tam;
 }pilha;
 
@@ -29,7 +29,7 @@ pilha *criaPilha(void) {
 void push(pilha *p, void *item) {
     if (p == NULL) return;
 
-    nodeP *novo = (nodeP*) malloc(sizeof(nodeP));
+    node *novo = (node*) malloc(sizeof(node));
     if (!novo) {
         printf("erro ao alocar memoria para o noh da pilha\n");
         return;
@@ -43,11 +43,11 @@ void push(pilha *p, void *item) {
 }
 
 void *pop(pilha *p) {
-    if (estaVazia(p)) {
+    if (estaVaziaPilha(p)) {
         return NULL;
     }
 
-    nodeP *memory = p -> topo;
+    node *memory = p -> topo;
 
     void *itemDesempilhado = memory -> item;
     p -> topo = memory -> prox;
@@ -59,7 +59,7 @@ void *pop(pilha *p) {
 }
 
 void *topo(pilha *p) {
-    if (estaVazia(p)) {
+    if (estaVaziaPilha(p)) {
         printf("a pilha esta vazia\n");
         return NULL;
     }
@@ -67,7 +67,7 @@ void *topo(pilha *p) {
     return p -> topo -> item;
 }
 
-bool estaVazia(pilha *p) {
+bool estaVaziaPilha(pilha *p) {
     if (p -> tam == 0) {
         return true;
     }
@@ -76,20 +76,21 @@ bool estaVazia(pilha *p) {
 }
 
 void liberaPilha(pilha *p, void (*destrutor)(void *item)) {
-    if (estaVazia(p)) {
+    if (p == NULL) {
         return;
     }
 
-    nodeP *atual = p -> topo;
+    node *atual = p -> topo;
 
     while (atual != NULL) {
-        nodeP *proximo = atual -> prox;
+        node *proximo = atual -> prox;
 
-        if (destrutor != NULL) {
+        if (destrutor != NULL && atual -> item != NULL) {
             destrutor(atual -> item);
         }
 
         free(atual);
+
         atual = proximo;
     }
 
@@ -98,12 +99,12 @@ void liberaPilha(pilha *p, void (*destrutor)(void *item)) {
 
 
 void copiaPilha(pilha *principal, pilha *copia) {
-    if (estaVazia(principal)) {
+    if (estaVaziaPilha(principal)) {
         return;
     }
 
     pilha *auxiliar = criaPilha();
-    nodeP *atual = principal -> topo;
+    node *atual = principal -> topo;
     while (atual != NULL) {
         push(auxiliar, atual -> item);
         atual = atual -> prox;

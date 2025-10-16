@@ -1,8 +1,13 @@
 #ifndef ARENA_H
 #define ARENA_H
 
+#include <stdio.h>
+
 #include "chao.h"
+#include "fila.h"
 #include "formas.h"
+#include "processaQry.h"
+
 
 
  /* ------- TAD ARENA -------
@@ -24,14 +29,12 @@
  */
 
 
-/// A definição da struct fica no arquivo .c
 typedef struct stArena arena;
+typedef struct stRepositorio repositorio;
 
-/// @brief: Cria uma arena com largura e altura.
-/// @param largura: Define o limite horizontal da arena.
-/// @param altura: Define o limite vertical da arena.
+/// @brief: Cria uma arena.
 /// @return: Retorna um ponteiro para a arena criada.
-arena *criaArena(double largura, double altura);
+arena *criaArena();
 
 /// @brief: Adiciona uma forma à arena.
 /// @param a: Ponteiro para a arena.
@@ -41,50 +44,27 @@ forma *adicionaFormaArena(arena *a, forma *f);
 
 /// @brief: Remove uma forma da arena.
 /// @param a: Ponteiro para a arena.
-/// @param f: Ponteiro para o objeto que será removido.
 /// @return: Retorna um ponteiro para o objeto removido.
-forma *removeFormaArena(arena *a, forma *f);
+forma *removeFormaArena(arena *a);
 
-/// @brief: Libera a arena e todas as formas dentro dela.
+/// @brief: Destrói a arena.
 /// @param a: Ponteiro para a arena.
 void destrutorArena(arena **a);
-
-/// @brief: Pega e retorna a largura atual da arena.
-/// @param a: Ponteiro para a arena.
-/// @return: Largura da arena.
-double getLarguraArena(arena *a);
-
-/// @brief: Pega e retorna a altura atual da arena.
-/// @param a: Ponteiro para a arena.
-/// @return: Altura da arena.
-double getAlturaArena(arena *a);
-
-/// @brief: Define uma nova largura para a arena.
-/// @param a: Ponteiro para a arena.
-void setLarguraArena(arena *a, double novaLargura);
-
-/// @brief: Define uma nova altura para arena.
-/// @param a: Ponteiro para a arena.
-void setAlturaArena(arena *a, double novaAltura);
 
 /// @brief: Conta e retorna a quantidade de formas que estão na arena.
 /// @param a: Ponteiro para a arena.
 /// @return: Quantidade de formas na arena.
 int getArenaNumFormas(arena *a);
 
-/// @brief: Pega e retorna a quantidade de formas na arena.
-/// @param a: Ponteiro para a arena.
-/// @return:O número de formas na arena.
-int getTamArena(arena *a);
-
-
-/// @brief: Procedimento base desse TAD. Processa a arena considerando a ordem
-/// de entrada dos objetos lançados nela, e então determina se o objeto será
-/// devolvido ao chão, destruído ou clonado.
+/// @brief: Processa a considerando as 2 primeiras formas arremessadas e assim sucessivamente.
 /// @param a: Ponteiro para a arena.
 /// @param c: Ponteiro para o chão.
-/// @param pontuacao_total: Soma da área das formas destruídas.
-/// @return: Retorna a pontuação total, obtida pela soma da área de todas as formas destruídas.
-double processaArena(arena *a, double, chao *c, double pontuacao_total);
+/// @param pontuacao_total: Área das formas esmagadas.
+/// @param anotacoes_svg: Fila de anotações do .svg (para depois printar as formas no arquivo .svg).
+/// @param arquivo_txt: Ponteiro para o arquivo .txt para reportar se houve ou não sobreposição.
+/// @param formas_clonadas: Número de formas clonadas no processo.
+/// @param formas_destruidas: Número de formas destruídas no processo.
+/// @param repo: Ponteiro para o repositório de carregadores e disparadores.
+void processaArena(arena *a, chao *c, double *pontuacao_total, fila *anotacoes_svg, FILE *arquivo_txt, int *formas_clonadas, int *formas_destruidas, repositorio *repo);
 
 #endif //ARENA_H

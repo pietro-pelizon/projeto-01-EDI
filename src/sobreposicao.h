@@ -29,9 +29,8 @@
 /// @brief: Checa se duas formas genéricas se sobrepõem num plano. Função mestre que chama as outras funções especialistas.
 /// @param f1: Ponteiro para a primeira forma genérica.
 /// @param f2: Ponteiro para a segunda forma genérica.
-/// @return: true se há sobreposição, false caso contrário.
+/// @return: True se há sobreposição, false caso contrário.
 bool formasSobrepoem(forma *f1, forma *f2);
-
 
 /* ------- FUNÇÕES ESPECIALISTAS ------- */
 
@@ -80,25 +79,28 @@ bool sobrepoe_retangulo_linha(retangulo *r, linha *l);
 
 /* ------- FUNÇÕES ADICIONAIS PARA A VERIFICAÇÃO DE SOBREPOSIÇÃO --------*/
 
+/// @brief: Função auxiliar na verificação da sobreposição entre texto e círculo.
+/// @param txt: O objeto texto.
+/// @param circ: O objeto circulo.
+/// @return: true caso haja sobreposição e false caso o contrário.
+bool sobrepoe_texto_circulo(texto *txt, circulo *circ);
+
+/// @brief: Função auxiliar para a verificação da sobreposição entre texto e retângulo.
+/// @param txt: Objeto texto.
+/// @param ret: Objeto retângulo.
+/// @return: true caso haja sobreposição e false caso o contrário.
+bool sobrepoe_texto_retangulo(texto *txt, retangulo *ret);
+
+/// @brief: Função auxiliar para a verficação da sobreposição entre texto e texto.
+/// @param txt1: Texto 1.
+/// @param txt2: Texto 2.
+/// @return: true caso haja sobreposição e false caso o contrário.
+bool sobrepoe_texto_texto(texto *txt1, texto *txt2);
+
 /// @brief: Converte um objeto texto em um segmento de reta, preenchendo um objeto linha existente.
 /// @param t: Ponteiro para o objeto texto de origem.
 /// @param l_out: Ponteiro para o objeto linha de destino que será preenchido com as coordenadas.
 void converter_texto_para_linha(texto *t, linha *l_out);
-
-/// @brief: Calcula o quadrado da distância euclidiana entre dois pontos (x1, y1) e (x2, y2).
-/// @param x1: Coordenada X do primeiro ponto.
-/// @param y1: Coordenada Y do primeiro ponto.
-/// @param x2: Coordenada X do segundo ponto.
-/// @param y2: Coordenada Y do segundo ponto.
-/// @return: O valor da distância ao quadrado.
-double distancia_quadrada(double x1, double y1, double x2, double y2);
-
-/// @brief: Verifica se um ponto (px, py) está contido dentro dos limites de um retângulo.
-/// @param r: Ponteiro para o objeto retângulo.
-/// @param px: Coordenada X do ponto a ser verificado.
-/// @param py: Coordenada Y do ponto a ser verificado.
-/// @return: true se o ponto está dentro, false caso contrário.
-bool ponto_dentro_retangulo(retangulo *r, double px, double py);
 
 /// @brief: Determina a orientação de um trio ordenado de pontos (p, q, r).
 /// @param px: Coordenada X do primeiro ponto.

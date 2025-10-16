@@ -4,9 +4,10 @@
 #include "carregadores.h"
 #include "formas.h"
 #include "arena.h"
+#include "processaQry.h"
 
 
- /* ------- TAD DISPARADOR -------
+/* ------- TAD DISPARADOR -------
  * O disparador é um objeto, que contém os seguintes atributos:
  * Identificador: Permite diferenciar os disparadores uns dos outros pelo ID;
  * Âncora: Define a posição do disparador no cenário, contendo as
@@ -19,6 +20,7 @@
  */
 
 typedef struct stDisparador disparador;
+typedef struct stArena arena;
 
 /// @brief: Cria um disparador com os atributos dados pelos parâmetros,
 /// e uma posição de disparo.
@@ -46,7 +48,7 @@ void posicionaDisparador(disparador *d, double x, double y);
 /// @param d: Disparador ao qual o carregador será encaixado.
 /// @param esq: Carregador esquerdo.
 /// @param dir: Carregador direito.
-void attachDisparador(disparador *d, carregador *esq, carregador *dir);
+void attachDisparador(disparador *d, carregador *dir, carregador *esq);
 
 /// @brief: Coloca a carga que estava no carregador em posição de disparo.
 /// Caso já houver uma carga no disparador, a transfere para o topo da carga
@@ -75,7 +77,7 @@ forma *disparaDisparador(disparador *d, double dx, double dy);
 /// @param ix: Valor a ser multiplicado com o iterador e acrescentado ao deslocamento dx.
 /// @param iy: Valor a ser multiplicado com o iterador e acrescentado ao deslocamento dy.
 /// @param a: Arena aonde as formas serão disparadas.
-void rajadaDisparador(disparador *d, char botao, double dx, double dy, double ix, double iy, arena *a);
+fila *rajadaDisparador(disparador *d, char botao, double dx, double dy, double ix, double iy, arena *a);
 
 /// @brief: Pega a forma que está em posição de disparo.
 /// @param d: Ponteiro para o disparador que contém a forma.
@@ -91,5 +93,14 @@ double getXdisparador(disparador *d);
 /// @param d: Ponteiro para o disparador.
 /// @return: Retorna a coordenada y da posição do disparador.
 double getYdisparador(disparador *d);
+
+/// @brief: Destrói um disparador.
+/// @param d: Ponteiro para o disparador a ser destruído.
+void destrutorDisparador(disparador **d);
+
+/// @brief: Limpa a forma em posição de disparo de um disparador específico
+/// @param d: Disparador
+/// @param forma: Forma a ser removida (se estiver em posição de disparo)
+void limpaFormaDoDisparador(disparador *d, forma *forma);
 
 #endif //DISPARADOR_H

@@ -1,35 +1,33 @@
-cmake_minimum_required(VERSION 3.31)
-project(EDI_projeto1 C)
+# Versão mínima do CMake
+cmake_minimum_required(VERSION 3.10)
+
+# Nome do projeto e linguagem (C)
+project(ted C)
 
 set(CMAKE_C_STANDARD 99)
+set(CMAKE_C_STANDARD_REQUIRED ON)
 
-add_executable(EDI_projeto1
-        pilha.c
-        pilha.h
-        fila.c
-        fila.h
-        circulo.c
-        circulo.h
-        retangulo.c
-        retangulo.h
-        linha.c
-        linha.h
-        texto.c
-        texto.h
-        src/carregador.h
-        src/svg.c
-        src/svg.h
-        carregadores.c
-        carregadores.h
-        disparador.c
-        disparador.h
-        arena.c
-        arena.h
-        chao.c
-        chao.h
-        src/formas.c
-        src/formas.h
-        main.c
+add_compile_options(-Wall -Wextra -ggdb -fstack-protector-all)
+
+# O CLion usará esta lista para entender seu projeto.
+add_executable(ted # (Você ainda vai criar este)
+        src/arena.c
+        src/carregadores.c
         src/chao.c
-        src/chao.h
+        src/circulo.c
+        src/disparador.c
+        src/fila.c
+        src/formas.c
+        src/linha.c
+        src/pilha.c
+        src/processaGeo.c
+        src/processaQry.c
+        src/retangulo.c
+        src/sobreposicao.c
+        src/svg.c
+        src/texto.c
+        src/main.c
 )
+
+# Linka a biblioteca de matemática (-lm), necessária para funções como sqrt, fabs, etc.
+target_link_libraries(ted PRIVATE m)

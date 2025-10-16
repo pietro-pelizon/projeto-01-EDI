@@ -20,9 +20,8 @@
  * removidos ('pop) do topo.
  */
 
-/// A definição da struct foi movida para o arquivo.c
 typedef struct stPilha pilha;
-typedef struct stNodeP nodeP;
+typedef struct stNodeP node;
 
 /// @brief: Cria uma pilha de alocação dinâmica
 /// @return: Retorna um ponteiro para o início da pilha. Retorna NULL caso a alocação da pilha falhe.
@@ -46,7 +45,7 @@ void *topo(pilha *p);
 /// @brief: Verifica se a pilha está vazia.
 /// @param p: Ponteiro para a struct pilha.
 /// @return: Retorna TRUE se a pilha estiver vazia, FALSE caso contrário.
-bool estaVazia(pilha *p);
+bool estaVaziaPilha(pilha *p);
 
 /// @brief: Libera todos os dados dentro da estrutura.
 /// @param p: Ponteiro para a pilha a ser liberada.
