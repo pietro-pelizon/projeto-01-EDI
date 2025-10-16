@@ -4,8 +4,10 @@
 #include "formas.h"
 #include <stdbool.h>
 
+#include "fila.h"
 
- /* ------- TAD CHAO -------
+
+/* ------- TAD CHAO -------
  * O TAD Chão funciona como um repositório ou "inventário" para as
  * formas criadas, mas ainda não estão em jogo (ou seja,
  * ainda não foram colocadas em um carregador ou disparadas na arena).
@@ -24,7 +26,6 @@
  * restantes no chão também são liberadas da memória.
  */
 
-/// A definição da struct está no arquivo .c
 typedef struct stChao chao;
 
 /// @brief: Cria o chão (onde as formas ficam antes
@@ -51,5 +52,10 @@ forma *retiraDoChao(chao *c);
 /// @brief: Libera toda a memória do chão.
 /// @param c: Ponteiro para o chão a ser liberado.
 void destrutorChao(chao *c);
+
+/// @brief: Pega e retorna a fila do chão.
+/// @param c: Ponteiro para o chão.
+/// @return: Fila do chão.
+fila *getFilaDoChao(chao *c);
 
 #endif //CHAO_H
