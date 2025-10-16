@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <string.h>
 
-// Inclua todos os seus TADs principais
 #include "fila.h"
 #include "chao.h"
 #include "arena.h"
@@ -9,8 +8,6 @@
 #include "processaQry.h"
 #include "svg.h"
 
-// Função auxiliar para montar caminhos de arquivos.
-// Ex: junta "diretorio/" e "arquivo.txt" para "diretorio/arquivo.txt"
 static void montaCaminho(char* path_completo, const char* base_dir, const char* nome_arquivo) {
     if (base_dir != NULL && strlen(base_dir) > 0) {
         sprintf(path_completo, "%s/%s", base_dir, nome_arquivo);
@@ -60,25 +57,26 @@ int main(int argc, char *argv[]) {
     sprintf(path_svg_inicial, "%s/%s.svg", dir_saida, nome_base_geo);
 
     // --- 3. Inicialização das Estruturas de Dados ---
-    arena* minha_arena = criaArena(1000, 800); // Tamanho padrão, pode ser alterado se necessário
+    arena* minha_arena = criaArena();
     repositorio* repo = criarRepositorio();
     fila* anotacoes_svg = criaFila();
     double pontuacao = 0.0;
-    int formas_clonadas = 0, formas_esmagadas = 0; // Contadores para o relatório final
+    int formas_clonadas = 0, formas_esmagadas = 0;
 
     // --- 4. Execução do ProcessaGeo ---
     chao *meu_chao = processaGeo(path_geo_completo);
 
-    // --- 5. Geração do SVG Inicial ---
-    printf("Gerando SVG inicial: %s\n", path_svg_inicial);
-    gerarArquivoSvg(path_svg_inicial, getFilaDoChao(meu_chao));
     if (meu_chao == NULL) {
-        printf("Falha critica ao processar o arquivo .geo! Encerrando programa...\n");
+        fprintf(stderr,"Falha critica ao processar o .geo (%s)\n", path_geo_completo);
         destrutorArena(&minha_arena);
         destrutorRepositorio(repo);
         liberaFila(anotacoes_svg, NULL);
         return 1;
     }
+
+    // --- 5. Geração do SVG Inicial ---
+    printf("Gerando SVG inicial: %s\n", path_svg_inicial);
+    gerarArquivoSvg(path_svg_inicial, getFilaDoChao(meu_chao));
 
     // --- 6. Execução do ProcessaQry (se aplicável) ---
     if (arq_qry_nome != NULL) {
@@ -96,21 +94,39 @@ int main(int argc, char *argv[]) {
         sprintf(path_svg_final, "%s/%s-%s.svg", dir_saida, nome_base_geo, nome_base_qry);
         sprintf(path_txt_final, "%s/%s-%s.txt", dir_saida, nome_base_geo, nome_base_qry);
 
+        printf("DEBUG MAIN: Tamanho da fila de anotações ANTES do processaQry: %d\n", getTamFila(anotacoes_svg));
+
+        printf("DEBUG MAIN: Pontuação antes do processaQry: %lf\n", pontuacao);
+
         printf("Processando arquivo .qry: %s\n", path_qry_completo);
         processaQry(repo, path_qry_completo, path_txt_final,
                             minha_arena, meu_chao, &pontuacao, anotacoes_svg,
                             &formas_clonadas, &formas_esmagadas);
 
+        printf("DEBUG MAIN: Tamanho da fila de anotações APÓS processaQry: %d\n", getTamFila(anotacoes_svg));
+
+        while (!estaVaziaFila(anotacoes_svg)) {
+            printf("DEBUG MAIN: Movendo 1 anotação para o chão...\n");
+            forma *anotacao = dequeue(anotacoes_svg);
+            adicionaNoChao(meu_chao, anotacao);
+        }
+
+        printf("DEBUG MAIN: Número de formas no chão ANTES de gerar SVG: %d\n", getTamFila(getFilaDoChao(meu_chao)));
+
+
         printf("Gerando SVG final: %s\n", path_svg_final);
         gerarArquivoSvg(path_svg_final, getFilaDoChao(meu_chao));
     }
 
+
     // --- 7. Liberação de Toda a Memória ---
     printf("Finalizando e liberando memória...\n");
+    devolveFormasCarregadoresParaChao(repo, meu_chao);
+    devolveFormasDisparadoresParaChao(repo, meu_chao);
     destrutorRepositorio(repo);
     destrutorChao(meu_chao);
     destrutorArena(&minha_arena);
-    liberaFila(anotacoes_svg, (void(*)(void*)) destrutorForma);
+    liberaFila(anotacoes_svg, NULL);
     printf("Programa finalizado com sucesso.\n");
 
     return 0;
