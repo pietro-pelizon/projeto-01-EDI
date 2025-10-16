@@ -28,16 +28,22 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="605ac3fb-d1f0-4484-a6d9-f8be5c2e2a26" name="Changes" comment="-new: lógica sobre a area do objeto I ser &gt;= J">
-      <change beforePath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/reply/codemodel-v2-e0999c1f23f0220ca91a.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/reply/index-2025-09-22T19-47-57-0547.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/reply/target-EDI_projeto1-Debug-6634fd4d49f963b16016.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.ninja_deps" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.ninja_log" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/EDI_projeto1.dir/pilha.c.obj" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/clion-Debug-log.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/clion-Debug-log.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/EDI_projeto1.exe" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src./build/arena.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src./build/carregadores.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src./build/chao.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src./build/circulo.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src./build/disparador.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src./build/fila.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src./build/formas.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src./build/linha.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src./build/main.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src./build/pilha.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src./build/processaGeo.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src./build/processaQry.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src./build/retangulo.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src./build/sobreposicao.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src./build/svg.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src./build/texto.o" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/src./build/arena.o" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/src./build/carregadores.o" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/src./build/chao.o" beforeDir="false" />
@@ -177,7 +183,7 @@
       <workItem from="1760625264606" duration="1879000" />
       <workItem from="1760627422976" duration="113000" />
       <workItem from="1760639218970" duration="679000" />
-      <workItem from="1760640030008" duration="913000" />
+      <workItem from="1760640030008" duration="1222000" />
     </task>
     <task id="LOCAL-00001" summary="-feat: main.c criado e finalizado">
       <option name="closed" value="true" />
