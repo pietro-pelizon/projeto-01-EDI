@@ -1,8 +1,6 @@
 #include "svg.h"
 
 #include <stdio.h>
-
-#include "arena.h"
 #include "fila.h"
 #include "formas.h"
 

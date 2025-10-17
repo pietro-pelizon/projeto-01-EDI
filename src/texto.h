@@ -1,6 +1,5 @@
 #ifndef TEXTO_H
 #define TEXTO_H
-#include <stddef.h>
 
 
 /* ------- TAD TEXTO -------

@@ -1,6 +1,5 @@
 #ifndef PROCESSAGEO_H
 #define PROCESSAGEO_H
-#include <stdio.h>
 
 #include "chao.h"
 
