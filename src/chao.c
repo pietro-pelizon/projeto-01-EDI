@@ -26,7 +26,6 @@ void adicionaNoChao(chao *c, forma *f) {
     }
 
     enqueue(c->filaChao, f);
-    printf("DEBUG: Forma ID=%d ADICIONADA ao chão\n", getIDforma(f));
 }
 
 forma *retiraDoChao(chao *c) {
@@ -40,7 +39,6 @@ forma *retiraDoChao(chao *c) {
 void destrutorChao(chao *chao) {
     if (chao == NULL) return;
 
-    printf("DEBUG CHAO: Destruindo chão. Formas na fila: %d\n", getTamFila(chao -> filaChao));
 
     if (chao -> filaChao != NULL) {
         liberaFila(chao -> filaChao, (void (*)(void*)) destrutorForma);

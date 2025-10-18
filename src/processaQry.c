@@ -101,16 +101,14 @@ static void acao_reportar_forma(void* item, void* aux_data) {
 
 
 void devolveFormasCarregadoresParaChao(repositorio *repo, chao *c) {
-    printf("DEBUG: Devolvendo formas de %d carregadores\n", repo->num_carregadores);
 
     for (int i = 0; i < repo->num_carregadores; i++) {
         carregador *car = repo->c[i];
-        printf("DEBUG: Processando carregador %d\n", getIDCarregador(car));
 
         while (!carregadorEstaVazio(car)) {
             forma *f = removeDoCarregador(car);
             if (f != NULL) {
-                printf("DEBUG: Devolvendo forma ID=%d do carregador %d ao chão\n",
+                printf("Devolvendo forma ID=%d do carregador %d ao chão\n",
                        getIDforma(f), getIDCarregador(car));
                 adicionaNoChao(c, f);
             }
@@ -124,7 +122,7 @@ void devolveFormasDisparadoresParaChao(repositorio *repo, chao *c) {
         forma *f = getFormaEmDisparo(d);
 
         if (f != NULL) {
-            printf("DEBUG: Devolvendo forma ID=%d do disparador %d (em posição de disparo) ao chão\n",
+            printf("Devolvendo forma ID=%d do disparador %d (em posição de disparo) ao chão\n",
                    getIDforma(f), getIDdisparador(d));
             adicionaNoChao(c, f);
             limpaFormaDoDisparador(d, f);
@@ -137,7 +135,7 @@ void limpaFormaDeTodosDisparadores(repositorio *repo, forma *f) {
         return;
     }
 
-    printf("DEBUG LIMPA: Limpando forma ID=%d de todos os disparadores\n", getIDforma(f));
+    printf("Limpando forma ID=%d de todos os disparadores\n", getIDforma(f));
 
     for (int i = 0; i < repo -> num_disparadores; i++) {
         limpaFormaDoDisparador(repo -> d[i], f);
@@ -238,8 +236,6 @@ void processaQry(repositorio *repo, char *nome_path_qry, const char *nome_txt, a
 
             int campos_lidos = sscanf(linha_buffer, "dsp %d %lf %lf %3s", &id, &dx, &dy, flag_visual);
 
-            printf("DEBUG DSP: Comando dsp - campos_lidos=%d, flag_visual='%s'\n", campos_lidos, flag_visual);
-
             disparador* d = encontraOUCriarDisparador(repo, id);
 
             if (d) {
@@ -258,7 +254,7 @@ void processaQry(repositorio *repo, char *nome_path_qry, const char *nome_txt, a
                     escreveDadosFormaTxt(forma_disparada, arquivo_txt, NULL);
 
                     if (campos_lidos == 4 && strcmp(flag_visual, "v") == 0) {
-                        printf("DEBUG DSP: Criando anotações visuais para disparo\n");
+                        printf("Criando anotações visuais para disparo\n");
 
                         double tam_caixa = 20.0;
                         retangulo* caixa_id = criaRetangulo(-1,
@@ -283,7 +279,7 @@ void processaQry(repositorio *repo, char *nome_path_qry, const char *nome_txt, a
                             x_final, y_final, "#FF0000", true);
                         enqueue(filaSVG, criaForma(-1, LINHA, proj_x));
 
-                        printf("DEBUG DSP: Anotações visuais criadas com sucesso\n");
+                        printf("Anotações visuais criadas com sucesso\n");
                     }
                 } else {
                     fprintf(arquivo_txt, "-> Falha no disparo: Nenhuma forma na posição de disparo.\n");
@@ -311,11 +307,6 @@ void processaQry(repositorio *repo, char *nome_path_qry, const char *nome_txt, a
         }
         else if (strcmp(comando, "calc") == 0) {
             instrucoes_realizadas++;
-
-            printf("\n--- DEBUG PRÉ-CALC ---\n");
-            printf("Pontuação antes do calc: %lf\n", *pontuacao_total);
-            printf("Formas na arena ANTES de processar: %d\n", getArenaNumFormas(arena));
-            printf("----------------------\n\n");
 
             processaArena(arena, chao, pontuacao_total, filaSVG, arquivo_txt, formas_clonadas, formas_esmagadas, repo);
         }

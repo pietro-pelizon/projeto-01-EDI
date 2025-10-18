@@ -107,15 +107,12 @@ void *dequeue(fila *f) {
 void liberaFila(fila *f, void (*destrutor)(void *item)) {
 	if (f == NULL) return;
 
-	printf("DEBUG FILA: Liberando fila com %d elementos\n", f -> tam);
-
-	nodeF *atual = f->inicio;
+	nodeF *atual = f -> inicio;
 	int contador = 0;
 	while (atual != NULL) {
 		nodeF *proximo = atual->prox;
 
-		if (destrutor != NULL && atual->item != NULL) {
-			printf("DEBUG FILA: Liberando forma do nó %d\n", contador);
+		if (destrutor != NULL && atual -> item != NULL) {
 			destrutor(atual->item);
 			contador++;
 		}
@@ -125,8 +122,6 @@ void liberaFila(fila *f, void (*destrutor)(void *item)) {
 		atual = proximo;
 	}
 
-
-	printf("DEBUG FILA: %d formas liberadas\n", contador);
 	free(f);
 }
 
