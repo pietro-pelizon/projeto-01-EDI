@@ -1,5 +1,5 @@
 # Nome do executável final
-TARGET = ted
+PROJ_NAME = ted
 
 NOME_ALUNO = Pietro Fernando Pelizon
 
@@ -22,11 +22,11 @@ OBJETOS=$(SOURCES:.c=.o)
 # --- REGRAS DE COMPILAÇÃO ---
 
 # A regra 'all' é a padrão, que compila o projeto
-all: $(TARGET)
+all: $(PROJ_NAME)
 
 # Regra para linkar todos os arquivos objeto e criar o executável final
 $(PROJ_NAME): $(OBJETOS)
-	$(CC) -o $(TARGET) $(OBJETOS) $(LIBS)
+	$(CC) -o $(PROJ_NAME) $(OBJETOS) $(LIBS)
 
 # Regra genérica para compilar um arquivo .c em um arquivo .o
 %.o: %.c
@@ -34,7 +34,7 @@ $(PROJ_NAME): $(OBJETOS)
 
 # Regra para limpar os arquivos gerados (executáveis e objetos)
 clean:
-	rm -f *.o $(TARGET)
+	rm -f *.o $(PROJ_NAME)
 
 # Define que 'all' e 'clean' não são nomes de arquivos
 .PHONY: all clean
