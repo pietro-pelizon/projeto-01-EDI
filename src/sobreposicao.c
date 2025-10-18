@@ -175,7 +175,6 @@ bool sobrepoe_circulo_linhaOUtexto(circulo *c, linha *l) {
 
     double distP1Linha = distancia_quadrada(cx, cy, lx1, ly1);
     double distP2Linha = distancia_quadrada(cx, cy, lx2, ly2);
-
     double raioAoQuadrado = cr * cr;
 
     if (distP1Linha <= raioAoQuadrado || distP2Linha <= raioAoQuadrado) {
@@ -183,22 +182,19 @@ bool sobrepoe_circulo_linhaOUtexto(circulo *c, linha *l) {
     }
 
     double comprimentoAoQuadrado = distancia_quadrada(lx1, ly1, lx2, ly2);
-
-    double t = (((cx - lx1) * (lx2 - lx1)) + ((cy - ly1) * (ly2 - ly1)))/ comprimentoAoQuadrado;
-
-    if (t > 1 || t < 0) {
-        return false;
+    if (comprimentoAoQuadrado == 0.0) {
+        return distP1Linha <= raioAoQuadrado;
     }
 
-    if (t >= 0 && t <= 1) {
-        double px = lx1  + t * (lx2 - lx1);
-        double py = ly1 + t * (ly2 - ly1);
-        double distanciaAoQuadradoDoCirculo = distancia_quadrada(cx, cy, px, py);
+    double t = ((cx - lx1) * (lx2 - lx1) + (cy - ly1) * (ly2 - ly1)) / comprimentoAoQuadrado;
 
-        return distanciaAoQuadradoDoCirculo <= raioAoQuadrado;
-    }
+    t = fmax(0.0, fmin(1.0, t));
 
-    return false;
+    double px = lx1 + t * (lx2 - lx1);
+    double py = ly1 + t * (ly2 - ly1);
+    double distanciaAoQuadradoDoCirculo = distancia_quadrada(cx, cy, px, py);
+
+    return distanciaAoQuadradoDoCirculo <= raioAoQuadrado;
 }
 
 bool sobrepoe_retangulo_retangulo(retangulo *r1, retangulo *r2) {
@@ -316,7 +312,6 @@ bool sobrepoe_linha_texto(linha *l, texto *t) {
 
 
 bool sobrepoe_retangulo_linha(retangulo *r, linha *l) {
-
     double lx1 = getX1Linha(l);
     double ly1 = getY1Linha(l);
     double lx2 = getX2Linha(l);
@@ -331,45 +326,27 @@ bool sobrepoe_retangulo_linha(retangulo *r, linha *l) {
     double rw = getLarguraRetangulo(r);
     double rh = getAlturaRetangulo(r);
 
-    double cse_x = rx,      cse_y = ry - rh; // Canto Superior Esquerdo
-    double csd_x = rx + rw, csd_y = ry - rh; // Canto Superior Direito
-    double cie_x = rx,      cie_y = ry;      // Canto Inferior Esquerdo
-    double cid_x = rx + rw, cid_y = ry;      // Canto Inferior Direito
-
-    bool resultado = false;
+    double cse_x = rx,      cse_y = ry - rh;
+    double csd_x = rx + rw, csd_y = ry - rh;
+    double cie_x = rx,      cie_y = ry;
+    double cid_x = rx + rw, cid_y = ry;
 
     linha *borda_cima = criaLinha(-1, cse_x, cse_y, csd_x, csd_y, "temp", false);
-    if (sobrepoe_linha_linha(l, borda_cima)) {
-        resultado = true;
-    }
-    destrutorLinha(borda_cima);
-    if (resultado) return true;
-
-
     linha *borda_direita = criaLinha(-1, csd_x, csd_y, cid_x, cid_y, "temp", false);
-    if (sobrepoe_linha_linha(l, borda_direita)) {
-        resultado = true;
-    }
-
-    destrutorLinha(borda_direita);
-    if (resultado) return true;
-
     linha *borda_baixo = criaLinha(-1, cid_x, cid_y, cie_x, cie_y, "temp", false);
-    if (sobrepoe_linha_linha(l, borda_baixo)) {
-        resultado = true;
-    }
-    destrutorLinha(borda_baixo);
-    if (resultado) return true;
-
     linha *borda_esquerda = criaLinha(-1, cie_x, cie_y, cse_x, cse_y, "temp", false);
-    if (sobrepoe_linha_linha(l, borda_esquerda)) {
-        resultado = true;
-    }
 
+    bool resultado = (sobrepoe_linha_linha(l, borda_cima) ||
+                     sobrepoe_linha_linha(l, borda_direita) ||
+                     sobrepoe_linha_linha(l, borda_baixo) ||
+                     sobrepoe_linha_linha(l, borda_esquerda));
+
+    destrutorLinha(borda_cima);
+    destrutorLinha(borda_direita);
+    destrutorLinha(borda_baixo);
     destrutorLinha(borda_esquerda);
-    if (resultado) return true;
 
-    return false;
+    return resultado;
 }
 
 void converter_texto_para_linha(texto *t, linha *l_out) {

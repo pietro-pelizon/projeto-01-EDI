@@ -61,9 +61,6 @@ void attachDisparador(disparador *d, carregador *esq, carregador *dir) {
 		return;
 	}
 
-	printf("DEBUG ATCH: Disparador %d attached: esq=%d, dir=%d\n",
-		  d->i, getIDCarregador(esq), getIDCarregador(dir));
-
 
 	d -> esq = esq;
 	d -> dir = dir;
@@ -79,59 +76,43 @@ forma* shiftDisparador(disparador *d, char botao, int n) {
 
     forma *forma_anterior = d->formaEmDisparo;
 
-	printf("DEBUG SHFT: Ordem de disparo - Botão: %c\n", botao);
     for (int i = 0; i < n; i++) {
         switch (botao) {
             case 'd': {
-                printf("DEBUG SHFT: Botão esquerdo pressionado. Forma atual em disparo: %p\n",
-                       (void*)forma_anterior);
 
                 if (forma_anterior != NULL) {
-                    printf("DEBUG SHFT: Movendo forma ID=%d do disparo para carregador direito\n",
-                           getIDforma(forma_anterior));
                     adicionaFormaCarregador(d->dir, forma_anterior);
                     forma_anterior = NULL;
                 }
 
                 if (carregadorEstaVazio(d -> esq)) {
-                    printf("DEBUG SHFT: Carregador esquerdo vazio. Nenhuma forma movida para disparo.\n");
                     d->formaEmDisparo = NULL;
                     return NULL;
                 }
 
                 forma_anterior = removeDoCarregador(d -> esq);
                 d->formaEmDisparo = forma_anterior;
-                printf("DEBUG SHFT: Forma ID=%d colocada em posição de disparo do carregador esquerdo\n",
-                       getIDforma(forma_anterior));
                 break;
             }
 
             case 'e': {
-                printf("DEBUG SHFT: Botão direito pressionado. Forma atual em disparo: %p\n",
-                       (void*)forma_anterior);
 
                 if (forma_anterior != NULL) {
-                    printf("DEBUG SHFT: Movendo forma ID=%d do disparo para carregador esquerdo\n",
-                           getIDforma(forma_anterior));
                     adicionaFormaCarregador(d->esq, forma_anterior);
                     forma_anterior = NULL;
                 }
 
                 if (carregadorEstaVazio(d -> dir)) {
-                    printf("DEBUG SHFT: Carregador direito vazio. Nenhuma forma movida para disparo.\n");
                     d->formaEmDisparo = NULL;
                     return NULL;
                 }
 
                 forma_anterior = removeDoCarregador(d -> dir);
                 d->formaEmDisparo = forma_anterior;
-                printf("DEBUG SHFT: Forma ID=%d colocada em posição de disparo do carregador direito\n",
-                       getIDforma(forma_anterior));
                 break;
             }
 
             default: {
-                printf("DEBUG SHFT: Botão inválido: %c\n", botao);
                 return NULL;
             }
         }
@@ -148,10 +129,6 @@ forma *disparaDisparador(disparador *d, double dx, double dy) {
 		return NULL;
 	}
 
-	printf("DEBUG DSP: Tentando disparar. formaEmDisparo=%p\n", (void*)d -> formaEmDisparo);
-	if (d->formaEmDisparo != NULL) {
-		printf("DEBUG DSP: Forma ID=%d está em posição de disparo\n", getIDforma(d -> formaEmDisparo));
-	}
 
 	if (d -> formaEmDisparo == NULL) {
 		printf("Nenhuma forma está na posição de disparo!\n");
@@ -176,7 +153,6 @@ forma *disparaDisparador(disparador *d, double dx, double dy) {
 
 fila *rajadaDisparador(disparador *d, char botao, double dx, double dy, double ix, double iy, arena *a) {
 	if (d == NULL || a == NULL) {
-		printf("DEBUG RJD: Parâmetros nulos\n");
 		return NULL;
 	}
 
@@ -186,31 +162,20 @@ fila *rajadaDisparador(disparador *d, char botao, double dx, double dy, double i
 	fila *fila_disparos = criaFila();
 	int formas_disparadas = 0;
 
-	printf("DEBUG RJD: Iniciando rajada. Posição original: (%.2f, %.2f)\n", x_original, y_original);
-	printf("DEBUG RJD: dx=%.2f, dy=%.2f, ix=%.2f, iy=%.2f\n", dx, dy, ix, iy);
 
 	for (int i = 0; ; i++) {
-		printf("DEBUG RJD: Iteração %d\n", i);
 
 		forma *formaAtual = shiftDisparador(d, botao, 1);
 		if (formaAtual == NULL) {
-			printf("DEBUG RJD: Fim da rajada - carregador vazio\n");
 			break;
 		}
 
 		double dx_atual = dx + (i * ix);
 		double dy_atual = dy + (i * iy);
 
-		printf("DEBUG RJD: Deslocamento para forma %d: (%.2f, %.2f)\n",
-			   getIDforma(formaAtual), dx_atual, dy_atual);
-
 		forma *formaDisparada = disparaDisparador(d, dx_atual, dy_atual);
 
 		if (formaDisparada != NULL) {
-			printf("DEBUG RJD: Forma %d disparada para (%.2f, %.2f)\n",
-				   getIDforma(formaDisparada),
-				   getXForma(formaDisparada),
-				   getYForma(formaDisparada));
 
 			adicionaFormaArena(a, formaDisparada);
 			enqueue(fila_disparos, formaDisparada);
@@ -220,7 +185,6 @@ fila *rajadaDisparador(disparador *d, char botao, double dx, double dy, double i
 
 	posicionaDisparador(d, x_original, y_original);
 
-	printf("DEBUG RJD: Rajada completa. %d formas disparadas\n", formas_disparadas);
 	return fila_disparos;
 }
 
@@ -247,8 +211,6 @@ void limpaFormaDoDisparador(disparador *d, forma *f) {
 	}
 
 	if (d -> formaEmDisparo == f) {
-		printf("DEBUG LIMPA: Removendo forma ID=%d da posição de disparo do disparador ID=%d\n",
-			   getIDforma(f), d -> i);
 		d -> formaEmDisparo = NULL;
 	}
 }
@@ -258,11 +220,6 @@ void destrutorDisparador(disparador **ptr_disparador) {
 	if (ptr_disparador == NULL || *ptr_disparador == NULL) return;
 
 	disparador* d = *ptr_disparador;
-
-	if (d->formaEmDisparo != NULL) {
-		printf("AVISO: Disparador %d tinha forma ID=%d em posição de disparo não utilizada\n",
-			   d -> i, getIDforma(d -> formaEmDisparo));
-	}
 
 	free(d);
 	*ptr_disparador = NULL;
