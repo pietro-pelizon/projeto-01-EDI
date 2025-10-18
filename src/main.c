@@ -95,16 +95,24 @@ int main(int argc, char *argv[]) {
         sprintf(path_svg_final, "%s/%s-%s.svg", dir_saida, nome_base_geo, nome_base_qry);
         sprintf(path_txt_final, "%s/%s-%s.txt", dir_saida, nome_base_geo, nome_base_qry);
 
+        printf("DEBUG MAIN: Tamanho da fila de anotações ANTES do processaQry: %d\n", getTamFila(anotacoes_svg));
+
+        printf("DEBUG MAIN: Pontuação antes do processaQry: %lf\n", pontuacao);
+
         printf("Processando arquivo .qry: %s\n", path_qry_completo);
         processaQry(repo, path_qry_completo, path_txt_final,
                             minha_arena, meu_chao, &pontuacao, anotacoes_svg,
                             &formas_clonadas, &formas_esmagadas);
 
+        printf("DEBUG MAIN: Tamanho da fila de anotações APÓS processaQry: %d\n", getTamFila(anotacoes_svg));
 
         while (!estaVaziaFila(anotacoes_svg)) {
+            printf("DEBUG MAIN: Movendo 1 anotação para o chão...\n");
             forma *anotacao = dequeue(anotacoes_svg);
             adicionaNoChao(meu_chao, anotacao);
         }
+
+        printf("DEBUG MAIN: Número de formas no chão ANTES de gerar SVG: %d\n", getTamFila(getFilaDoChao(meu_chao)));
 
 
         printf("Gerando SVG final: %s\n", path_svg_final);
