@@ -317,7 +317,7 @@ void processaQry(repositorio *repo, char *nome_path_qry, const char *nome_txt, a
     printf("Instruções realizadas: %i\n", instrucoes_realizadas);
     printf("Total de disparos: %i\n", total_disparos);
     printf("Formas esmagadas: %i\n", *formas_esmagadas);
-    printf("Formas clonadas: %i\n", *formas_clonadas);
+    printf("Formas clonadas: %i\n\n", *formas_clonadas);
 
     fprintf(arquivo_txt, "\n ----- RELATÓRIO FINAL ----- \n");
     fprintf(arquivo_txt, "Pontuação total: %lf\n", *pontuacao_total);

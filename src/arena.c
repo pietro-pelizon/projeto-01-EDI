@@ -91,18 +91,15 @@ void processaArena(arena *a, chao *c, double *pontuacao_total, fila *anotacoes_s
     if (formas_clonadas != NULL) *formas_clonadas = 0;
     if (formas_esmagadas != NULL) *formas_esmagadas = 0;
 
+        printf("\n=== INICIANDO PROCESSAMENTO DA ARENA ===\n");
     while (getTamArena(a) >= 2) {
         forma *forma_I = removeFormaArena(a);
         forma *forma_J = removeFormaArena(a);
 
-        printf("=== INICIANDO PROCESSAMENTO DA ARENA ===\n");
-        printf("Formas na arena: %d\n", getTamArena(a));
         if (formasSobrepoem(forma_I, forma_J)) {
 
-            bool sobreposicao = formasSobrepoem(forma_I, forma_J);
-            printf("Sobreposição detectada: %s\n", sobreposicao ? "SIM" : "NÃO");
+            printf("\nSobreposição detectada!\n");
 
-            printf("HOUVE SOBREPOSIÇÃO.\n");
             double area_I = getAreaForma(forma_I);
             double area_J = getAreaForma(forma_J);
 
@@ -110,6 +107,8 @@ void processaArena(arena *a, chao *c, double *pontuacao_total, fila *anotacoes_s
                     getIDforma(forma_I), getIDforma(forma_J));
 
             if (area_I < area_J) {
+                printf("=== I < J ===\n ID = %d (I) (área %.2f) foi esmagada por ID = %d (J) (área %.2f).\n",
+                        getIDforma(forma_I), area_I, getIDforma(forma_J), area_J);
                 fprintf(arquivo_txt, "<<<-- I < J -->>> forma %d (I) (área %.2f) foi esmagada por forma %d (J) (área %.2f).\n",
                         getIDforma(forma_I), area_I, getIDforma(forma_J), area_J);
 
@@ -133,7 +132,9 @@ void processaArena(arena *a, chao *c, double *pontuacao_total, fila *anotacoes_s
                 adicionaNoChao(c, forma_J);
             }
             else if (area_I >= area_J) {
-                fprintf(arquivo_txt, "<<<-- I >= J -->>> forma %d (I) (área %.2f) modificou a forma %d (J) (área %.2f).\n",
+                printf("=== I >= J ===\n ID = %d (I) (área %.2f) modificou a ID = %d (J) (área %.2f).\n\n",
+                    getIDforma(forma_I), area_I, getIDforma(forma_J), area_J);
+                fprintf(arquivo_txt, "<<<-- I >= J -->>>\n forma %d (I) (área %.2f) modificou a forma %d (J) (área %.2f).\n\n",
                         getIDforma(forma_I), area_I, getIDforma(forma_J), area_J);
 
                 forma *clone_I = NULL;

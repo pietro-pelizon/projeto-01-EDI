@@ -66,6 +66,7 @@ int main(int argc, char *argv[]) {
 
     // --- 4. Execução do ProcessaGeo ---
     chao *meu_chao = processaGeo(path_geo_completo);
+    printf("Lendo o arquivo .geo e adicionando as formas ao chão...\n");
 
     if (meu_chao == NULL) {
         fprintf(stderr,"Falha critica ao processar o .geo (%s)\n", path_geo_completo);
@@ -90,8 +91,8 @@ int main(int argc, char *argv[]) {
         ponto_ext = strrchr(nome_base_qry, '.');
         if (ponto_ext) *ponto_ext = '\0';
 
-        char path_svg_final[512];
-        char path_txt_final[512];
+        char path_svg_final[520];
+        char path_txt_final[520];
         sprintf(path_svg_final, "%s/%s-%s.svg", dir_saida, nome_base_geo, nome_base_qry);
         sprintf(path_txt_final, "%s/%s-%s.txt", dir_saida, nome_base_geo, nome_base_qry);
 
