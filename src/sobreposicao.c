@@ -223,7 +223,7 @@ bool sobrepoe_retangulo_retangulo(retangulo *r1, retangulo *r2) {
 }
 
 int orientacao(double px, double py, double qx, double qy, double rx, double ry) {
-    double val = (qy - py) * (rx - qx) - (qx - px) * (ry - qy);
+    double val = (qx - px) * (ry - py) - (qy - py) * (rx - px);
     if (fabs(val) < 1e-10) return 0;
     return (val > 0) ? 1 : 2;
 }
