@@ -7,6 +7,21 @@
 #include <math.h>
 
 
+/* --- ATENÇÃO ----
+ Considerando que é um tópico que gera bastante confusão,
+ a implementação do cálculo de sobreposição
+ envolvendo retângulos utilizou da lógica
+ provida nos testes enviados pelo professor.
+
+ Segue a especificação da implementação abaixo:
+
+    borda esquerda = x_retangulo;
+    borda direita = x_retangulo + largura;
+    borda superior = y_retangulo;
+    borda inferior= y_retangulo + altura;
+
+*/
+
 static double distancia_quadrada(double x1, double y1, double x2, double y2) {
     double deltaX = x1 - x2;
     double deltaY = y1 - y2;
@@ -116,8 +131,8 @@ bool sobrepoe_circulo_retangulo(circulo *c1, retangulo *r) {
 
     double x_min = xRetangulo;
     double x_max = xRetangulo + largura;
-    double y_min = yRetangulo - altura;
-    double y_max = yRetangulo;
+    double y_min = yRetangulo;
+    double y_max = yRetangulo + altura;
 
     double px, py;
     if (xCirculo < x_min) {
@@ -195,18 +210,21 @@ bool sobrepoe_retangulo_retangulo(retangulo *r1, retangulo *r2) {
     double r2h = getAlturaRetangulo(r2);
     double r2w = getLarguraRetangulo(r2);
 
-    double intervaloR1x = r1x + r1w;
-    double intervaloR2x = r2x + r2w;
+    double r1_x_min = r1x;
+    double r1_x_max = r1x + r1w;
+    double r2_x_min = r2x;
+    double r2_x_max = r2x + r2w;
 
-    bool sobrepoeX = ((r1x  < intervaloR2x) && (intervaloR1x > r2x));
+    bool sobrepoeX = (r1_x_min < r2_x_max) && (r1_x_max > r2_x_min);
 
-    double intervaloR1y = r1y - r1h;
-    double intervaloR2y = r2y - r2h;
+    double r1_y_min = r1y;
+    double r1_y_max = r1y + r1h;
+    double r2_y_min = r2y;
+    double r2_y_max = r2y + r2h;
 
-    bool sobrepoeY = ((intervaloR1y < r2y)) && ((r1y > intervaloR2y));
+    bool sobrepoeY = (r1_y_min < r2_y_max) && (r1_y_max > r2_y_min);
 
     return sobrepoeX && sobrepoeY;
-
 }
 
 int orientacao(double px, double py, double qx, double qy, double rx, double ry) {
@@ -308,11 +326,10 @@ bool sobrepoe_retangulo_linha(retangulo *r, linha *l) {
     double rw = getLarguraRetangulo(r);
     double rh = getAlturaRetangulo(r);
 
-    // Limites do retângulo
     double x_min = rx;
     double x_max = rx + rw;
-    double y_min = ry - rh;  // Topo (y menor)
-    double y_max = ry;       // Base (y maior)
+    double y_min = ry;
+    double y_max = ry + rh;
 
     bool p1_dentro = (lx1 >= x_min - EPSILON && lx1 <= x_max + EPSILON &&
                       ly1 >= y_min - EPSILON && ly1 <= y_max + EPSILON);
@@ -322,6 +339,7 @@ bool sobrepoe_retangulo_linha(retangulo *r, linha *l) {
     if (p1_dentro || p2_dentro) {
         return true;
     }
+
 
     linha *borda_cima = criaLinha(-1, x_min, y_min, x_max, y_min, "temp", false);
     linha *borda_direita = criaLinha(-1, x_max, y_min, x_max, y_max, "temp", false);

@@ -12,12 +12,23 @@ typedef struct stLinha {
 	bool eh_pontilhada;
 } linha;
 
+static void ordenaPontosLinha(double *x1, double *y1, double *x2, double *y2) {
+	if (*x1 > *x2 || (*x1 == *x2 && *y1 > *y2)) {
+		double temp_x = *x1, temp_y = *y1;
+		*x1 = *x2; *y1 = *y2;
+
+		*x2 = temp_x; *y2 = temp_y;
+	}
+}
+
 linha *criaLinha(int i, double x1, double y1, double x2, double y2, char *cor, bool eh_pontilhada) {
 	linha *l = malloc (sizeof(linha));
 	if (l == NULL) {
 		printf("Erro na alocacao de memoria para o objeto linha!\n");
 		exit(1);
 	}
+
+	ordenaPontosLinha(&x1, &y1, &x2, &y2);
 
 	l -> i = i;
 	l -> x1 = x1;

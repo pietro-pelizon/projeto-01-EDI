@@ -312,7 +312,7 @@ void processaQry(repositorio *repo, char *nome_path_qry, const char *nome_txt, a
         }
     }
 
-    printf("=== RELATÓRIO FINAL ===\n");
+    printf("\n=== RELATÓRIO FINAL ===\n");
     printf("Pontuação total: %lf\n", *pontuacao_total);
     printf("Instruções realizadas: %i\n", instrucoes_realizadas);
     printf("Total de disparos: %i\n", total_disparos);
