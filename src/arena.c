@@ -78,6 +78,7 @@ int getTamArena(arena *a) {
     return getTamFila(a -> filaArena);
 }
 
+
 void processaArena(arena *a, chao *c, double *pontuacao_total, fila *anotacoes_svg,
                    FILE *arquivo_txt, int *formas_clonadas, int *formas_esmagadas, repositorio *repo) {
     if (c == NULL || a == NULL || arquivo_txt == NULL) {
@@ -85,11 +86,7 @@ void processaArena(arena *a, chao *c, double *pontuacao_total, fila *anotacoes_s
         return;
     }
 
-    *pontuacao_total = 0.0;
     double area_esmagada_round = 0.0;
-
-    if (formas_clonadas != NULL) *formas_clonadas = 0;
-    if (formas_esmagadas != NULL) *formas_esmagadas = 0;
 
         printf("\n=== INICIANDO PROCESSAMENTO DA ARENA ===\n");
     while (getTamArena(a) >= 2) {

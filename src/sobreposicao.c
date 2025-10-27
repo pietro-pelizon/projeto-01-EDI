@@ -3,7 +3,7 @@
 #include "retangulo.h"
 #include "linha.h"
 #include "texto.h"
-
+#define EPSILON 1e-10
 #include <math.h>
 
 
@@ -150,19 +150,6 @@ bool sobrepoe_circulo_retangulo(circulo *c1, retangulo *r) {
 
 }
 
-static bool ponto_dentro_retangulo(retangulo *r, double px, double py) {
-    double rx_min = getXretangulo(r);
-    double rx_max = getXretangulo(r) + getLarguraRetangulo(r);
-
-    double ry_min = getYretangulo(r) - getAlturaRetangulo(r);
-    double ry_max = getYretangulo(r);
-
-    bool dentroX = (px >= rx_min) && (px <= rx_max);
-    bool dentroY = (py >= ry_min) && (py <= ry_max);
-
-    return dentroX && dentroY;
-}
-
 bool sobrepoe_circulo_linhaOUtexto(circulo *c, linha *l) {
     double cx = getXCirculo(c);
     double cy = getYCirculo(c);
@@ -224,7 +211,7 @@ bool sobrepoe_retangulo_retangulo(retangulo *r1, retangulo *r2) {
 
 int orientacao(double px, double py, double qx, double qy, double rx, double ry) {
     double val = (qx - px) * (ry - py) - (qy - py) * (rx - px);
-    if (fabs(val) < 1e-10) return 0;
+    if (fabs(val) < EPSILON) return 0;
     return (val > 0) ? 1 : 2;
 }
 
@@ -310,31 +297,36 @@ bool sobrepoe_linha_texto(linha *l, texto *t) {
 }
 
 
-
 bool sobrepoe_retangulo_linha(retangulo *r, linha *l) {
     double lx1 = getX1Linha(l);
     double ly1 = getY1Linha(l);
     double lx2 = getX2Linha(l);
     double ly2 = getY2Linha(l);
 
-    if (ponto_dentro_retangulo(r, lx1, ly1) || ponto_dentro_retangulo(r, lx2, ly2)) {
-        return true;
-    }
-
     double rx = getXretangulo(r);
     double ry = getYretangulo(r);
     double rw = getLarguraRetangulo(r);
     double rh = getAlturaRetangulo(r);
 
-    double cse_x = rx,      cse_y = ry - rh;
-    double csd_x = rx + rw, csd_y = ry - rh;
-    double cie_x = rx,      cie_y = ry;
-    double cid_x = rx + rw, cid_y = ry;
+    // Limites do retângulo
+    double x_min = rx;
+    double x_max = rx + rw;
+    double y_min = ry - rh;  // Topo (y menor)
+    double y_max = ry;       // Base (y maior)
 
-    linha *borda_cima = criaLinha(-1, cse_x, cse_y, csd_x, csd_y, "temp", false);
-    linha *borda_direita = criaLinha(-1, csd_x, csd_y, cid_x, cid_y, "temp", false);
-    linha *borda_baixo = criaLinha(-1, cid_x, cid_y, cie_x, cie_y, "temp", false);
-    linha *borda_esquerda = criaLinha(-1, cie_x, cie_y, cse_x, cse_y, "temp", false);
+    bool p1_dentro = (lx1 >= x_min - EPSILON && lx1 <= x_max + EPSILON &&
+                      ly1 >= y_min - EPSILON && ly1 <= y_max + EPSILON);
+    bool p2_dentro = (lx2 >= x_min - EPSILON && lx2 <= x_max + EPSILON &&
+                      ly2 >= y_min - EPSILON && ly2 <= y_max + EPSILON);
+
+    if (p1_dentro || p2_dentro) {
+        return true;
+    }
+
+    linha *borda_cima = criaLinha(-1, x_min, y_min, x_max, y_min, "temp", false);
+    linha *borda_direita = criaLinha(-1, x_max, y_min, x_max, y_max, "temp", false);
+    linha *borda_baixo = criaLinha(-1, x_max, y_max, x_min, y_max, "temp", false);
+    linha *borda_esquerda = criaLinha(-1, x_min, y_max, x_min, y_min, "temp", false);
 
     bool resultado = (sobrepoe_linha_linha(l, borda_cima) ||
                      sobrepoe_linha_linha(l, borda_direita) ||
