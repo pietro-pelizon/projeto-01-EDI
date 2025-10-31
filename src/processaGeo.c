@@ -9,7 +9,141 @@
 #include <stdlib.h>
 #include <string.h>
 
-chao *processaGeo(const char *nome_path_geo) {
+#define BUFFER_SIZE 512
+#define COMANDO_SIZE 16
+#define COR_SIZE 64
+#define TEXTO_SIZE 256
+#define ESTILO_FAMILIA_SIZE 64
+#define ESTILO_PESO_SIZE 16
+#define ESTILO_TAMANHO_SIZE 16
+
+typedef struct stEstiloTexto {
+    char familia[ESTILO_FAMILIA_SIZE];
+    char peso[ESTILO_PESO_SIZE];
+    char tamanho[ESTILO_TAMANHO_SIZE];
+} estilo_texto;
+
+
+static void inicializar_estilo_padrao(estilo_texto* estilo) {
+    strcpy(estilo -> familia, "sans");
+    strcpy(estilo -> peso, "n");
+    strcpy(estilo -> tamanho, "12");
+}
+
+
+static void extrair_texto_com_espacos(const char* linha_buffer, int offset, char* conteudo_texto, size_t tamanho_max) {
+    if (offset <= 0) {
+        conteudo_texto[0] = '\0';
+        return;
+    }
+
+    const char *inicio_texto = linha_buffer + offset;
+    while (*inicio_texto && (*inicio_texto == ' ' || *inicio_texto == '\t')) {
+        inicio_texto++;
+    }
+
+    strncpy(conteudo_texto, inicio_texto, tamanho_max - 1);
+    conteudo_texto[tamanho_max - 1] = '\0';
+    conteudo_texto[strcspn(conteudo_texto, "\r\n")] = '\0';
+}
+
+
+static void processar_circulo(const char* linha, chao* meuChao) {
+    int id;
+    double x, y, r;
+    char corb[COR_SIZE] = "", corp[COR_SIZE] = "";
+
+    int num_lidos = sscanf(linha, "c %i %lf %lf %lf %s %s", &id, &x, &y, &r, corb, corp);
+    if (num_lidos < 4) return;
+
+    circulo *c = criaCirculo(id, x, y, r, corb, corp);
+    forma *f = criaForma(id, CIRCULO, c);
+    adicionaNoChao(meuChao, f);
+}
+
+static void processar_retangulo(const char* linha, chao* meuChao) {
+    int id;
+    double x, y, w, h;
+    char corb[COR_SIZE] = "", corp[COR_SIZE] = "";
+
+    int num_lidos = sscanf(linha, "r %i %lf %lf %lf %lf %s %s", &id, &x, &y, &w, &h, corb, corp);
+    if (num_lidos < 5) return;
+
+    retangulo *r = criaRetangulo(id, x, y, w, h, corb, corp);
+    forma *f = criaForma(id, RETANGULO, r);
+    adicionaNoChao(meuChao, f);
+}
+
+static void processar_linha(const char* linha_buffer, chao* meuChao) {
+    int id;
+    double x1, y1, x2, y2;
+    char cor[COR_SIZE] = "";
+
+    int num_lidos = sscanf(linha_buffer, "l %i %lf %lf %lf %lf %s", &id, &x1, &y1, &x2, &y2, cor);
+    if (num_lidos < 5) return;
+
+    linha *l = criaLinha(id, x1, y1, x2, y2, cor, false);
+    forma *f = criaForma(id, LINHA, l);
+    adicionaNoChao(meuChao, f);
+}
+
+static void processar_texto(const char* linha_buffer, chao* meuChao, estilo_texto* estilo_atual) {
+    int id;
+    double x, y;
+    char corp[COR_SIZE] = "", corb[COR_SIZE] = "";
+    char ancora = 'i';
+    char conteudo_texto[TEXTO_SIZE] = "";
+    int offset = 0;
+
+    sscanf(linha_buffer, "t %i %lf %lf %s %s %c %n", &id, &x, &y, corb, corp, &ancora, &offset);
+
+    extrair_texto_com_espacos(linha_buffer, offset, conteudo_texto, sizeof(conteudo_texto));
+
+    estilo *e_temp = criaEstilo(estilo_atual->familia, estilo_atual->peso, estilo_atual->tamanho);
+    texto *t = criaTexto(id, x, y, corb, corp, ancora, conteudo_texto, e_temp);
+    destroiEstilo(e_temp);
+
+    forma *f = criaForma(id, TEXTO, t);
+    if (f) {
+        adicionaNoChao(meuChao, f);
+    }
+}
+
+static void processar_estilo_texto(const char* linha, estilo_texto* estilo_atual) {
+    char familia[ESTILO_FAMILIA_SIZE];
+    char peso[ESTILO_PESO_SIZE];
+    char tamanho[ESTILO_TAMANHO_SIZE];
+
+    int num_lidos = sscanf(linha, "ts %s %s %s", familia, peso, tamanho);
+    if (num_lidos == 3) {
+        strcpy(estilo_atual->familia, familia);
+        strcpy(estilo_atual->peso, peso);
+        strcpy(estilo_atual->tamanho, tamanho);
+    }
+}
+
+
+static void processar_comando(const char* linha_buffer, const char* comando,
+                             chao* meuChao, estilo_texto* estilo_atual) {
+    if (strcmp(comando, "c") == 0) {
+        processar_circulo(linha_buffer, meuChao);
+    }
+    else if (strcmp(comando, "r") == 0) {
+        processar_retangulo(linha_buffer, meuChao);
+    }
+    else if (strcmp(comando, "l") == 0) {
+        processar_linha(linha_buffer, meuChao);
+    }
+    else if (strcmp(comando, "t") == 0) {
+        processar_texto(linha_buffer, meuChao, estilo_atual);
+    }
+    else if (strcmp(comando, "ts") == 0) {
+        processar_estilo_texto(linha_buffer, estilo_atual);
+    }
+}
+
+
+chao* processaGeo(const char *nome_path_geo) {
     FILE *arquivo_geo = fopen(nome_path_geo, "r");
     if (arquivo_geo == NULL) {
         perror("Erro ao abrir o arquivo .geo");
@@ -22,98 +156,20 @@ chao *processaGeo(const char *nome_path_geo) {
         return NULL;
     }
 
-    char linha_buffer[512];
-    char comando[16];
+    estilo_texto estilo_atual;
+    inicializar_estilo_padrao(&estilo_atual);
 
-    char estilo_familia[64] = "sans";
-    char estilo_peso[16] = "n";
-    char estilo_tamanho[16] = "12";
+    char linha_buffer[BUFFER_SIZE];
+    char comando[COMANDO_SIZE];
 
     while (fgets(linha_buffer, sizeof(linha_buffer), arquivo_geo) != NULL) {
-        if (linha_buffer[0] == '\n' || linha_buffer[0] == '#') {
-            continue;
-        }
 
         comando[0] = '\0';
         sscanf(linha_buffer, "%s", comando);
 
-        if (strcmp(comando, "c") == 0) {
-            int id; double x, y, r; char corb[64] = "", corp[64] = "";
-            int num_lidos = sscanf(linha_buffer, "c %i %lf %lf %lf %s %s", &id, &x, &y, &r, corb, corp);
-
-            if (num_lidos < 4) continue;
-
-            circulo *c = criaCirculo(id, x, y, r, corb, corp);
-            forma *f = criaForma(id, CIRCULO, c);
-            adicionaNoChao(meuChao, f);
-        }
-
-        else if (strcmp(comando, "r") == 0) {
-            int id; double x, y, w, h; char corb[64] = "", corp[64] = "";
-            int num_lidos = sscanf(linha_buffer, "r %i %lf %lf %lf %lf %s %s", &id, &x, &y, &w, &h, corb, corp);
-
-            if (num_lidos < 5) continue;
-
-            retangulo *r = criaRetangulo(id, x, y, w, h, corb, corp);
-            forma *f = criaForma(id, RETANGULO, r);
-
-            adicionaNoChao(meuChao, f);
-        }
-
-        else if (strcmp(comando, "l") == 0) {
-            int id; double x1, y1, x2, y2; char cor[64] = "";
-            int num_lidos = sscanf(linha_buffer, "l %i %lf %lf %lf %lf %s", &id, &x1, &y1, &x2, &y2, cor);
-
-            if (num_lidos < 5) continue;
-
-            linha *l = criaLinha(id, x1, y1, x2, y2, cor, false);
-            forma *f = criaForma(id, LINHA, l);
-
-            adicionaNoChao(meuChao, f);
-        }
-
-        else if (strcmp(comando, "t") == 0) {
-            int id; double x, y; char corp[64] = "", corb[64] = "";
-            char ancora = 'i';
-            char conteudo_texto[256] = "";
-            int offset = 0;
-
-            sscanf(linha_buffer, "t %i %lf %lf %s %s %c %n", &id, &x, &y, corb, corp, &ancora, &offset);
-
-            if (offset > 0) {
-                const char *inicio_texto = linha_buffer + offset;
-                while (*inicio_texto && (*inicio_texto == ' ' || *inicio_texto == '\t')) {
-                    inicio_texto++;
-                }
-                strncpy(conteudo_texto, inicio_texto, sizeof(conteudo_texto) - 1);
-                conteudo_texto[sizeof(conteudo_texto) - 1] = '\0';
-                conteudo_texto[strcspn(conteudo_texto, "\r\n")] = 0;
-            }
-
-
-            estilo *e_temp = criaEstilo(estilo_familia, estilo_peso, estilo_tamanho);
-            texto *t = criaTexto(id, x, y, corb, corp, ancora, conteudo_texto, e_temp);
-            destroiEstilo(e_temp);
-
-            forma *f = criaForma(id, TEXTO, t);
-
-
-            if (f) {
-                adicionaNoChao(meuChao, f);
-            }
-        }
-
-        else if (strcmp(comando, "ts") == 0) {
-            char familia[64], peso[16], tamanho[16];
-            int num_lidos = sscanf(linha_buffer, "ts %s %s %s", familia, peso, tamanho);
-
-            if (num_lidos == 3) {
-                strcpy(estilo_familia, familia);
-                strcpy(estilo_peso, peso);
-                strcpy(estilo_tamanho, tamanho);
-            }
-        }
+        processar_comando(linha_buffer, comando, meuChao, &estilo_atual);
     }
-        fclose(arquivo_geo);
-        return meuChao;
+
+    fclose(arquivo_geo);
+    return meuChao;
 }
