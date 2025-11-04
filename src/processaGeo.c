@@ -23,13 +23,37 @@ typedef struct stEstiloTexto {
     char tamanho[ESTILO_TAMANHO_SIZE];
 } estilo_texto;
 
+static void converter_familia_svg(const char* familia_trabalho, char* familia_svg) {
+    if (strcmp(familia_trabalho, "sans") == 0) {
+        strcpy(familia_svg, "sans-serif");
+    } else if (strcmp(familia_trabalho, "serif") == 0) {
+        strcpy(familia_svg, "serif");
+    } else if (strcmp(familia_trabalho, "cursive") == 0) {
+        strcpy(familia_svg, "cursive");
+    } else {
+        strcpy(familia_svg, "sans-serif"); // padrão
+    }
+}
+
+static void converter_peso_svg(const char* peso_trabalho, char* peso_svg) {
+    if (strcmp(peso_trabalho, "n") == 0) {
+        strcpy(peso_svg, "normal");
+    } else if (strcmp(peso_trabalho, "b") == 0) {
+        strcpy(peso_svg, "bold");
+    } else if (strcmp(peso_trabalho, "b+") == 0) {
+        strcpy(peso_svg, "bolder");
+    } else if (strcmp(peso_trabalho, "l") == 0) {
+        strcpy(peso_svg, "lighter");
+    } else {
+        strcpy(peso_svg, "normal");
+    }
+}
 
 static void inicializar_estilo_padrao(estilo_texto* estilo) {
     strcpy(estilo -> familia, "sans");
     strcpy(estilo -> peso, "n");
     strcpy(estilo -> tamanho, "12");
 }
-
 
 static void extrair_texto_com_espacos(const char* linha_buffer, int offset, char* conteudo_texto, size_t tamanho_max) {
     if (offset <= 0) {
@@ -46,7 +70,6 @@ static void extrair_texto_com_espacos(const char* linha_buffer, int offset, char
     conteudo_texto[tamanho_max - 1] = '\0';
     conteudo_texto[strcspn(conteudo_texto, "\r\n")] = '\0';
 }
-
 
 static void processar_circulo(const char* linha, chao* meuChao) {
     int id;
@@ -99,7 +122,13 @@ static void processar_texto(const char* linha_buffer, chao* meuChao, estilo_text
 
     extrair_texto_com_espacos(linha_buffer, offset, conteudo_texto, sizeof(conteudo_texto));
 
-    estilo *e_temp = criaEstilo(estilo_atual->familia, estilo_atual->peso, estilo_atual->tamanho);
+    char familia_svg[ESTILO_FAMILIA_SIZE];
+    char peso_svg[ESTILO_PESO_SIZE];
+
+    converter_familia_svg(estilo_atual->familia, familia_svg);
+    converter_peso_svg(estilo_atual->peso, peso_svg);
+
+    estilo *e_temp = criaEstilo(familia_svg, peso_svg, estilo_atual->tamanho);
     texto *t = criaTexto(id, x, y, corb, corp, ancora, conteudo_texto, e_temp);
     destroiEstilo(e_temp);
 
@@ -122,7 +151,6 @@ static void processar_estilo_texto(const char* linha, estilo_texto* estilo_atual
     }
 }
 
-
 static void processar_comando(const char* linha_buffer, const char* comando,
                              chao* meuChao, estilo_texto* estilo_atual) {
     if (strcmp(comando, "c") == 0) {
@@ -141,7 +169,6 @@ static void processar_comando(const char* linha_buffer, const char* comando,
         processar_estilo_texto(linha_buffer, estilo_atual);
     }
 }
-
 
 chao* processaGeo(const char *nome_path_geo) {
     FILE *arquivo_geo = fopen(nome_path_geo, "r");
