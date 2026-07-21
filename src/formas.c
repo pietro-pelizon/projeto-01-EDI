@@ -1,13 +1,13 @@
 #include <stdio.h>
 
-#include "formas.h"
-#include "circulo.h"
+#include "../include/formas.h"
+#include "../include/circulo.h"
 #include <stdlib.h>
 #include <string.h>
-#include "retangulo.h"
-#include "linha.h"
-#include "svg.h"
-#include "texto.h"
+#include "../include/retangulo.h"
+#include "../include/linha.h"
+#include "../include/svg.h"
+#include "../include/texto.h"
 
 typedef struct stForma {
 	int id;
@@ -239,7 +239,6 @@ char *getCorComplementar(char *cor_hexa_original) {
         }
     }
     else {
-        printf("Comprimento inválido de cor hexadecimal: %s (comprimento: %d)\n", cor_hexa_original, len);
         char* branco_padrao = (char*) malloc(8 * sizeof(char));
         if (branco_padrao) {
             strcpy(branco_padrao, "#FFFFFF");

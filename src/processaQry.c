@@ -1,16 +1,16 @@
-#include "processaQry.h"
-#include "carregadores.h"
-#include "disparador.h"
-#include "arena.h"
-#include "formas.h"
+#include "../include/processaQry.h"
+#include "../include/carregadores.h"
+#include "../include/disparador.h"
+#include "../include/arena.h"
+#include "../include/formas.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
-#include "fila.h"
-#include "linha.h"
-#include "retangulo.h"
-#include "texto.h"
+#include "../include/fila.h"
+#include "../include/linha.h"
+#include "../include/retangulo.h"
+#include "../include/texto.h"
 
 #define MAX_OBJETOS 100
 #define BUFFER_SIZE 512
@@ -109,8 +109,6 @@ void devolveFormasCarregadoresParaChao(repositorio *repo, chao *c) {
         while (!carregadorEstaVazio(car)) {
             forma *f = removeDoCarregador(car);
             if (f != NULL) {
-                printf("Devolvendo forma ID=%d do carregador %d ao chão\n",
-                       getIDforma(f), getIDCarregador(car));
                 adicionaNoChao(c, f);
             }
         }
@@ -122,8 +120,6 @@ void devolveFormasDisparadoresParaChao(repositorio *repo, chao *c) {
         disparador *d = repo -> d[i];
         forma *f = getFormaEmDisparo(d);
         if (f != NULL) {
-            printf("Devolvendo forma ID=%d do disparador %d (em posição de disparo) ao chão\n",
-                   getIDforma(f), getIDdisparador(d));
             adicionaNoChao(c, f);
             limpaFormaDoDisparador(d, f);
         }
@@ -133,7 +129,6 @@ void devolveFormasDisparadoresParaChao(repositorio *repo, chao *c) {
 void limpaFormaDeTodosDisparadores(repositorio *repo, forma *f) {
     if (repo == NULL || f == NULL) return;
 
-    printf("Limpando forma ID=%d de todos os disparadores\n", getIDforma(f));
     for (int i = 0; i < repo -> num_disparadores; i++) {
         limpaFormaDoDisparador(repo -> d[i], f);
     }
@@ -204,7 +199,6 @@ static void processar_shft(char* linha, repositorio* repo, FILE* arquivo_txt, es
 
 static void criar_anotacoes_visuais(int id, double x_inicial, double y_inicial,
                                     double x_final, double y_final, fila* filaSVG) {
-    printf("Criando anotações visuais para disparo\n");
 
     double tam_caixa = 20.0;
     retangulo* caixa_id = criaRetangulo(-1,
@@ -227,7 +221,6 @@ static void criar_anotacoes_visuais(int id, double x_inicial, double y_inicial,
     linha* proj_x = criaLinha(-1, x_inicial, y_final, x_final, y_final, "#FF0000", true);
     enqueue(filaSVG, criaForma(-1, LINHA, proj_x));
 
-    printf("Anotações visuais criadas com sucesso\n");
 }
 
 static void processar_dsp(char* linha, repositorio* repo, arena* arena,
@@ -291,13 +284,6 @@ static void processar_calc(repositorio* repo, arena* arena, chao* chao,
 
 
 static void imprimir_relatorio_final(FILE* arquivo_txt, estatisticas* stats) {
-    printf("\n=== RELATÓRIO FINAL ===\n");
-    printf("Pontuação total: %lf\n", stats -> pontuacao_total);
-    printf("Instruções realizadas: %i\n", stats -> instrucoes_realizadas);
-    printf("Total de disparos: %i\n", stats -> total_disparos);
-    printf("Formas esmagadas: %i\n", stats -> formas_esmagadas);
-    printf("Formas clonadas: %i\n\n", stats->formas_clonadas);
-
     fprintf(arquivo_txt, "\n ----- RELATÓRIO FINAL ----- \n");
     fprintf(arquivo_txt, "Pontuação total: %lf\n", stats -> pontuacao_total);
     fprintf(arquivo_txt, "Número de instruções realizadas: %i\n", stats -> instrucoes_realizadas);

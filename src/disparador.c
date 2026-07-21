@@ -1,8 +1,8 @@
-#include "disparador.h"
-#include "carregadores.h"
-#include "formas.h"
-#include "arena.h"
-#include "fila.h"
+#include "../include/disparador.h"
+#include "../include/carregadores.h"
+#include "../include/formas.h"
+#include "../include/arena.h"
+#include "../include/fila.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -28,8 +28,6 @@ disparador *criaDisparador(int i, double x, double y, carregador *esq, carregado
 	d -> esq = esq;
 	d -> dir = dir;
 	d -> formaEmDisparo = NULL;
-
-	printf("Disparador %i criado com sucesso!\n", d -> i);
 
 	return d;
 

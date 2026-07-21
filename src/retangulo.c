@@ -1,4 +1,4 @@
-#include "retangulo.h"
+#include "../include/retangulo.h"
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>

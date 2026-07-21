@@ -1,6 +1,6 @@
-#include "chao.h"
-#include "fila.h"
-#include "formas.h"
+#include "../include/chao.h"
+#include "../include/fila.h"
+#include "../include/formas.h"
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -15,7 +15,6 @@ chao *criaChao() {
         return NULL;
     }
     c->filaChao = criaFila();
-    printf("Chão criado com sucesso!\n");
     return c;
 }
 

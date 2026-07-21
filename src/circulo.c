@@ -1,4 +1,4 @@
-#include "circulo.h"
+#include "../include/circulo.h"
 #include <string.h>
 #include <stdlib.h>
 #include <stdio.h>

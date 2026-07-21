@@ -1,16 +1,16 @@
-#include "carregadores.h"
-#include "pilha.h"
+#include "../include/carregadores.h"
+#include "../include/pilha.h"
 
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "fila.h"
-
+#include "../include/fila.h"
+#include "../include/formas.h"
 
 typedef struct stCarregador {
 	int i;
 	pilha *p;
-}carregador;
+} carregador;
 
 
 carregador *criaCarregador(int i) {
@@ -23,13 +23,11 @@ carregador *criaCarregador(int i) {
 	c -> i = i;
 	c -> p = criaPilha();
 	if (c -> p == NULL) {
-		printf("Erro ao criar a pilha do carregador!\n");
 		free(c);
 		exit(EXIT_FAILURE);
+
 	}
 
-
-	printf("Carregador %d criado com sucesso!\n", c -> i);
 	return c;
 
 }

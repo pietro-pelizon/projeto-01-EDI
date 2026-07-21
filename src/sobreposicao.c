@@ -1,8 +1,8 @@
-#include "sobreposicao.h"
-#include "circulo.h"
-#include "retangulo.h"
-#include "linha.h"
-#include "texto.h"
+#include "../include/sobreposicao.h"
+#include "../include/circulo.h"
+#include "../include/retangulo.h"
+#include "../include/linha.h"
+#include "../include/texto.h"
 #define EPSILON 1e-10
 #include <math.h>
 

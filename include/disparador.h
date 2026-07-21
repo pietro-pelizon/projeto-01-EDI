@@ -4,7 +4,6 @@
 #include "carregadores.h"
 #include "formas.h"
 #include "arena.h"
-#include "processaQry.h"
 
 
 /* ------- TAD DISPARADOR -------

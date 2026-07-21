@@ -1,8 +1,8 @@
-#include "fila.h"
+#include "../include/fila.h"
 #include <stdlib.h>
 #include <stdio.h>
 
-#include "formas.h"
+#include "../include/formas.h"
 
 typedef struct nodeF {
 	void *item;
@@ -46,7 +46,6 @@ bool estaVaziaFila(fila *f) {
 void enqueue(fila *f, void *item) {
 	nodeF *novo = malloc(sizeof(nodeF));
 	if (!novo) {
-		perror("malloc nodeF");
 		exit(1);
 	}
 

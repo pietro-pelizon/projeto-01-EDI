@@ -1,8 +1,8 @@
-#include "arena.h"
-#include "fila.h"
-#include "formas.h"
-#include "sobreposicao.h"
-#include "chao.h"
+#include "../include/arena.h"
+#include "../include/fila.h"
+#include "../include/formas.h"
+#include "../include/sobreposicao.h"
+#include "../include/chao.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -20,8 +20,6 @@ arena *criaArena() {
 
     a -> filaArena = criaFila();
 
-    printf("Arena criada com sucesso!\n");
-
     return a;
 }
 
@@ -31,7 +29,6 @@ forma *adicionaFormaArena(arena *a, forma *f) {
     }
 
     if (a == NULL) {
-        printf("Arena inexistente passada para a função 'adicionaFormaArena'\n");
         return NULL;
     }
 
@@ -82,7 +79,6 @@ int getTamArena(arena *a) {
 void processaArena(arena *a, chao *c, double *pontuacao_total, fila *anotacoes_svg,
                    FILE *arquivo_txt, int *formas_clonadas, int *formas_esmagadas, repositorio *repo) {
     if (c == NULL || a == NULL || arquivo_txt == NULL) {
-        printf("Erro: Parâmetros nulos passados para processaArena!\n");
         return;
     }
 
@@ -94,7 +90,6 @@ void processaArena(arena *a, chao *c, double *pontuacao_total, fila *anotacoes_s
         forma *forma_J = removeFormaArena(a);
 
         if (formasSobrepoem(forma_I, forma_J)) {
-            printf("\nSobreposição detectada!\n");
 
             double area_I = getAreaForma(forma_I);
             double area_J = getAreaForma(forma_J);
@@ -103,8 +98,6 @@ void processaArena(arena *a, chao *c, double *pontuacao_total, fila *anotacoes_s
                     getIDforma(forma_I), getIDforma(forma_J));
 
             if (area_I < area_J) {
-                printf("=== I < J ===\n ID = %d (I) (área %.2f) foi esmagada por ID = %d (J) (área %.2f).\n",
-                       getIDforma(forma_I), area_I, getIDforma(forma_J), area_J);
                 fprintf(arquivo_txt,
                         "<<<-- I < J -->>> forma %d (I) (área %.2f) foi esmagada por forma %d (J) (área %.2f).\n",
                         getIDforma(forma_I), area_I, getIDforma(forma_J), area_J);
@@ -128,8 +121,6 @@ void processaArena(arena *a, chao *c, double *pontuacao_total, fila *anotacoes_s
                 destrutorForma(forma_I);
                 adicionaNoChao(c, forma_J);
             } else if (area_I >= area_J) {
-                printf("=== I >= J ===\n ID = %d (I) (área %.2f) modificou a ID = %d (J) (área %.2f).\n\n",
-                       getIDforma(forma_I), area_I, getIDforma(forma_J), area_J);
                 fprintf(arquivo_txt,
                         "<<<-- I >= J -->>>\n forma %d (I) (área %.2f) modificou a forma %d (J) (área %.2f).\n\n",
                         getIDforma(forma_I), area_I, getIDforma(forma_J), area_J);

@@ -1,4 +1,4 @@
-#include "pilha.h"
+#include "../include/pilha.h"
 #include <stdlib.h>
 #include <stdio.h>
 
@@ -31,7 +31,6 @@ void push(pilha *p, void *item) {
 
     node *novo = (node*) malloc(sizeof(node));
     if (!novo) {
-        printf("erro ao alocar memoria para o noh da pilha\n");
         return;
     }
 

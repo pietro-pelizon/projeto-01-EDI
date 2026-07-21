@@ -1,4 +1,4 @@
-#include "linha.h"
+#include "../include/linha.h"
 
 #include <stdio.h>
 #include <stdlib.h>

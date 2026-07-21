@@ -1,8 +1,8 @@
-#include "svg.h"
+#include "../include/svg.h"
 
 #include <stdio.h>
-#include "fila.h"
-#include "formas.h"
+#include "../include/fila.h"
+#include "../include/formas.h"
 
 FILE* inicializaSvg(const char* caminhoArquivo) {
 	FILE* svg = fopen(caminhoArquivo, "w");
@@ -118,7 +118,7 @@ void gerarArquivoSvg(const char *nome_svg, fila *filaDeFormas) {
 
 	FILE *arquivo_svg = inicializaSvg(nome_svg);
 	if (!arquivo_svg) {
-		printf("Erro ao abrir o arquivo svg!\n");
+		printf("Erro ao abrir o arquivo (.svg).\n");
 		return;
 	}
 
@@ -133,7 +133,5 @@ void gerarArquivoSvg(const char *nome_svg, fila *filaDeFormas) {
 	}
 
 	fechaSVG(arquivo_svg);
-
-	printf("Arquivo .svg gerado com sucesso!\n");
 
 }

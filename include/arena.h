@@ -5,12 +5,12 @@
 
 #include "chao.h"
 #include "fila.h"
-#include "formas.h"
-#include "processaQry.h"
+#include "../include/formas.h"
+#include "../include/processaQry.h"
 
 
 
- /* ------- TAD ARENA -------
+/* ------- TAD ARENA -------
  * O TAD Arena representa o "mundo" ou "cenário" principal do programa,
  * funcionando como um container para todas as formas ativas. Seus
  * principais conceitos são:

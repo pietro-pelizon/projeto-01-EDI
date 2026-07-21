@@ -1,9 +1,9 @@
-#include "processaGeo.h"
-#include "chao.h"
-#include "circulo.h"
-#include "linha.h"
-#include "retangulo.h"
-#include "texto.h"
+#include "../include/processaGeo.h"
+#include "../include/chao.h"
+#include "../include/circulo.h"
+#include "../include/linha.h"
+#include "../include/retangulo.h"
+#include "../include/texto.h"
 
 #include <stdio.h>
 #include <stdlib.h>

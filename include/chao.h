@@ -1,10 +1,10 @@
 #ifndef CHAO_H
 #define CHAO_H
 
-#include "formas.h"
 #include <stdbool.h>
 
 #include "fila.h"
+#include "formas.h"
 
 
 /* ------- TAD CHAO -------
