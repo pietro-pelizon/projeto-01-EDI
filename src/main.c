@@ -9,6 +9,9 @@
 #include "../include/processaQry.h"
 #include "../include/svg.h"
 
+
+static void print_help();
+
 static void montaCaminho(char* path_completo, const char* base_dir, const char* nome_arquivo) {
     if (base_dir != NULL && strlen(base_dir) > 0) {
         sprintf(path_completo, "%s/%s", base_dir, nome_arquivo);
@@ -33,6 +36,9 @@ int main(int argc, char *argv[]) {
             dir_saida = argv[++i];
         } else if (strcmp(argv[i], "-q") == 0 && i + 1 < argc) {
             arq_qry_nome = argv[++i];
+        } else if ((strcmp(argv[i], "-h") == 0 || strcmp(argv[i], "--help") == 0)) {
+            print_help();
+            return 0;
         }
     }
 
@@ -114,4 +120,16 @@ int main(int argc, char *argv[]) {
     printf("\nPrograma finalizado com sucesso.\n");
 
     return 0;
+}
+
+static void print_help() {
+    printf("Uso: ted [OPÇÕES]\n\n");
+    printf("Opções:\n");
+    printf("  -f <arquivo.geo>   (obrigatório) Arquivo com as formas geométricas\n");
+    printf("  -o <dir>           (obrigatório) Diretório de saída\n");
+    printf("  -e <dir>           (opcional)    Diretório base dos testes\n");
+    printf("  -q <arquivo.qry>   (opcional)    Arquivo de consultas\n");
+    printf("  -h, --help                       Exibe esta mensagem\n\n");
+    printf("Exemplo:\n");
+    printf("  ted -e entrada/ -f formas.geo -q consultas.qry -o saida/\n");
 }
