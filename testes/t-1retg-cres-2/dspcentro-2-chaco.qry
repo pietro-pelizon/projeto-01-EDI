@@ -1,0 +1,37 @@
+pd 1 10.00 10.00
+lc 1 2
+lc 2 2
+atch 1 1 2
+pd 2 710.00 10.00
+lc 3 2
+lc 4 2
+atch 2 3 4
+pd 3 710.00 710.00
+lc 5 2
+lc 6 2
+atch 3 5 6
+pd 4 10.00 710.00
+lc 7 2
+lc 8 2
+atch 4 7 8
+shft 1 e 1
+shft 1 d 1
+shft 1 e 1
+shft 1 d 1
+shft 1 e 1
+dsp 1 366.12 359.93 v
+shft 1 e 1
+dsp 1 370.18 367.19 v
+shft 2 d 1
+dsp 2 -366.12 359.93 v
+shft 2 d 1
+dsp 2 -362.06 367.19 v
+shft 3 e 1
+dsp 3 -366.12 -359.93 v
+shft 3 e 1
+dsp 3 -365.32 -352.68 v
+shft 4 d 1
+dsp 4 366.12 -359.93 v
+shft 4 d 1
+dsp 4 366.92 -352.68 v
+calc

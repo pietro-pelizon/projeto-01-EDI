@@ -1,0 +1,48 @@
+pd 3 4.12 7.39
+lc 6 6
+atch 3 6 9
+pd 5 585.28 565.76
+lc 8 6
+atch 5 7 8
+shft 3 d 1
+shft 5 e 1
+shft 5 e 1
+dsp 5 -908.61 -389.10 i
+shft 5 e 1
+dsp 5 -906.11 -384.10 i
+shft 5 e 1
+dsp 5 -903.61 -379.10 i
+rjd 3 d -327.45 169.28 2.50 5.00
+calc
+pd 1 4.12 7.39
+lc 6 6
+atch 1 6 9
+pd 7 585.28 565.76
+lc 8 6
+atch 7 7 8
+shft 1 d 1
+shft 7 e 1
+shft 7 e 1
+dsp 7 -908.61 -389.10 i
+shft 7 e 1
+dsp 7 -906.11 -384.10 i
+shft 7 e 1
+dsp 7 -903.61 -379.10 i
+rjd 1 d -327.45 169.28 2.50 5.00
+calc
+pd 3 4.12 7.39
+lc 6 6
+atch 3 6 9
+pd 6 585.28 565.76
+lc 8 6
+atch 6 7 8
+shft 3 d 1
+shft 6 e 1
+shft 6 e 1
+dsp 6 -908.61 -389.10 i
+shft 6 e 1
+dsp 6 -906.11 -384.10 i
+shft 6 e 1
+dsp 6 -903.61 -379.10 i
+rjd 3 d -327.45 169.28 2.50 5.00
+calc

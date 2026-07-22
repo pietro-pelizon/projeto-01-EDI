@@ -1,0 +1,24 @@
+pd 3 4.12 7.39
+lc 6 13
+atch 3 6 9
+pd 5 585.28 565.76
+lc 8 10
+atch 5 7 8
+shft 3 d 1
+shft 5 e 1
+shft 5 e 1
+dsp 5 -387.78 6.74 i
+shft 5 e 1
+dsp 5 -382.78 16.74 i
+shft 5 e 1
+dsp 5 -377.78 26.74 i
+shft 5 e 1
+dsp 5 -372.78 36.74 i
+shft 5 e 1
+dsp 5 -367.78 46.74 i
+shft 5 e 1
+dsp 5 -362.78 56.74 i
+shft 5 e 1
+dsp 5 -357.78 66.74 i
+rjd 3 d 193.38 565.11 5.00 10.00
+calc

@@ -1,0 +1,44 @@
+pd 5 250.00 250.00
+lc 3 20
+atch 5 3 6
+shft 5 d 1
+dsp 5 20.00 -30.00 i
+shft 5 d 1
+dsp 5 -20.00 -30.00 i
+shft 5 d 1
+dsp 5 -20.00 30.00 i
+shft 5 d 1
+dsp 5 30.00 45.00 i
+shft 5 d 1
+dsp 5 30.00 -45.00 i
+shft 5 d 1
+dsp 5 -30.00 -45.00 i
+shft 5 d 1
+dsp 5 -30.00 45.00 i
+shft 5 d 1
+dsp 5 40.00 60.00 i
+shft 5 d 1
+dsp 5 40.00 -60.00 i
+shft 5 d 1
+dsp 5 -40.00 -60.00 i
+shft 5 d 1
+dsp 5 -40.00 60.00 i
+shft 5 d 1
+dsp 5 50.00 75.00 i
+shft 5 d 1
+dsp 5 50.00 -75.00 i
+shft 5 d 1
+dsp 5 -50.00 -75.00 i
+shft 5 d 1
+dsp 5 -50.00 75.00 i
+shft 5 d 1
+dsp 5 60.00 90.00 i
+shft 5 d 1
+dsp 5 60.00 -90.00 i
+shft 5 d 1
+dsp 5 -60.00 -90.00 i
+shft 5 d 1
+dsp 5 -60.00 90.00 i
+shft 5 d 1
+dsp 5 70.00 105.00 i
+calc
