@@ -1,4 +1,4 @@
-<div align="center"
+<div align="center">
 
 # Projeto 01 - Estrutura de Dados (EDI)
 
