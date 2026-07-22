@@ -10,7 +10,7 @@
 
 ```text
 .
-├── documentation/     # PDFs com as especificações do trabalho
+├── docs/     # PDFs com as especificações do trabalho
 ├── include/           # Arquivos de cabeçalho (.h)
 ├── src/               # Implementações (.c), Makefile e run.sh
 ├── testes/            # Arquivos de entrada (.geo e .qry)
