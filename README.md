@@ -120,7 +120,7 @@ Define os comandos da Bocha Geométrica.
 | `atch`  | `id_disp id_carr_dir id_carr_esq` | Acopla carregadores a um disparador                |
 | `shft`  | `id_disp lado n`                  | Move munição para a posição de disparo             |
 | `dsp`   | `id_disp dx dy`                   | Dispara uma forma                                  |
-| `rjd`   | `d [e/d]  dx dy ix iy`            | Dispara uma rajada de formas                       |
+| `rjd`   | `d [e \| d]  dx dy ix iy`            | Dispara uma rajada de formas                       |
 | `calc`  | *-*                               | Processa a Arena (colisões, pontuação e relatório) |
 
 
