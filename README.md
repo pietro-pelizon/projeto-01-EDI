@@ -1,3 +1,5 @@
+<div align="center"
+
 # Projeto 01 - Estrutura de Dados (EDI)
 
 ![Autor](https://img.shields.io/badge/Autor-Pietro%20Fernando%20Pelizon-maroon)
@@ -5,6 +7,7 @@
 ![Build](https://img.shields.io/badge/Makefile-GCC-green)
 ![Data Structures](https://img.shields.io/badge/ED-Queue%20%7C%20Stack-orange)
 
+</div>
 
 ## Estrutura do Repositório
 
