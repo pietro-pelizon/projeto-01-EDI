@@ -39,9 +39,15 @@ O sistema lê arquivos de entrada (`.geo` e `.qry`) para configurar o ambiente e
       * Se a forma A colide com B e `Área(A) ≥ Área(B)`: A modifica as cores de B e pode ser clonada.
   * **Saída Gráfica:** Geração de arquivos `(.svg)` que representam visualmente o estado inicial e final da simulação.
 
+## Pré-requisitos
+Certifique-se de ter as seguintes ferramentas instaladas no seu ambiente:
+* Compilador **GCC** (com suporte ao padrão C99)
+* **Make** (para automação da build)
+* Ambiente **Linux** ou **WSL** (Windows Subsystem for Linux)
+
 ## Compilação
 
-O projeto inclui um `Makefile` para facilitar a compilação. Certifique-se de ter o `gcc` e o `make` instalados.
+O projeto inclui um `Makefile` para facilitar a compilação.
 
 * Para compilar o projeto, é necessário executar:
 
